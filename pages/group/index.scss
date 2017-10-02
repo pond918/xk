@@ -1,0 +1,147 @@
+@charset "utf-8";
+@import '../../public/css/_mixin.scss';
+@import '../../public/css/_user_info.scss';
+@import '../../public/css/_todo_list.scss';
+@import '../../components/time-tabs/_index.scss';
+
+.statistics-section{
+  background-color: #f2f2f2;
+  display: flex;
+  &-item{
+    line-height: 1;
+    text-align: center;
+    padding:30rpx 0;
+    flex: 1;
+    .title{
+      color: #666;
+      font-size: 24rpx;
+    }
+    .num{
+      margin-top: 10rpx;
+      font-size: 36rpx;
+      color: #f56857;
+      font-weight: bold;
+    }
+  }
+}
+
+.groups-container{
+  padding: 25rpx;
+}
+.champion-group{
+  background-color: #fff;
+  border:1rpx solid #d5e2e9;
+  padding: 0 25rpx;
+  &-title{
+    display: flex;
+    align-items: center;
+    font-size:32rpx;
+    border-bottom:1rpx solid #d5e2e9;
+    .icon{
+      width: 70rpx;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      image{
+        width: 44rpx;
+        height: 65rpx;
+      }
+    }
+    .title{
+      flex: 1;
+    }
+    .sub{
+      .num{
+        font-size: 60rpx;
+        font-weight: bold;
+        color: #f56857;
+      }
+      .unit{
+        color: #999;
+      }
+    }
+  }
+  &-content{
+    display: flex;
+    .people-item{
+      text-align: center;
+      padding:20rpx 0;
+      margin-right: 30rpx;
+      .avatar{
+        width: 80rpx;
+        height: 80rpx;
+        display: block;
+      }
+      .name{
+        margin-top:13rpx;
+        font-size: 28rpx;
+      }
+    }
+  }
+}
+.other-group-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+.other-group{
+  width: 48%;
+  box-sizing: border-box;
+  border:1rpx solid #d5e2e9;
+  background-color: #fff;
+  margin-bottom:30rpx;
+  &:nth-child(2n+1){
+    margin-right: 4%;
+  }
+  .add-item{
+    padding: 35rpx 0;
+    .icon-add{
+      width: 128rpx;
+      height: 128rpx;
+      margin: 0 auto;
+      display: block;
+    }
+    .add-text{
+      line-height: 1;
+      font-size: 36rpx;
+      text-align: center;
+      color: #1dcca1;
+      margin-top:15rpx;
+    }
+  }
+  &-title{
+    height: 72rpx;
+    font-size: 36rpx;
+    border-bottom:1rpx solid #d5e2e9;
+    display: flex;
+    align-items: center;
+    .l{
+      flex: 1;
+      padding-left:28rpx;
+    }
+    .r{
+      .badge{
+        $h: 44rpx;
+        line-height:$h;
+        color: #fff;
+        border-top-left-radius: $h/2;
+        border-bottom-left-radius: $h/2;
+        background-color: #20cba1;
+        padding: 0 20rpx 0 28rpx;
+      }
+    }
+  }
+  &-content{
+    height: 174rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .num{
+      font-size: 60rpx;
+      font-weight: bold;
+      color: #f56857;
+    }
+    .unit{
+      color: #999;
+    }
+  }
+}

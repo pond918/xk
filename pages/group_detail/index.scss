@@ -1,0 +1,145 @@
+@charset "utf-8";
+@import '../../public/css/_mixin.scss';
+@import '../../public/css/_user_info.scss';
+@import '../../public/css/_todo_list.scss';
+@import '../../components/time-tabs/_index.scss';
+
+.statistics-section{
+  background-color: #f2f2f2;
+  display: flex;
+  &-item{
+    line-height: 1;
+    text-align: center;
+    padding:30rpx 0;
+    flex: 1;
+    .title{
+      color: #666;
+      font-size: 24rpx;
+    }
+    .num{
+      margin-top: 10rpx;
+      font-size: 36rpx;
+      color: #f56857;
+      font-weight: bold;
+    }
+  }
+}
+
+.todo-edit{
+  background-color: #f5f9fc;
+}
+
+.todo-item{
+  padding-right:25rpx;
+}
+
+.class-confirm{
+  line-height: 48rpx;
+}
+
+.class-picker{
+  width: 190rpx;
+  height: 50rpx;
+  line-height: 48rpx;
+  text-align: center;
+  border: 1rpx solid #d4e1e9;
+  border-radius: 5rpx;
+  box-sizing: border-box;
+  padding: 0 10rpx;
+  background-color: #fff;
+}
+
+.active-list{
+  background-color: #fff;
+}
+.active-item{
+  padding: 0 20rpx 30rpx 20rpx;
+  .user-info{
+    position: relative;
+  }
+  .calc-day{
+    line-height: 40rpx;
+    position: absolute;
+    right:0;
+    bottom:20rpx;
+  }
+  .img-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    &.num1{
+      image{
+        width: 100%;
+        height: 350rpx;
+      }
+    }
+    &.num2{
+      image{
+        width: 49%;
+        height: 350rpx;
+        margin-bottom:2%;
+      }
+    }
+    &.num3{
+      image{
+        width: 32%;
+        height: 220rpx;
+        margin-bottom:2%;
+      }
+    }
+    &.num4{
+      image{
+        width: 24%;
+        height: 170rpx;
+        margin-bottom:1.333%;
+      }
+    }
+  }
+  .active-opera{
+    padding: 15rpx 0;
+    display: flex;
+    align-items: center;
+    .opera-item{
+      margin-right: 40rpx;
+      .icon{
+        width: 31rpx;
+        height: 31rpx;
+        margin-right: 10rpx;
+        vertical-align: bottom;
+      }
+      .num{
+        font-size: 18rpx;
+        color: #999;
+      }
+    }
+  }
+  .active-comment{
+    .p{
+      line-height: 38rpx;
+      color: #666;
+    }
+    .active-comment-reply{
+      margin-top: 25rpx;
+      display: flex;
+      .label{
+        flex: 1;
+        height: 50rpx;
+        border-radius: 5rpx;
+        background-color: #f5f4f4;
+        border: 2rpx solid #d4e1e9;
+        color: #999;
+        padding: 0 12rpx;
+        margin-right: 54rpx;
+        display: flex;
+        align-items: center;
+        input{
+          flex: 1;
+        }
+      }
+      .btn{
+        height: 54rpx;
+        border: 2rpx solid #08b087;
+      }
+    }
+  }
+}

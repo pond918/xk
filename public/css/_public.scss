@@ -1,0 +1,234 @@
+@charset "utf-8";
+@import './_mixin.scss';
+@import './_utils.scss';
+@import './_animate.scss';
+@import './_btn.scss';
+
+.line1{
+  @include ellipsis();
+}
+.line2{
+  @include ellipsis(2);
+}
+
+.empty-data{
+  height: 100%;
+  background-color: #fff;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position:absolute;
+  top:0;
+  right: 0;
+  bottom: 0;
+  left:0;
+  z-index: 10;
+  image{
+    width:295rpx;
+    height: 185rpx;
+    display: block;
+  }
+  text{
+    text-align: center;
+    margin-top:45rpx;
+    font-size: 40rpx;
+    font-weight: bold;
+  }
+}
+
+.btns-prompt{
+  height: 98rpx;
+  display: flex;
+  &.bt{
+    border-top: 1rpx solid #e5e5e5;
+  }
+  .each-item{
+    flex: 1;
+    text-align: center;
+    color: #666;
+    font-size: 26rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:first-child{
+      border-right: 1rpx solid #e5e5e5;
+    }
+    &.confirm{
+      color: #fff;
+      background: linear-gradient(to right, #ff9000 18%, #ff5000 78%);
+    }
+  }
+}
+
+.app-prompt{
+  position:fixed;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  background-color: rgba(0, 0, 0, 0.65);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  .prompt-container{
+    width: 565rpx;
+    border-radius: 10rpx;
+    background-color: #fff;
+  }
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  height: 88rpx;
+  background: linear-gradient(to right, #ff9000 0%, #ff9000 20%, #ff5000 66%);
+  &.fixed{
+    position:fixed;
+    top:0;
+    right:0;
+    left:0;
+    z-index: 100;
+  }
+  .right-btn {
+    width: 90rpx;
+    height: 60rpx;
+  }
+  .left-btn{
+    width: 73rpx;
+    height: 60rpx;
+  }
+  .left-btn,
+  .right-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    image{
+      width: 48rpx;
+      height: 48rpx;
+    }
+  }
+  .search-input {
+    height: 60rpx;
+    background: rgba(255, 255, 255, 0.45);
+    border-radius: 30rpx;
+    padding: 0 30rpx;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    image{
+      width: 32rpx;
+      height: 32rpx;
+      margin-right: 10rpx;
+    }
+    input{
+      height: 60rpx;
+      font-size: 28rpx;
+      color:#fff;
+      flex: 1;
+    }
+  }
+}
+
+.label-act{
+  height: 78rpx;
+  display: flex;
+  align-items: center;
+  color: #757575;
+  font-size: 20rpx;
+  background-color: #fff;
+  position: relative;
+  &.bb{
+    border-bottom: 1rpx solid #e5e5e5;
+    //&:after{
+    //  content: '';
+    //  height: 1rpx;
+    //  background-color: #e5e5e5;
+    //  position:absolute;
+    //  right: 0;
+    //  bottom:0;
+    //  left: 18rpx;
+    //  display: block;
+    //}
+  }
+  .ico {
+    margin-left: 18rpx;
+    image{
+      width: 40rpx;
+      height: 40rpx;
+      display: block;
+    }
+  }
+  .title{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    @include ellipsis();
+    image{
+      width: 40rpx;
+      height: 40rpx;
+    }
+  }
+  .arrow{
+    margin-right: 23rpx;
+  }
+}
+
+.select-label{
+  height: 107rpx;
+  display: flex;
+  align-items: center;
+  color: #757575;
+  font-size: 20rpx;
+  background-color: #fff;
+  position: relative;
+  &.bb{
+    border-bottom: 1rpx solid #e5e5e5;
+  }
+  .ico {
+    margin-left: 23rpx;
+    image{
+      width: 40rpx;
+      height: 40rpx;
+      display: block;
+    }
+  }
+  .title{
+    flex: 1;
+    margin-left: 35rpx;
+    font-size: 28rpx;
+    @include ellipsis();
+  }
+  .sub{
+    font-size: 32rpx;
+    color: #c8c8c8;
+    margin-right: 23rpx;
+  }
+  .arrow{
+    margin-right: 40rpx;
+    image{
+      width: 40rpx;
+      height: 40rpx;
+      display: block;
+    }
+  }
+}
+
+.sort-triangle{
+  &.active{
+    .up {
+      border-color: transparent transparent #ff5000 transparent;
+    }
+    .down {
+      border-color: #666 transparent transparent transparent;
+    }
+  }
+  .up{
+    margin-bottom: 5rpx;
+    @include rac(7rpx, 5rpx, 'top', #666);
+  }
+  .down{
+    @include rac(7rpx, 5rpx, 'bottom', #ff5000);
+  }
+}

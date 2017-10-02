@@ -1,0 +1,190 @@
+<view class="habit-item bb">
+  <view class="habit-item-label">
+    <view class="icon">
+      <image class="img" src="../../icons/icon-unselected.png"></image>
+    </view>
+    <view class="content">
+      <view class="title">按时起床</view>
+      <view class="p">自己上闹钟，钟响即起</view>
+    </view>
+    <view class="sub">
+      <view class="switch-container">
+        <view class="tac grey">必选</view>
+        <switch checked bindchange="switch1Change"/>
+      </view>
+    </view>
+  </view>
+  <view class="habit-item-label">
+    <view class="icon">
+      <image class="img" src="../../icons/icon-unselected.png"></image>
+    </view>
+    <view class="content">
+      <view class="title">按时起床</view>
+      <view class="p">自己上闹钟，钟响即起</view>
+    </view>
+    <view class="sub">
+      <image class="icon-date vam" src="../../icons/icon-date.png"></image>
+      <image class="icon-arrow vam" src="../../icons/icon-arrow.png"></image>
+    </view>
+  </view>
+
+  <view class="habit-item-main">
+    <view class="title line1">
+      <image class="icon" src="../../icons/icon-lamp.png"></image>
+      养成孩子学习主动性
+    </view>
+    <view class="content">
+      <view class="status-section">
+        <view class="status-item">
+          <view class="status-item-title">主动完成</view>
+          <view class="status-item-content">
+            <text class="num">+2</text>
+            <text class="unit">分</text>
+          </view>
+        </view>
+      </view>
+      <view class="status-section">
+        <view class="status-item">
+          <view class="status-item-title">主动完成</view>
+          <view class="status-item-content">
+            <text class="num">+2</text>
+            <text class="unit">分</text>
+          </view>
+        </view>
+      </view>
+      <view class="status-section">
+        <view class="status-item">
+          <view class="status-item-title">主动完成</view>
+          <view class="status-item-content">
+            <text class="num">+2</text>
+            <text class="unit">分</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="habit-item bb">
+  <view class="habit-item-label">
+    <view class="icon">
+      <image class="img" src="../../icons/icon-unselected.png"></image>
+    </view>
+    <view class="content">
+      <view class="title">按时起床</view>
+      <view class="p">自己上闹钟，钟响即起</view>
+    </view>
+    <view class="sub">
+      <image class="icon-date vam" src="../../icons/icon-date.png"></image>
+      <image class="icon-arrow vam" src="../../icons/icon-arrow.png"></image>
+    </view>
+  </view>
+  <view class="habit-item-main">
+    <view class="title line1">
+      <image class="icon" src="../../icons/icon-lamp.png"></image>
+      养成孩子学习主动性
+    </view>
+    <view class="content">
+      <view class="status-section">
+        <view class="status-item">
+          <view class="status-item-title">主动完成</view>
+          <view class="status-item-content">
+            <text class="num">+2</text>
+            <text class="unit">分</text>
+          </view>
+        </view>
+      </view>
+      <view class="status-section">
+        <view class="status-item">
+          <view class="status-item-title">主动完成</view>
+          <view class="status-item-content">
+            <text class="num">+2</text>
+            <text class="unit">分</text>
+          </view>
+        </view>
+      </view>
+      <view class="status-section">
+        <view class="status-item">
+          <view class="status-item-title">主动完成</view>
+          <view class="status-item-content">
+            <text class="num">+2</text>
+            <text class="unit">分</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="statistic-label">
+  <view class="total">
+    <view class="p">已选 <text class="strong">6</text> 个习惯，最多可选 <text class="strong">6</text> 个习惯！</view>
+    <view class="p">必选习惯数不可超过 <text class="strong">6</text>个！</view>
+  </view>
+  <view class="confirm">确   定</view>
+</view>
+
+<view class="app-popup ">
+  <view class="app-popup-container">
+    <view class="app-popup-title">
+      <view class="text">习惯定时提醒设置 习惯完成情况</view>
+      <image class="icon" src="../../icons/icon-close.png"></image>
+    </view>
+    <view>
+      <view class="input-label m30">
+        <view class="input-label-icon">
+          <image class="icon" src="../../icons/icon-bell.png"></image>
+        </view>
+        <view class="input-label-content">
+          <input class="input" type="password" placeholder="*请选择时间"/>
+        </view>
+      </view>
+      <view class="tac">
+        <view class="btn btn-small hint-btn">提醒频率</view>
+      </view>
+      <view class="date-picker">
+        <view class="date-picker-item"
+              wx:for="{{week}}"
+              wx:key="{{index}}"
+              data-index="{{index}}"
+              bindtap="selectWeek">
+          <view class="date-picker-text">{{item}}</view>
+          <image class="date-picker-icon" src="{{selectedWeek[index] ? '../../icons/icon-selected.png' : '../../icons/icon-unselected.png'}}" hidden=""></image>
+        </view>
+      </view>
+    </view>
+    <view class="app-popup-main">
+      <view class="line mt10">
+        <text>完成情况：</text>
+        <view class="btns-group">
+          <view class="btn btn-green">主动完成</view>
+          <view class="btn">监督完成</view>
+        </view>
+      </view>
+      <view class="line mt10">
+        <text>上传图片</text>
+      </view>
+      <view class="upload-file">
+        <view class="upload-item">
+          <image class="img" src="../../testimg/good.jpg"></image>
+        </view>
+        <view class="upload-item">
+          <image class="img" src="../../testimg/good.jpg"></image>
+        </view>
+        <view class="upload-item">
+          <image class="img" src="../../testimg/good.jpg"></image>
+        </view>
+        <view class="upload-item">
+          <image class="img" src="../../testimg/good.jpg"></image>
+        </view>
+        <view class="upload-item">
+          <image class="img" src="../../testimg/good.jpg"></image>
+        </view>
+        <view class="upload-item">
+          <image class="icon-add" src="../../icons/icon-add.png"></image>
+        </view>
+      </view>
+      <textarea class="textarea mtb40" placeholder="班主任说点什么吧，这孩子无法无天了..."></textarea>
+      <view class="app-popup-confirm btn btn-full btn-green">我选好了</view>
+    </view>
+  </view>
+</view>
+

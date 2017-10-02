@@ -1,0 +1,64 @@
+.todo-list{
+  padding: 0 25rpx;
+  background-color: #fff;
+}
+.todo-item{
+  padding: 20rpx 0;
+  display: flex;
+  &.bb{
+    border-bottom: 1rpx solid #d4e1e9;
+  }
+  &-ico{
+    padding-left:25rpx;
+    .icon{
+      width: 30rpx;
+      height: 30rpx;
+    }
+  }
+  &-arrow{
+    .icon{
+      width: 40rpx;
+      height: 40rpx;
+    }
+  }
+  &-ico,
+  &-arrow{
+    display: flex;
+    align-items: center;
+  }
+  &-info{
+    flex: 1;
+  }
+  &-grade{
+    width: 130rpx;
+    .num{
+      font-size: 36rpx;
+      color: #f56857;
+    }
+    .unit{
+      font-size: 24rpx;
+      color: #999;
+    }
+  }
+  &-medal{
+    min-width: 100rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .icon{
+      width: 60rpx;
+      height: 85rpx;
+    }
+    .num{
+      width: 45rpx;
+      height: 45rpx;
+      border-radius: 50%;
+      font-size: 36rpx;
+      color: #fff;
+      background-color: #20cba1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "pages":[
+    "pages/habit/index",
+    "pages/habit-unfinish/index",
+    "pages/behavior/index",
+    "pages/invite/index",
+    "pages/group/index",
+    "pages/situation/index",
+    "pages/success/index",
+    "pages/register/index",
+    "pages/group_detail/index",
+    "pages/role_choose/role_choose"
+  ],
+  "window":{
+    "navigationBarTitleText": "习课",
+    "navigationBarTextStyle":"white"
+  },
+  "tabBar": {
+    "backgroundColor": "#e2e2e2",
+    "selectedColor": "#1dcca1",
+    "list": [{
+      "pagePath": "pages/group/index",
+      "text": "群组",
+      "iconPath": "icons/tabs-group.png",
+      "selectedIconPath": "icons/tabs-group-active.png"
+    }, {
+      "pagePath": "pages/behavior/index",
+      "text": "习惯",
+      "iconPath": "icons/tabs-behavior.png",
+      "selectedIconPath": "icons/tabs-behavior-active.png"
+    }]
+  }
+}

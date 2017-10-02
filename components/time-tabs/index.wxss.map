@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": ";AAEA,YAAY;AAcZ;;;;;;GAMG;ACnBH,UAAU;EACR,OAAO,EAAE,IAAI;EACb,eAAM;IACJ,IAAI,EAAE,CAAC;EAET,0BAAe;IACb,KAAK,EAAE,MAAM;IACb,WAAW,EAAE,kBAAkB;IAC/B,SAAS,EAAE,KAAK;IAChB,KAAK,EAAE,OAAO",
+"sources": ["../../public/css/_mixin.scss","index.scss"],
+"names": [],
+"file": "index.wxss"
+}

@@ -1,0 +1,35 @@
+<!--
+  参数：
+  // 时间列表
+  list: [
+    {
+      name: '日'
+    }, {
+      name: '周'
+    }, {
+      name: '月'
+    }, {
+      name: '年'
+    }
+  ],
+  // 默认选中第几个时间
+  idx: 0,
+  // 右侧名称
+  sub: '群组',
+  // 是否显示底部边框
+  bb: false
+-->
+<template name="time-tabs">
+  <view class="time-tabs {{ bb? 'bb' : '' }}">
+    <view class="time-tabs-list">
+      <view class="time-tabs-item"
+            wx:for="{{list}}"
+            wx:key="{{index}}"
+            bindtap="switchTap"
+            data-index="{{index}}">
+        <text class="name {{idx == index ? 'active' : '' }}">{{item.name}}</text>
+      </view>
+    </view>
+    <view class="time-tabs-sub" wx:if="{{sub}}">{{sub}}</view>
+  </view>
+</template>

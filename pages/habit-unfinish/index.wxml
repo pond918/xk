@@ -1,0 +1,44 @@
+<view class="container">
+  <view class="timeline-section">
+    <view class="timeline-title">
+      2017-09-16  周六
+    </view>
+    <view class="timeline-main">
+      <view class="timeline-main-title">
+        <image class="icon" src="../../icons/icon-people.png"></image>
+        <view class="title">张童鞋</view>
+        <view class="tag not">批注</view>
+        <view class="tag done">批注</view>
+      </view>
+      <view class="timeline-unfinish">
+        <view class="unfinish-list bb">
+          <view class="unfinish-item">
+            <image class="icon" src="../../icons/icon-close2.png"></image>
+            <view class="text">按时起床</view>
+          </view>
+          <view class="unfinish-item">
+            <image class="icon" src="../../icons/icon-close2.png"></image>
+            <view class="text">按时起床</view>
+          </view>
+          <view class="unfinish-item">
+            <image class="icon" src="../../icons/icon-close2.png"></image>
+            <view class="text">按时起床</view>
+          </view>
+          <view class="unfinish-item">
+            <image class="icon" src="../../icons/icon-close2.png"></image>
+            <view class="text">按时起床</view>
+          </view>
+          <view class="unfinish-item">
+            <image class="icon" src="../../icons/icon-close2.png"></image>
+            <view class="text">按时起床</view>
+          </view>
+        </view>
+        <view class="unfinish-item">
+          <text class="green">宋童鞋：</text>
+          今天有事暂时不完成了，咋滴？
+          <image class="icon-msg" src="../../icons/icon-msg2.png"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

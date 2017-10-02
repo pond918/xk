@@ -1,0 +1,235 @@
+@charset "UTF-8";
+/*字体超出变省略号*/
+/* 实心三角形
+ * 参数有4个
+ * $tb : 上下边框宽
+ * $lr : 左右边框宽
+ * $direction : 三角形指向(top, right, bottom, left)
+ * $color : 三角形颜色
+ */
+.user-info {
+  display: flex;
+  align-items: center; }
+  .user-info-avatar {
+    padding: 0 15rpx 0 20rpx; }
+    .user-info-avatar .img {
+      width: 80rpx;
+      height: 80rpx;
+      display: block; }
+  .user-info-detail {
+    flex: 1; }
+    .user-info-detail .name {
+      line-height: 1;
+      padding: 3rpx 0 5rpx 0; }
+    .user-info-detail .p {
+      line-height: 24rpx;
+      font-size: 18rpx;
+      color: #999; }
+
+.todo-list {
+  padding: 0 25rpx;
+  background-color: #fff; }
+
+.todo-item {
+  padding: 20rpx 0;
+  display: flex; }
+  .todo-item.bb {
+    border-bottom: 1rpx solid #d4e1e9; }
+  .todo-item-ico {
+    padding-left: 25rpx; }
+    .todo-item-ico .icon {
+      width: 30rpx;
+      height: 30rpx; }
+  .todo-item-arrow .icon {
+    width: 40rpx;
+    height: 40rpx; }
+  .todo-item-ico, .todo-item-arrow {
+    display: flex;
+    align-items: center; }
+  .todo-item-info {
+    flex: 1; }
+  .todo-item-grade {
+    width: 130rpx; }
+    .todo-item-grade .num {
+      font-size: 36rpx;
+      color: #f56857; }
+    .todo-item-grade .unit {
+      font-size: 24rpx;
+      color: #999; }
+  .todo-item-medal {
+    min-width: 100rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .todo-item-medal .icon {
+      width: 60rpx;
+      height: 85rpx; }
+    .todo-item-medal .num {
+      width: 45rpx;
+      height: 45rpx;
+      border-radius: 50%;
+      font-size: 36rpx;
+      color: #fff;
+      background-color: #20cba1;
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+
+/*字体超出变省略号*/
+/* 实心三角形
+ * 参数有4个
+ * $tb : 上下边框宽
+ * $lr : 左右边框宽
+ * $direction : 三角形指向(top, right, bottom, left)
+ * $color : 三角形颜色
+ */
+.time-tabs {
+  height: 78rpx;
+  font-size: 24rpx;
+  background-color: #f2f2f2;
+  display: flex; }
+  .time-tabs.bb {
+    border-bottom: 2rpx solid #d4e1e9; }
+  .time-tabs-list {
+    flex: 1;
+    padding: 0 40rpx;
+    display: flex; }
+  .time-tabs-item {
+    flex: 1;
+    display: flex;
+    justify-content: center; }
+    .time-tabs-item .name {
+      padding: 0 25rpx;
+      position: relative;
+      display: flex;
+      align-items: center; }
+      .time-tabs-item .name.active:after {
+        content: '';
+        height: 5rpx;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: #20cba1;
+        display: block; }
+  .time-tabs-sub {
+    width: 162rpx;
+    border-left: 2rpx solid #d4e1e9;
+    color: #20cba1;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+
+.statistics-section {
+  background-color: #f2f2f2;
+  display: flex; }
+  .statistics-section-item {
+    line-height: 1;
+    text-align: center;
+    padding: 30rpx 0;
+    flex: 1; }
+    .statistics-section-item .title {
+      color: #666;
+      font-size: 24rpx; }
+    .statistics-section-item .num {
+      margin-top: 10rpx;
+      font-size: 36rpx;
+      color: #f56857;
+      font-weight: bold; }
+
+.groups-container {
+  padding: 25rpx; }
+
+.champion-group {
+  background-color: #fff;
+  border: 1rpx solid #d5e2e9;
+  padding: 0 25rpx; }
+  .champion-group-title {
+    display: flex;
+    align-items: center;
+    font-size: 32rpx;
+    border-bottom: 1rpx solid #d5e2e9; }
+    .champion-group-title .icon {
+      width: 70rpx;
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+      .champion-group-title .icon image {
+        width: 44rpx;
+        height: 65rpx; }
+    .champion-group-title .title {
+      flex: 1; }
+    .champion-group-title .sub .num {
+      font-size: 60rpx;
+      font-weight: bold;
+      color: #f56857; }
+    .champion-group-title .sub .unit {
+      color: #999; }
+  .champion-group-content {
+    display: flex; }
+    .champion-group-content .people-item {
+      text-align: center;
+      padding: 20rpx 0;
+      margin-right: 30rpx; }
+      .champion-group-content .people-item .avatar {
+        width: 80rpx;
+        height: 80rpx;
+        display: block; }
+      .champion-group-content .people-item .name {
+        margin-top: 13rpx;
+        font-size: 28rpx; }
+
+.other-group-container {
+  display: flex;
+  flex-wrap: wrap; }
+
+.other-group {
+  width: 48%;
+  box-sizing: border-box;
+  border: 1rpx solid #d5e2e9;
+  background-color: #fff;
+  margin-bottom: 30rpx; }
+  .other-group:nth-child(2n+1) {
+    margin-right: 4%; }
+  .other-group .add-item {
+    padding: 35rpx 0; }
+    .other-group .add-item .icon-add {
+      width: 128rpx;
+      height: 128rpx;
+      margin: 0 auto;
+      display: block; }
+    .other-group .add-item .add-text {
+      line-height: 1;
+      font-size: 36rpx;
+      text-align: center;
+      color: #1dcca1;
+      margin-top: 15rpx; }
+  .other-group-title {
+    height: 72rpx;
+    font-size: 36rpx;
+    border-bottom: 1rpx solid #d5e2e9;
+    display: flex;
+    align-items: center; }
+    .other-group-title .l {
+      flex: 1;
+      padding-left: 28rpx; }
+    .other-group-title .r .badge {
+      line-height: 44rpx;
+      color: #fff;
+      border-top-left-radius: 22rpx;
+      border-bottom-left-radius: 22rpx;
+      background-color: #20cba1;
+      padding: 0 20rpx 0 28rpx; }
+  .other-group-content {
+    height: 174rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .other-group-content .num {
+      font-size: 60rpx;
+      font-weight: bold;
+      color: #f56857; }
+    .other-group-content .unit {
+      color: #999; }
+
+/*# sourceMappingURL=index.wxss.map */

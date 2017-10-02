@@ -1,0 +1,51 @@
+page{
+  padding-bottom:98rpx;
+}
+.statistic-label{
+  height: 98rpx;
+  background-color: #fff;
+  position:fixed;
+  right: 0;
+  bottom:0;
+  left:0;
+  display: flex;
+  .strong{
+    font-size: 36rpx;
+    color: #f56857;
+  }
+  .sel {
+    margin-left: 18rpx;
+    font-size: 28rpx;
+    display: flex;
+    align-items: center;
+    image{
+      width: 40rpx;
+      height: 40rpx;
+      display: block;
+    }
+  }
+  .total{
+    flex: 1;
+    padding: 0 20rpx;
+    font-size: 26rpx;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .p{
+    line-height:1;
+  }
+  .confirm{
+    width: 250rpx;
+    font-size: 36rpx;
+    text-align: center;
+    color:#fff;
+    background: #e5e5e5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &.active{
+      background: #09c1bf;
+    }
+  }
+}

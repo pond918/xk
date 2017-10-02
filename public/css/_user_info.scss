@@ -1,0 +1,24 @@
+.user-info{
+  display: flex;
+  align-items: center;
+  &-avatar{
+    padding:0 15rpx 0 20rpx;
+    .img{
+      width: 80rpx;
+      height: 80rpx;
+      display: block;
+    }
+  }
+  &-detail{
+    flex: 1;
+    .name{
+      line-height: 1;
+      padding:3rpx 0 5rpx 0;
+    }
+    .p{
+      line-height: 24rpx;
+      font-size: 18rpx;
+      color: #999;
+    }
+  }
+}

@@ -1,0 +1,110 @@
+@charset "utf-8";
+@import '../../public/css/_mixin.scss';
+
+page{
+  height: 100%;
+}
+.container{
+  min-height: 100%;
+  padding-right:38rpx;
+  margin-left: 34rpx;
+  border-left: 4rpx solid #1dcca1;
+}
+
+.timeline-section{
+  padding-top: 24rpx;
+  .timeline-title{
+    height: 50rpx;
+    line-height:50rpx;
+    font-size: 28rpx;
+    color: #999;
+    padding-left:20rpx;
+    position: relative;
+    &:before{
+      content: '';
+      $w: 15rpx;
+      $b-w: 3rpx;
+      width: $w;
+      height: $w;
+      border-radius: 50%;
+      border: $b-w solid #1dcca1;
+      background-color: #fff;
+      position: absolute;
+      top:50%;
+      left:0;
+      margin-top: -($w + $b-w)/2;
+      margin-left: -($w + $b-w + 2)/2;
+      display: block;
+    }
+  }
+  .timeline-main{
+    border:1rpx solid #1dcca1;
+    margin: 12rpx 0 0 14rpx;
+    background-color: #fff;
+    &-title{
+      height: 85rpx;
+      border-bottom: 1rpx solid #ccc;
+      padding-right:85rpx;
+      position: relative;
+      display: flex;
+      align-items: center;
+      .icon{
+        $w: 40rpx;
+        width: 40rpx;
+        height: 40rpx;
+        margin-left: 20rpx;
+      }
+      .title{
+        margin-left:10rpx;
+      }
+      .tag{
+        width: 85rpx;
+        color: #fff;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &.done{
+          background-color: #1dcca1;
+        }
+        &.not{
+          background-color: #f56857;
+        }
+      }
+    }
+  }
+  .timeline-unfinish{
+    padding:5rpx 20rpx;
+    .bb{
+      border-bottom: 1rpx solid #eee;
+    }
+    .unfinish-list{
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .unfinish-item{
+      height: 60rpx;
+      display: flex;
+      align-items: center;
+      .icon{
+        $w: 40rpx;
+        width: 40rpx;
+        height: 40rpx;
+        margin-right: 10rpx;
+      }
+      .text{
+        margin-right:20rpx;
+        font-size: 20rpx;
+        color: #666;
+      }
+      .icon-msg{
+        width: 25rpx;
+        height:24rpx;
+      }
+    }
+  }
+}
+

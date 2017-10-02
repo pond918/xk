@@ -1,0 +1,35 @@
+@charset "utf-8";
+@import '../../public/css/_mixin.scss';
+
+page{
+  background-color: #f5f9fc;
+}
+
+.role-top{
+  width: 588rpx;
+  height: 560rpx;
+  margin: 60rpx 80rpx 95rpx;
+  display: block;
+}
+.role-list{
+  .role-item{
+    width: 590rpx;
+    height: 130rpx;
+    border-radius: 8rpx;
+    background-color: #d4e1e9;
+    margin: 0 auto 40rpx;
+    display: flex;
+    align-items: center;
+    .icon{
+      width: 110rpx;
+      height: 110rpx;
+      margin-left: 20rpx;
+    }
+    .title{
+      margin-left: 25rpx;
+      font-size: 36rpx;
+      color: #333;
+    }
+  }
+}
+

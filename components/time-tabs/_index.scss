@@ -1,0 +1,48 @@
+@charset "utf-8";
+@import '../../public/css/_mixin.scss';
+
+.time-tabs{
+  height: 78rpx;
+  font-size: 24rpx;
+  background-color: #f2f2f2;
+  display: flex;
+  &.bb{
+    border-bottom:2rpx solid #d4e1e9;
+  }
+  &-list{
+    flex: 1;
+    padding:0 40rpx;
+    display: flex;
+  }
+  &-item{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    .name{
+      padding: 0 25rpx;
+      position: relative;
+      display: flex;
+      align-items: center;
+      &.active{
+        &:after{
+          content: '';
+          height: 5rpx;
+          position:absolute;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          background-color: #20cba1;
+          display: block;
+        }
+      }
+    }
+  }
+  &-sub{
+    width: 162rpx;
+    border-left: 2rpx solid #d4e1e9;
+    color: #20cba1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

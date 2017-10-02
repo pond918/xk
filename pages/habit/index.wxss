@@ -1,0 +1,256 @@
+@charset "UTF-8";
+/*字体超出变省略号*/
+/* 实心三角形
+ * 参数有4个
+ * $tb : 上下边框宽
+ * $lr : 左右边框宽
+ * $direction : 三角形指向(top, right, bottom, left)
+ * $color : 三角形颜色
+ */
+page {
+  padding-bottom: 98rpx; }
+
+.statistic-label {
+  height: 98rpx;
+  background-color: #fff;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex; }
+  .statistic-label .strong {
+    font-size: 36rpx;
+    color: #f56857; }
+  .statistic-label .sel {
+    margin-left: 18rpx;
+    font-size: 28rpx;
+    display: flex;
+    align-items: center; }
+    .statistic-label .sel image {
+      width: 40rpx;
+      height: 40rpx;
+      display: block; }
+  .statistic-label .total {
+    flex: 1;
+    padding: 0 20rpx;
+    font-size: 26rpx;
+    display: flex;
+    justify-content: center;
+    flex-direction: column; }
+  .statistic-label .p {
+    line-height: 1; }
+  .statistic-label .confirm {
+    width: 250rpx;
+    font-size: 36rpx;
+    text-align: center;
+    color: #fff;
+    background: #e5e5e5;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .statistic-label .confirm.active {
+      background: #09c1bf; }
+
+.input-label {
+  height: 80rpx;
+  border: 1rpx solid #dfdfdf;
+  border-radius: 8rpx;
+  background-color: #fff;
+  display: flex; }
+  .input-label-icon {
+    width: 75rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .input-label-icon .icon {
+      width: 60rpx;
+      height: 60rpx; }
+  .input-label-content {
+    padding-left: 12rpx;
+    flex: 1;
+    display: flex;
+    align-items: center; }
+    .input-label-content .input {
+      flex: 1; }
+    .input-label-content .code {
+      width: 240rpx;
+      height: 100%;
+      color: #fff;
+      background-color: #f56857;
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+
+.bb {
+  border-bottom: 2rpx solid #d4e1e9; }
+
+.habit-item-label {
+  height: 110rpx;
+  background-color: #fff;
+  display: flex;
+  align-items: center; }
+  .habit-item-label.active {
+    background-color: #f0f0f0; }
+  .habit-item-label .icon {
+    margin-left: 25rpx; }
+    .habit-item-label .icon .img {
+      width: 40rpx;
+      height: 40rpx; }
+  .habit-item-label .content {
+    flex: 1;
+    margin-left: 15rpx; }
+    .habit-item-label .content .title {
+      line-height: 42rpx;
+      font-size: 32rpx; }
+    .habit-item-label .content .p {
+      color: #999; }
+  .habit-item-label .sub {
+    margin: 0 20rpx; }
+    .habit-item-label .sub .switch-container {
+      margin-right: -30rpx; }
+    .habit-item-label .sub switch {
+      margin: -15rpx 0;
+      transform: scale(0.5); }
+    .habit-item-label .sub .icon-date {
+      width: 59rpx;
+      height: 57rpx; }
+    .habit-item-label .sub .icon-arrow {
+      width: 48rpx;
+      height: 48rpx;
+      margin: 10rpx;
+      transition: .7s; }
+      .habit-item-label .sub .icon-arrow.active {
+        transform: rotate(-180deg); }
+
+.habit-item-main {
+  background-color: #fff; }
+  .habit-item-main .title {
+    height: 46rpx;
+    color: #666;
+    padding: 20rpx 25rpx 0 25rpx;
+    display: flex;
+    align-items: center; }
+    .habit-item-main .title .icon {
+      width: 40rpx;
+      height: 40rpx;
+      margin-right: 10rpx; }
+  .habit-item-main .content {
+    padding: 22rpx 0;
+    display: flex; }
+
+.status-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .status-section .status-item {
+    min-width: 135rpx;
+    text-align: center;
+    border: 1rpx solid #1dcca1;
+    border-radius: 5rpx; }
+    .status-section .status-item .status-item-title {
+      line-height: 44rpx;
+      color: #555;
+      border-bottom: 1rpx solid #1dcca1; }
+    .status-section .status-item .status-item-content {
+      height: 54rpx;
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+      .status-section .status-item .status-item-content .num {
+        font-size: 36rpx;
+        font-weight: bold;
+        color: #f56857; }
+      .status-section .status-item .status-item-content .unit {
+        color: #999; }
+
+.app-popup {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); }
+  .app-popup-container {
+    width: 700rpx;
+    background-color: #fff; }
+  .app-popup-title {
+    height: 90rpx;
+    padding-left: 20rpx;
+    border-bottom: 2rpx solid #d4e1e9;
+    display: flex;
+    align-items: center; }
+    .app-popup-title .text {
+      font-size: 32rpx;
+      color: #555;
+      flex: 1; }
+    .app-popup-title .icon {
+      width: 40rpx;
+      height: 40rpx;
+      padding: 20rpx;
+      display: flex; }
+  .app-popup .hint-btn {
+    color: #fff;
+    background-color: #acc5d9; }
+  .app-popup .date-picker {
+    padding-top: 20rpx;
+    display: flex; }
+    .app-popup .date-picker-item {
+      flex: 1;
+      text-align: center; }
+    .app-popup .date-picker-text {
+      line-height: 1;
+      color: #999; }
+    .app-popup .date-picker-icon {
+      width: 40rpx;
+      height: 40rpx;
+      margin: 25rpx auto 0;
+      display: block; }
+  .app-popup-main {
+    margin: 48rpx 65rpx 30rpx; }
+    .app-popup-main .line {
+      height: 80rpx;
+      display: flex;
+      align-items: center; }
+    .app-popup-main .btns-group {
+      border: 1rpx solid #f0f0f0;
+      border-radius: 3rpx; }
+      .app-popup-main .btns-group .btn {
+        border-radius: 3rpx; }
+        .app-popup-main .btns-group .btn:first-child {
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0; }
+        .app-popup-main .btns-group .btn:last-child {
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0; }
+    .app-popup-main .upload-file {
+      display: flex;
+      flex-wrap: wrap; }
+      .app-popup-main .upload-file .upload-item {
+        width: 80rpx;
+        height: 80rpx;
+        border: 1rpx solid #ccc;
+        margin: 0 20rpx 20rpx 0;
+        display: flex;
+        justify-content: center;
+        align-items: center; }
+        .app-popup-main .upload-file .upload-item .img {
+          width: 100%;
+          height: 100%;
+          display: block; }
+        .app-popup-main .upload-file .upload-item .icon-add {
+          width: 60rpx;
+          height: 60rpx; }
+    .app-popup-main .textarea {
+      width: 100%;
+      height: 175rpx;
+      border: 1rpx solid #d5e1e9;
+      padding: 22rpx;
+      background-color: #fcfcfc;
+      border-radius: 8rpx;
+      box-sizing: border-box; }
+
+/*# sourceMappingURL=index.wxss.map */

@@ -1,0 +1,102 @@
+@charset "UTF-8";
+/*字体超出变省略号*/
+/* 实心三角形
+ * 参数有4个
+ * $tb : 上下边框宽
+ * $lr : 左右边框宽
+ * $direction : 三角形指向(top, right, bottom, left)
+ * $color : 三角形颜色
+ */
+.invite-header {
+  height: 280rpx;
+  background-color: #1dcca1;
+  color: #fff;
+  position: relative;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .invite-header .avatar {
+    width: 100rpx;
+    height: 100rpx;
+    border: 2rpx solid #fff;
+    border-radius: 50%;
+    display: block; }
+  .invite-header .h3 {
+    line-height: 42rpx;
+    font-size: 30rpx; }
+  .invite-header .p {
+    line-height: 24rpx;
+    font-size: 18rpx; }
+  .invite-header .share-btn {
+    height: 42rpx;
+    font-size: 24rpx;
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 5rpx;
+    padding: 0 21rpx 0 18rpx;
+    color: #1dcca1;
+    position: absolute;
+    top: 30rpx;
+    right: 30rpx;
+    display: flex;
+    align-items: center; }
+    .invite-header .share-btn:after {
+      display: none; }
+    .invite-header .share-btn .icon {
+      width: 21rpx;
+      height: 26rpx;
+      margin-right: 10rpx; }
+
+.twocode {
+  width: 335rpx;
+  height: 335rpx;
+  padding: 23rpx;
+  margin: 60rpx auto 0;
+  border-radius: 15rpx;
+  background-color: #fff;
+  display: block; }
+
+.invite-code {
+  font-size: 36rpx;
+  color: #f56857;
+  text-align: center; }
+  .invite-code text {
+    line-height: 80rpx;
+    background-color: #d4e1e9;
+    padding: 0 40rpx;
+    display: inline-block; }
+
+.hint {
+  line-height: 30rpx;
+  color: #666;
+  margin: 75rpx 40rpx; }
+  .hint .strong {
+    color: #7ba8bf; }
+
+.share-popup {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.75); }
+  .share-popup .arrow {
+    width: 112rpx;
+    height: 84rpx;
+    position: absolute;
+    top: 70rpx;
+    right: 34rpx; }
+  .share-popup .mt195 {
+    margin-top: 195rpx; }
+  .share-popup .p {
+    line-height: 48rpx;
+    font-size: 32rpx;
+    text-align: center;
+    color: #fff; }
+  .share-popup .strong {
+    font-size: 48rpx; }
+  .share-popup .btn {
+    margin-top: 80rpx;
+    background-color: rgba(255, 255, 255, 0.75); }
+
+/*# sourceMappingURL=index.wxss.map */

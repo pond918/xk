@@ -1,0 +1,90 @@
+.btn{
+  line-height: 56rpx;
+  font-size: 24rpx;
+  padding:0 20rpx;
+  border-radius: 8rpx;
+  box-sizing:border-box;
+  border:1rpx solid transparent;
+  display:inline-block;
+  &.disabled,
+  &:disabled,
+  &[disabled]{
+    border:1px solid rgba(0,0,0,0.1) !important;
+    color:#fff !important;
+    background-color: #aaa !important;
+  }
+  &.btn-small{
+    line-height: 42rpx;
+    padding:0 8rpx;
+  }
+  &.btn-large{
+    line-height: 80rpx;
+    font-size: 36rpx;
+    padding: 0 88rpx;
+  }
+  &.btn-full{
+    line-height: 98rpx;
+    text-align: center;
+    font-size: 36rpx;
+    display:block;
+  }
+  &.btn-fixed{
+    border-radius:0;
+    position:fixed;
+    z-index:1;
+    display:block;
+    &.bottom{
+      right:0;
+      bottom:0;
+      left:0;
+    }
+  }
+  &.btn-light{
+    color:#666;
+    background-color: #fff;
+    border:1px solid #b3b3b3;
+  }
+  &.btn-stable{
+    color:#fff;
+    background-color: #cbcbcb;
+    border:1px solid #cbcbcb;
+  }
+  &.btn-energized{
+    color:#fff;
+    background-color: #ff5000;
+    border:1px solid #ff5000;
+  }
+  &.btn-energized-linear{
+    color:#fff;
+    background: linear-gradient(to right, #ff9000 18%, #ff5000 78%);
+  }
+  &.btn-energized-light{
+    color:#fa952f;
+    background-color: #fff;
+    border:1px solid #ff5000;
+  }
+  &.btn-green-linear{
+    color:#fff;
+    background: linear-gradient(to right, #09c1bf 0%, #13c6b1 50%, #1dcca3 100%);
+  }
+  &.btn-balanced{
+    color:#fff;
+    background-color: #43b133;
+    border:1px solid #43b133;
+  }
+  &.btn-red{
+    color:#fff;
+    background-color: #f56857;
+    border:1px solid #f56857;
+  }
+  &.btn-green{
+    color:#fff;
+    background-color: #1dcca1;
+    border:1px solid #1dcca1;
+  }
+  &.btn-grey{
+    color:#fff;
+    background-color: #ccc;
+    border:1px solid #ccc;
+  }
+}

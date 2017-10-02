@@ -1,0 +1,11 @@
+<image class="role-top" src="../../icons/role-bg.jpg"></image>
+<view class="role-list">
+  <view class="role-item">
+    <image class="icon" src="../../icons/icon-role-man.png"></image>
+    <view class="title">我是班主任</view>
+  </view>
+  <view class="role-item">
+    <image class="icon" src="../../icons/icon-role-girl.png"></image>
+    <view class="title">我是家长</view>
+  </view>
+</view>

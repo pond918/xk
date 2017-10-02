@@ -1,0 +1,25 @@
+<view class="invite-header">
+  <image class="avatar" src="../../testimg/good.jpg"></image>
+  <view class="h3 mt15">您好，张轩卿老师</view>
+  <view class="p">武汉中心小学二年级5班班主任</view>
+  <view class="p">班级习惯选择成功，请向班级内学生展示班级二维码或邀请码</view>
+  <button open-type="share" class="share-btn">
+    <image class="icon" src="../../icons/icon-share.png"></image>分享
+  </button>
+</view>
+<image class="twocode" src="../../testimg/good.jpg"></image>
+<view class="invite-code mt50">
+  <text>291GHS9H</text>
+</view>
+<view class="hint">
+  家长可凭扫描二维码和输入邀请码两种方式登录系统，请班主任<text class="strong">妥善管理</text>，另该二维码和邀请码 <text class="strong">一个学期内不可再次更改！</text>
+</view>
+
+<view class="share-popup">
+  <image class="arrow" src="../../icons/icon-arrow-circle.png"></image>
+  <view class="p mt195">点击<text class="strong">“分享”</text>微信好友或朋友圈</view>
+  <view class="p">告诉学生家长们班级创建完成啦！</view>
+  <view class="tac">
+    <view class="btn green">我知道了</view>
+  </view>
+</view>

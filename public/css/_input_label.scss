@@ -1,0 +1,35 @@
+.input-label{
+  height: 80rpx;
+  border: 1rpx solid #dfdfdf;
+  border-radius: 8rpx;
+  background-color: #fff;
+  display: flex;
+  &-icon{
+    width: 75rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .icon{
+      width: 60rpx;
+      height: 60rpx;
+    }
+  }
+  &-content{
+    padding-left:12rpx;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    .input{
+      flex: 1;
+    }
+    .code{
+      width: 240rpx;
+      height: 100%;
+      color: #fff;
+      background-color: #f56857;
+      display:flex;
+      justify-content:center;
+      align-items: center;
+    }
+  }
+}

@@ -1,0 +1,62 @@
+@charset "UTF-8";
+/*字体超出变省略号*/
+/* 实心三角形
+ * 参数有4个
+ * $tb : 上下边框宽
+ * $lr : 左右边框宽
+ * $direction : 三角形指向(top, right, bottom, left)
+ * $color : 三角形颜色
+ */
+.input-label {
+  height: 80rpx;
+  border: 1rpx solid #dfdfdf;
+  border-radius: 8rpx;
+  background-color: #fff;
+  display: flex; }
+  .input-label-icon {
+    width: 75rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .input-label-icon .icon {
+      width: 60rpx;
+      height: 60rpx; }
+  .input-label-content {
+    padding-left: 12rpx;
+    flex: 1;
+    display: flex;
+    align-items: center; }
+    .input-label-content .input {
+      flex: 1; }
+    .input-label-content .code {
+      width: 240rpx;
+      height: 100%;
+      color: #fff;
+      background-color: #f56857;
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+
+.container {
+  padding: 0 25rpx 50rpx; }
+
+.family-img {
+  width: 100%;
+  height: 426rpx;
+  padding-top: 52rpx;
+  display: block; }
+
+.teacher-img {
+  width: 100%;
+  height: 593rpx;
+  display: block; }
+
+.hint {
+  line-height: 30rpx;
+  margin-top: 30rpx;
+  font-size: 24rpx;
+  color: #666; }
+  .hint .active {
+    color: #7ba8bf; }
+
+/*# sourceMappingURL=index.wxss.map */
