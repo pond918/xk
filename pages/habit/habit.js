@@ -15,9 +15,23 @@ Page({
       selectedWeek
     })
   },
-  //
+  // 获取习惯列表
   getData () {
+    let { code } = this.data;
 
+    wx.showLoading();
+    http.request({
+      url: api.gradeList,
+      data: {
+        school: code
+      }
+    }).then((res) => {
+      wx.hideLoading();
+
+      this.setData({
+        gradeList: res.data
+      });
+    });
   },
   onLoad () {
 

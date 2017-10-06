@@ -122,7 +122,7 @@
   <view class="confirm">确   定</view>
 </view>
 
-<view class="app-popup ">
+<view class="app-popup hide">
   <view class="app-popup-container">
     <view class="app-popup-title">
       <view class="text">习惯定时提醒设置 习惯完成情况</view>

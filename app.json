@@ -1,15 +1,16 @@
 {
   "pages":[
-    "pages/habit/index",
-    "pages/habit-unfinish/index",
-    "pages/behavior/index",
-    "pages/invite/index",
-    "pages/group/index",
-    "pages/situation/index",
-    "pages/success/index",
-    "pages/register/index",
-    "pages/group_detail/index",
-    "pages/role_choose/role_choose"
+    "pages/habit/habit",
+    "pages/registry/registry",
+
+    "pages/group/group",
+    "pages/habit_unfinish/habit_unfinish",
+    "pages/behavior/behavior",
+    "pages/invite/invite",
+    "pages/situation/situation",
+    "pages/success/success",
+    "pages/group_detail/group_detail",
+    "pages/role/role"
   ],
   "window":{
     "navigationBarTitleText": "习课",
@@ -19,12 +20,12 @@
     "backgroundColor": "#e2e2e2",
     "selectedColor": "#1dcca1",
     "list": [{
-      "pagePath": "pages/group/index",
+      "pagePath": "pages/group/group",
       "text": "群组",
       "iconPath": "icons/tabs-group.png",
       "selectedIconPath": "icons/tabs-group-active.png"
     }, {
-      "pagePath": "pages/behavior/index",
+      "pagePath": "pages/behavior/behavior",
       "text": "习惯",
       "iconPath": "icons/tabs-behavior.png",
       "selectedIconPath": "icons/tabs-behavior-active.png"

@@ -1,0 +1,285 @@
+<style lang="less">
+  @cl9: #999999;
+  @cl6: #666666;
+  @cl3: #333333;
+  @clhr: #f1f1f1;
+  .placeholder {
+    color: @cl9;
+  }
+  .icon {
+    background-image: url(http://ouu1lwlw6.bkt.clouddn.com/liuwa_reg.png);
+    background-size: 60rpx 60rpx;
+    background-repeat: no-repeat;
+  }
+  .pic {
+    width: 280rpx;
+    height: 280rpx;
+    border: 1rpx solid #e6e6e6;
+    border-radius: 10rpx;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 26rpx;
+    color: @cl9;
+    .yulan {
+      display: none;
+      width: 278rpx;
+      height: 278rpx;
+    }
+    .cross {
+      width: 60rpx;
+      height: 60rpx;
+      margin-top: 99rpx;
+      background-position: 0rpx 0rpx;
+      margin-bottom: 32rpx;
+    }
+  }
+  .pic-yulan {
+    .yulan {
+      display: block;
+    }
+    text {
+      display: none;
+    }
+  }
+  .complete {
+    align-self: flex-start;
+    margin-top: 50rpx;
+    font-size: 28rpx;
+    color: #85cc96;
+    margin-left: 32rpx;
+    margin-bottom: 22rpx;
+  }
+  .line {
+    width: 702rpx;
+    height: 90rpx;
+    box-sizing:border-box;
+    border: 1rpx solid #e6e6e6;
+    border-radius: 10rpx;
+    margin-bottom: 20rpx;
+    padding-left: 39rpx;
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    color: @cl9;
+    input {
+      height: 90rpx;
+      width: 660rpx;
+      text-align: left;
+    }
+    .label {
+    }
+    .arrow {
+      width: 0;
+      height: 0;
+      overflow: hidden;
+      border-width: 16rpx;
+      border-color: #cccccc transparent transparent transparent;
+      border-style: solid dashed dashed dashed;
+      position: absolute;
+      right: 28rpx;
+      top: 38rpx;
+    }
+  }
+  .container-none {
+    display: none;
+  }
+</style>
+<template>
+  <view class="container{{filePath ? ' container-none' : ''}}">
+    <view class="pic{{dataInfo.avatar?' pic-yulan':''}}" @tap.stop="avatarClick">
+      <!--<image class="yulan" src="http://owdii61tm.bkt.clouddn.com/tmp_1047223244o6zAJsw6V8oO5g3O8i173l0Csuv822058f4590301f33d2437572b8b32d1f.png"></image>-->
+      <image class="yulan" src="{{dataInfo.avatar}}" wx:if="{{dataInfo.avatar}}"></image>
+      <text class="icon cross"></text>
+      <text>点击上传宝宝照片</text>
+    </view>
+    <view class="complete">请完善以下信息</view>
+    <view class="line">
+      <input placeholder="请输入宝宝姓名" placeholder-class="placeholder" value="{{dataInfo.name}}" bindinput="bindinputName"/>
+    </view>
+    <picker bindchange="bindPickerChangeMale" value="{{maleRangeIndex}}" range="{{maleRange}}">
+      <view class="line">
+          <text class="label">{{maleDesc}}</text>
+        <text class="arrow"></text>
+      </view>
+    </picker>
+    <picker mode="date" value="{{date}}" start="1988-01-01" end="2018-01-01" bindchange="bindDateChangeAge">
+      <view class="line">
+        <text class="label">{{ageDesc}}</text>
+        <text class="arrow"></text>
+      </view>
+    </picker>
+    <view class="line">
+      <input placeholder="请输入家长姓名" placeholder-class="placeholder" bindinput="bindinputParent"/>
+    </view>
+    <view class="line">
+      <input placeholder="请输入家长电话" placeholder-class="placeholder" bindinput="bindinputTel"/>
+    </view>
+    <bbuttom :typeName="typeName" @eBbClick.user="bbClick"></bbuttom>
+  </view>
+  <wecropper :filePath.sync="filePath" @changeParentFilePath.user="changeParentFilePath"></wecropper>
+</template>
+<script>
+  import wepy from 'wepy'
+  import comMixin from '../mixins/com'
+  import authMixin from '../mixins/auth'
+  import toastMixin from '../mixins/toast'
+  import Bbuttom from '../components/bbuttom'
+  import Wecropper from '../components/wecropper'
+  import qiniuUploader from '../model/qiniuUploader'
+
+  export default class reg extends wepy.page {
+    mixins = [authMixin, comMixin, toastMixin]
+    config = {
+      navigationBarTitleText: '注册'
+    }
+
+    components = {
+      bbuttom: Bbuttom,
+      wecropper: Wecropper
+    }
+
+    data = {
+      maleRangeIndex: 0,
+      maleRange: ['男', '女'],
+      chooseImageIng: false,
+      filePath: '', // 选中的图片
+      typeName: '确认注册',
+      cardsMineInfoSubIng: false,
+      dataInfo: {
+        name: '',
+        male: '',
+        age: '',
+        parent: '',
+        tel: '',
+        avatar: ''
+      }
+    }
+
+    computed = {
+      maleDesc() {
+        if (this.dataInfo.male === '') {
+          return '请选择宝宝性别'
+        } else if (this.dataInfo.male) {
+          return '男'
+        } else {
+          return '女'
+        }
+      },
+      ageDesc() {
+        if (this.dataInfo.age === '') {
+          return '请选择宝宝出生日期'
+        } else {
+          return this.dataInfo.age
+        }
+      }
+    }
+
+    methods = {
+      avatarClick() { // 选择头像
+        this.chooseImage()
+      },
+      async changeParentFilePath(filePath) {
+        this.filePath = '' // 切图回来，重新选择
+        if (filePath) {
+          // 交给七牛上传
+          const resQiniuToken = this.comGetUri('resQiniuToken')
+          let res = await wepy.request({
+            url: resQiniuToken
+          })
+          const qiniuToken = res.data
+          qiniuUploader.upload(filePath, (res) => {
+            const QINIURI = this.comGetUri('QINIURI')
+            this.dataInfo.avatar = QINIURI + res.imageURL
+            this.chooseImageIng = false
+            this.$apply()
+          }, res => {
+            this.toastShowModal(undefined, '图片服务器失败', false)
+            this.dataInfo.avatar = ''
+            this.chooseImageIng = false
+            this.$apply()
+          }, {
+            region: 'ABC',
+            uptoken: qiniuToken, // 从指定 url 通过 HTTP GET 获取 uptoken，返回的格式必须是 json 且包含 uptoken 字段，例如： {"uptoken": "[yourTokenString]"}
+            shouldUseQiniuFileName: false
+          })
+        } else {
+          this.chooseImageIng = false
+        }
+      },
+      bindinputName(e) { // 姓名输入
+        this.dataInfo.name = e.detail.value
+      },
+      bindPickerChangeMale(e) { // 性别
+        console.log(e.detail.value)
+        let male = true
+        this.dataInfo.male = (e.detail.value === '0') ? male : false
+      },
+      bindDateChangeAge(e) { // 出生日期
+        this.dataInfo.age = e.detail.value
+      },
+      bindinputParent(e) { // 家长
+        this.dataInfo.parent = e.detail.value
+      },
+      bindinputTel(e) { // 电话输入
+        this.dataInfo.tel = e.detail.value
+      },
+      bbClick() { // 提交
+        this.cardsMineInfoSub()
+      }
+    }
+    async onLoad() {
+      wepy.stopPullDownRefresh()
+    }
+    chooseImage() {
+      if (this.chooseImageIng) {
+        return false
+      }
+      this.chooseImageIng = true
+      wepy.chooseImage().then(res => {
+        let filePath = res.tempFilePaths[0]
+        this.filePath = filePath
+        this.$apply()
+      }, res => {
+        this.chooseImageIng = false
+      })
+      return true
+    }
+    async cardsMineInfoSub() {
+      for (let i in this.dataInfo) {
+        if (this.dataInfo[i] === '') {
+          this.toastShowModal(undefined, i + ':不能为空', false)
+          return false
+        }
+        if (i === 'tel') {
+          if (!this.comCheckMobile(this.dataInfo[i])) {
+            this.toastShowModal(undefined, '手机号码不正确', false)
+            return false
+          }
+        }
+      }
+      if (this.cardsMineInfoSubIng) {
+        return false
+      }
+      this.cardsMineInfoSubIng = true
+      const cardsMineInfo = this.comGetUri('cardsMineInfo')
+      let res = await wepy.request({
+        url: cardsMineInfo,
+        method: 'POST',
+        data: this.dataInfo
+      })
+      res = await this.comHandleResAsync(res)
+      if (res && res.data) {
+        await this.toastShowModal(undefined, '注册成功', false)
+        wepy.navigateBack({
+          delta: 2
+        })
+      } else {
+        await this.toastShowModal(undefined, '注册失败', false)
+      }
+    }
+  }
+</script>

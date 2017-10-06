@@ -1,7 +1,7 @@
 import Auth from './auth.js';
 
 class Http extends Auth {
-  constructor(){
+  constructor () {
     super();
     // 错误次数
     this.errorCount = 0;
@@ -43,10 +43,9 @@ class Http extends Auth {
           // 用户未登录，则重新登录之后，再次发起本次请求
           if (res.errorCode === 401) {
             this.errorCount++;
-            this.logs(new Date() + '用户登录失败，重新登录中。错误：' + res.moreInfo);
 
             // 如果登录错误的次数小于规定次数，则自动重新登录
-            if(this.errorCount < this.maxErrorCount){
+            if (this.errorCount < this.maxErrorCount) {
               this.login()
                 .then(() => {
                   sessionId = wx.getStorageSync('sessionId');
@@ -57,20 +56,35 @@ class Http extends Auth {
                   config.header.cookie = `SESSION=${sessionId}`;
                   this.request(config);
                 });
-            }else{
+            } else {
               wx.showToast({
                 title: '自动登录出错',
                 image: '../../icons/close-circled.png'
               })
             }
+          } else if (res.errorCode === 403) {
+            // 用户未注册，则跳转注册页面
+            wx.showModal({
+              title: '提示',
+              content: '对不起，您还未注册，是否立即注册？',
+              success (res) {
+                if (res.confirm) {
+                  console.log(1);
+                  wx.navigateTo({
+                    url: '/pages/role/role'
+                  });
+                }
+              }
+            })
+            reject(res);
           } else {
             resolve(res);
           }
         },
-        fail(res){
+        fail (res) {
           // 请求错误
           wx.showToast({
-            title: res.data.moreinfo,
+            title: res.errMsg,
             image: '../../icons/close-circled.png'
           })
         }

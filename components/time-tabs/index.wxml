@@ -1,23 +1,15 @@
 <!--
   参数：
   // 时间列表
-  list: [
-    {
-      name: '日'
-    }, {
-      name: '周'
-    }, {
-      name: '月'
-    }, {
-      name: '年'
-    }
-  ],
-  // 默认选中第几个时间
-  idx: 0,
-  // 右侧名称
-  sub: '群组',
+  list: ['日', '周', '月', '年'],
+  // 左侧时间tab的选中序号
+  timeTabsIndex: 0,
+  // 右侧群组的选中序号
+  timeGroupIndex: 0,
+  // 右侧群组名称
+  group: ['群组', '学生列表'],
   // 是否显示底部边框
-  bb: false
+  tabsBb: false
 -->
 <template name="time-tabs">
   <view class="time-tabs {{ bb? 'bb' : '' }}">
@@ -25,11 +17,17 @@
       <view class="time-tabs-item"
             wx:for="{{list}}"
             wx:key="{{index}}"
-            bindtap="switchTap"
-            data-index="{{index}}">
-        <text class="name {{idx == index ? 'active' : '' }}">{{item.name}}</text>
+            data-index="{{index}}"
+            bindtap="switchTapIndex">
+        <text class="name {{timeTabsIndex == index ? 'active' : '' }}">{{item}}</text>
       </view>
     </view>
-    <view class="time-tabs-sub" wx:if="{{sub}}">{{sub}}</view>
+    <view class="time-tabs-sub" wx:if="{{group.length != 0}}">
+      <view wx:for="{{group}}"
+            wx:key="{{index}}"
+            data-index="{{index}}"
+            bindtap="switchGroupIndex"
+            hidden="{{timeGroupIndex != index}}">{{item}}</view>
+    </view>
   </view>
 </template>

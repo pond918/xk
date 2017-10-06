@@ -1,0 +1,247 @@
+<import src="../../components/time-tabs/index.wxml"/>
+
+<block wx:if="{{isLoaded}}">
+  <!--用户已注册-->
+  <block wx:if="{{isRegisted}}">
+    <template is="time-tabs" data="{{...timeTabs}}"/>
+    <!--群组-->
+    <view hidden="{{!(timeTabs.timeGroupIndex == 0)}}">
+      <view class="statistics-section">
+        <view class="statistics-section-item">
+          <view class="title">总积分</view>
+          <view class="num">802</view>
+        </view>
+        <view class="statistics-section-item">
+          <view class="title">总完成率</view>
+          <view class="num">78%</view>
+        </view>
+      </view>
+      <view class="todo-list">
+        <view class="todo-item bb">
+          <view class="todo-item-info">
+            <view class="user-info">
+              <view class="user-info-avatar">
+                <image class="img" src="../../icons/icon-people.png"></image>
+              </view>
+              <view class="user-info-detail">
+                <view class="name">王童鞋</view>
+                <view class="p">学号：G172981</view>
+                <view class="p">做家务、自己洗漱、叠被子、完成作业 ...</view>
+              </view>
+            </view>
+          </view>
+          <view class="todo-item-grade">
+            <text class="num">80</text><text class="unit">分</text>
+          </view>
+          <view class="todo-item-medal">
+            <image class="icon" src="../../icons/icon-medal1.png"></image>
+          </view>
+        </view>
+        <view class="todo-item bb">
+          <view class="todo-item-info">
+            <view class="user-info">
+              <view class="user-info-avatar">
+                <image class="img" src="../../icons/icon-people.png"></image>
+              </view>
+              <view class="user-info-detail">
+                <view class="name">王童鞋</view>
+                <view class="p">学号：G172981</view>
+                <view class="p">做家务、自己洗漱、叠被子、完成作业 ...</view>
+              </view>
+            </view>
+          </view>
+          <view class="todo-item-grade">
+            <text class="num">80</text><text class="unit">分</text>
+          </view>
+          <view class="todo-item-medal">
+            <image class="icon" src="../../icons/icon-medal2.png"></image>
+          </view>
+        </view>
+        <view class="todo-item bb">
+          <view class="todo-item-info">
+            <view class="user-info">
+              <view class="user-info-avatar">
+                <image class="img" src="../../icons/icon-people.png"></image>
+              </view>
+              <view class="user-info-detail">
+                <view class="name">王童鞋</view>
+                <view class="p">学号：G172981</view>
+                <view class="p">做家务、自己洗漱、叠被子、完成作业 ...</view>
+              </view>
+            </view>
+          </view>
+          <view class="todo-item-grade">
+            <text class="num">80</text><text class="unit">分</text>
+          </view>
+          <view class="todo-item-medal">
+            <image class="icon" src="../../icons/icon-medal3.png"></image>
+          </view>
+        </view>
+        <view class="todo-item bb">
+          <view class="todo-item-info">
+            <view class="user-info">
+              <view class="user-info-avatar">
+                <image class="img" src="../../icons/icon-people.png"></image>
+              </view>
+              <view class="user-info-detail">
+                <view class="name">王童鞋</view>
+                <view class="p">学号：G172981</view>
+                <view class="p">做家务、自己洗漱、叠被子、完成作业 ...</view>
+              </view>
+            </view>
+          </view>
+          <view class="todo-item-grade">
+            <text class="num">80</text><text class="unit">分</text>
+          </view>
+          <view class="todo-item-medal">
+            <view class="num">4</view>
+          </view>
+        </view>
+
+
+      </view>
+    </view>
+    <!--学生列表-->
+    <view hidden="{{!(timeTabs.timeGroupIndex == 1)}}">
+      <view class="groups-container">
+        <view class="champion-group mb30">
+          <view class="champion-group-title">
+            <view class="icon">
+              <image src="../../icons/icon-medal1.png"></image>
+            </view>
+            <view class="title">
+              <text class="grey">今日冠军：1组</text>
+              <text class="light-grey">（6人）</text>
+            </view>
+            <view class="sub">
+              <view>
+                <text class="num">209</text>
+                <text class="unit vab">分</text>
+              </view>
+            </view>
+          </view>
+          <scroll-view scroll-x="{{true}}">
+            <view class="champion-group-content">
+              <view class="people-item">
+                <image class="avatar" src="../../icons/icon-people.png"></image>
+                <view class="name">张童鞋</view>
+              </view>
+              <view class="people-item">
+                <image class="avatar" src="../../icons/icon-people.png"></image>
+                <view class="name">张童鞋</view>
+              </view>
+              <view class="people-item">
+                <image class="avatar" src="../../icons/icon-people.png"></image>
+                <view class="name">张童鞋</view>
+              </view>
+              <view class="people-item">
+                <image class="avatar" src="../../icons/icon-people.png"></image>
+                <view class="name">张童鞋</view>
+              </view>
+              <view class="people-item">
+                <image class="avatar" src="../../icons/icon-people.png"></image>
+                <view class="name">张童鞋</view>
+              </view>
+              <view class="people-item">
+                <image class="avatar" src="../../icons/icon-people.png"></image>
+                <view class="name">张童鞋</view>
+              </view>
+              <view class="people-item">
+                <image class="avatar" src="../../icons/icon-people.png"></image>
+                <view class="name">张童鞋</view>
+              </view>
+              <view class="people-item">
+                <image class="avatar" src="../../icons/icon-people.png"></image>
+                <view class="name">张童鞋</view>
+              </view>
+            </view>
+          </scroll-view>
+        </view>
+        <view class="other-group-container">
+          <view class="other-group">
+            <view class="other-group-title">
+              <view class="l">
+                <text class="grey">1组</text>
+                <text class="light-grey text-small">（6人）</text>
+              </view>
+              <view class="r">
+                <view class="badge">2</view>
+              </view>
+            </view>
+            <view class="other-group-content">
+              <view>
+                <text class="num">209</text>
+                <text class="unit vab">分</text>
+              </view>
+            </view>
+          </view>
+          <view class="other-group">
+            <view class="other-group-title">
+              <view class="l">
+                <text class="grey">1组</text>
+                <text class="light-grey text-small">（6人）</text>
+              </view>
+              <view class="r">
+                <view class="badge">2</view>
+              </view>
+            </view>
+            <view class="other-group-content">
+              <view>
+                <text class="num">209</text>
+                <text class="unit vab">分</text>
+              </view>
+            </view>
+          </view>
+          <view class="other-group">
+            <view class="other-group-title">
+              <view class="l">
+                <text class="grey">1组</text>
+                <text class="light-grey text-small">（6人）</text>
+              </view>
+              <view class="r">
+                <view class="badge">2</view>
+              </view>
+            </view>
+            <view class="other-group-content">
+              <view>
+                <text class="num">209</text>
+                <text class="unit vab">分</text>
+              </view>
+            </view>
+          </view>
+          <view class="other-group">
+            <view class="other-group-title">
+              <view class="l">
+                <text class="grey">1组</text>
+                <text class="light-grey text-small">（6人）</text>
+              </view>
+              <view class="r">
+                <view class="badge">2</view>
+              </view>
+            </view>
+            <view class="other-group-content">
+              <view class="btn btn-red">删除该组</view>
+            </view>
+          </view>
+          <view class="other-group">
+            <view class="add-item">
+              <image class="icon-add" src="../../icons/icon-add1.png"></image>
+              <view class="add-text">邀请成员</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+  <!--用户未注册-->
+  <block wx:else>
+    <view class="empty-data">
+      <view class="p20 tac grey fs32">对不起，您暂未注册，请先注册</view>
+      <navigator class="btn btn-green" url="/pages/role_choose/role_choose">立即注册</navigator>
+    </view>
+  </block>
+</block>
+
+
+
+
