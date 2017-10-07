@@ -215,7 +215,7 @@ Page({
 
         setTimeout(() => {
           wx.navigateTo({
-            url: '/pages/habit/habit'
+            url: '/pages/habit_select/habit_select'
           });
         }, 1500);
       } else {

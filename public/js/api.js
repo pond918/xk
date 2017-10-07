@@ -5,10 +5,11 @@ let api = {
   // 我的习惯列表
   habitList: '/p/habit/list',
 
-  // 群组动态
-  groupActiveList: '/group/feed/list',
   // 群组积分
   groupScoreList: '/score/group/list',
+  // 群组动态
+  groupActiveList: '/group/feed/list',
+
 
   // 家长习惯列表
   parentHabitList: '/p/habit/mine/list',
@@ -22,6 +23,12 @@ let api = {
   teacherRegistry: '/user/reg/t',
   // 老师选择习惯
   teacherHabitList: '/t/habit/list',
+  // 老师提交习惯
+  teacherSubmitHabit: '/t/habit/select',
+  // 老师分享班级
+  shareClass: '/share/class',
+  // 班级二维码
+  classTwoCode: '/t/class/qrcode',
 
   // 登录
   login: '/wx/login',

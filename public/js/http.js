@@ -63,18 +63,10 @@ class Http extends Auth {
               })
             }
           } else if (res.errorCode === 403) {
-            // 用户未注册，则跳转注册页面
+            // 用户未注册，则提示
             wx.showModal({
               title: '提示',
-              content: '对不起，您还未注册，是否立即注册？',
-              success (res) {
-                if (res.confirm) {
-                  console.log(1);
-                  wx.navigateTo({
-                    url: '/pages/role/role'
-                  });
-                }
-              }
+              content: '对不起，您还未注册，请扫码注册'
             })
             reject(res);
           } else {

@@ -1,0 +1,225 @@
+@charset "utf-8";
+@import '../../public/css/_mixin.scss';
+@import '../../public/css/_statistic_label.scss';
+@import '../../public/css/_input_label.scss';
+
+page{
+  height: 100%;
+}
+.habit-list{
+  height: 100%;
+}
+
+.bb{
+  border-bottom:2rpx solid #d4e1e9;
+}
+.habit-item-label{
+  height: 110rpx;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  &.active{
+    background-color: #f0f0f0;
+  }
+  .icon{
+    margin-left:25rpx;
+    .img{
+      width: 40rpx;
+      height: 40rpx;
+    }
+  }
+  .content{
+    flex: 1;
+    margin-left:15rpx;
+    .title{
+      line-height: 42rpx;
+      font-size: 32rpx;
+    }
+    .p{
+      color: #999;
+    }
+  }
+  .sub{
+    margin:0 20rpx;
+    .switch-container{
+      margin-right: -30rpx;
+    }
+    switch{
+      margin:-15rpx 0;
+      transform: scale(0.5);
+    }
+    .icon-date{
+      width: 59rpx;
+      height: 57rpx;
+    }
+    .icon-arrow{
+      width: 48rpx;
+      height: 48rpx;
+      margin:10rpx;
+      transition:.7s;
+      &.active{
+        transform: rotate(-180deg);
+      }
+    }
+  }
+}
+.habit-item-main{
+  background-color: #fff;
+  .title{
+    height: 46rpx;
+    color: #666;
+    padding: 20rpx 25rpx 0 25rpx;
+    display: flex;
+    align-items: center;
+    .icon{
+      width: 40rpx;
+      height: 40rpx;
+      margin-right:10rpx;
+    }
+  }
+  .content{
+    padding: 22rpx 0;
+    display: flex;
+  }
+}
+.status-section{
+  flex:1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .status-item{
+    min-width: 135rpx;
+    text-align: center;
+    border: 1rpx solid #1dcca1;
+    border-radius: 5rpx;
+    .status-item-title{
+      line-height: 44rpx;
+      color: #555;
+      border-bottom: 1rpx solid #1dcca1;
+    }
+    .status-item-content{
+      height: 54rpx;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .num{
+        font-size: 36rpx;
+        font-weight: bold;
+        color: #f56857;
+      }
+      .unit{
+        color: #999;
+      }
+    }
+  }
+}
+.app-popup{
+  position: absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,.5);
+  &-container{
+    width: 700rpx;
+    background-color: #fff;
+  }
+  &-title{
+    height: 90rpx;
+    padding-left:20rpx;
+    border-bottom: 2rpx solid #d4e1e9;
+    display: flex;
+    align-items: center;
+    .text{
+      font-size: 32rpx;
+      color: #555;
+      flex: 1;
+    }
+    .icon{
+      width: 40rpx;
+      height: 40rpx;
+      padding: 20rpx;
+      display: flex;
+    }
+  }
+  .hint-btn{
+    color: #fff;
+    background-color: #acc5d9;
+  }
+  .date-picker{
+    padding-top:20rpx;
+    display: flex;
+    &-item{
+      flex: 1;
+      text-align: center;
+    }
+    &-text{
+      line-height: 1;
+      color: #999;
+    }
+    &-icon{
+      width: 40rpx;
+      height: 40rpx;
+      margin: 25rpx auto 0;
+      display: block;
+    }
+  }
+  &-main{
+    margin:48rpx 65rpx 30rpx;
+    .line{
+      height: 80rpx;
+      display:flex;
+      align-items: center;
+    }
+    .btns-group{
+      border: 1rpx solid #f0f0f0;
+      border-radius: 3rpx;
+      .btn{
+        border-radius: 3rpx;
+        &:first-child{
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+        &:last-child{
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+      }
+    }
+    .upload-file{
+      display: flex;
+      flex-wrap: wrap;
+      .upload-item{
+        width: 80rpx;
+        height: 80rpx;
+        border: 1rpx solid #ccc;
+        margin: 0 20rpx 20rpx 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .img{
+          width: 100%;
+          height: 100%;
+          display: block;
+        }
+        .icon-add{
+          width: 60rpx;
+          height: 60rpx;
+        }
+      }
+    }
+    .textarea{
+      width: 100%;
+      height: 175rpx;
+      border: 1rpx solid #d5e1e9;
+      padding:22rpx;
+      background-color: #fcfcfc;
+      border-radius: 8rpx;
+      box-sizing: border-box;
+    }
+  }
+}
+

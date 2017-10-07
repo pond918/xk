@@ -236,8 +236,7 @@
   <!--用户未注册-->
   <block wx:else>
     <view class="empty-data">
-      <view class="p20 tac grey fs32">对不起，您暂未注册，请先注册</view>
-      <navigator class="btn btn-green" url="/pages/role_choose/role_choose">立即注册</navigator>
+      <view class="p20 tac grey fs32">对不起，您暂未注册，请扫码注册</view>
     </view>
   </block>
 </block>

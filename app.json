@@ -1,16 +1,17 @@
 {
   "pages":[
-    "pages/habit/habit",
-    "pages/registry/registry",
+    "pages/habit_select/habit_select",
+    "pages/invite/invite",
 
     "pages/group/group",
-    "pages/habit_unfinish/habit_unfinish",
-    "pages/behavior/behavior",
-    "pages/invite/invite",
-    "pages/situation/situation",
+
+    "pages/habit/habit",
+
+    "pages/role/role",
+    "pages/registry/registry",
+
     "pages/success/success",
-    "pages/group_detail/group_detail",
-    "pages/role/role"
+    "pages/group_detail/group_detail"
   ],
   "window":{
     "navigationBarTitleText": "习课",

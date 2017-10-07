@@ -12,13 +12,19 @@
 	"projectname": "%E4%B9%A0%E8%AF%BE",
 	"condition": {
 		"weapp": {
-			"current": -1,
+			"current": 1,
 			"list": [
 				{
 					"id": 0,
 					"name": "注册",
 					"pathName": "pages/registry/registry",
 					"query": "role=1&code=yyyy"
+				},
+				{
+					"id": -1,
+					"name": "邀请码",
+					"pathName": "pages/invite/invite",
+					"query": "code=xxx3"
 				}
 			]
 		},
