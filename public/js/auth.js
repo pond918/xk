@@ -19,14 +19,26 @@ class Auth {
                   let data = res.data.data;
                   wx.setStorageSync('sessionId', data.sessionKey);
                   wx.setStorageSync('role', data.role);
+
+                  // 登录成功，设置当前页面data中的role为相对应的角色
+                  let pages = getCurrentPages();
+                  let currentPage = pages[pages.length-1];
+                  currentPage.setData({
+                    role: data.role
+                  });
+                  currentPage.onLoad();
                 }
 
-                // 无论登录是否成功，都再次发起请求
                 resolve();
               }
             });
           } else {
             // 登录出错
+            wx.showToast({
+              title: '自动登录出错',
+              image: '../../icons/close-circled.png'
+            })
+
             reject(res);
           }
         }

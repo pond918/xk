@@ -1,17 +1,15 @@
 {
   "pages":[
-    "pages/habit_select/habit_select",
-    "pages/invite/invite",
-
+    "pages/group_detail/group_detail",
     "pages/group/group",
-
-    "pages/habit/habit",
 
     "pages/role/role",
     "pages/registry/registry",
+    "pages/habit_select/habit_select",
+    "pages/invite/invite",
 
-    "pages/success/success",
-    "pages/group_detail/group_detail"
+    "pages/habit/habit",
+    "pages/success/success"
   ],
   "window":{
     "navigationBarTitleText": "习课",
@@ -26,7 +24,7 @@
       "iconPath": "icons/tabs-group.png",
       "selectedIconPath": "icons/tabs-group-active.png"
     }, {
-      "pagePath": "pages/behavior/behavior",
+      "pagePath": "pages/habit/habit",
       "text": "习惯",
       "iconPath": "icons/tabs-behavior.png",
       "selectedIconPath": "icons/tabs-behavior-active.png"

@@ -4,7 +4,7 @@
   <!--用户已注册-->
   <block wx:if="{{isRegisted}}">
     <template is="time-tabs" data="{{...timeTabs}}"/>
-    <!--群组-->
+    <!--学生列表-->
     <view hidden="{{!(timeTabs.timeGroupIndex == 0)}}">
       <view class="statistics-section">
         <view class="statistics-section-item">
@@ -101,132 +101,59 @@
 
       </view>
     </view>
-    <!--学生列表-->
+    <!--群组-->
     <view hidden="{{!(timeTabs.timeGroupIndex == 1)}}">
       <view class="groups-container">
-        <view class="champion-group mb30">
+        <!--冠军组-->
+        <view class="champion-group mb30" wx:if="{{gList.length > 0}}">
           <view class="champion-group-title">
             <view class="icon">
               <image src="../../icons/icon-medal1.png"></image>
             </view>
             <view class="title">
-              <text class="grey">今日冠军：1组</text>
-              <text class="light-grey">（6人）</text>
+              <text class="grey">今日冠军：{{gList[0].name}}</text>
+              <text class="light-grey">（{{gList[0].members.length}}人）</text>
             </view>
             <view class="sub">
               <view>
-                <text class="num">209</text>
+                <text class="num">{{gList[0].score}}</text>
                 <text class="unit vab">分</text>
               </view>
             </view>
           </view>
           <scroll-view scroll-x="{{true}}">
             <view class="champion-group-content">
-              <view class="people-item">
-                <image class="avatar" src="../../icons/icon-people.png"></image>
-                <view class="name">张童鞋</view>
-              </view>
-              <view class="people-item">
-                <image class="avatar" src="../../icons/icon-people.png"></image>
-                <view class="name">张童鞋</view>
-              </view>
-              <view class="people-item">
-                <image class="avatar" src="../../icons/icon-people.png"></image>
-                <view class="name">张童鞋</view>
-              </view>
-              <view class="people-item">
-                <image class="avatar" src="../../icons/icon-people.png"></image>
-                <view class="name">张童鞋</view>
-              </view>
-              <view class="people-item">
-                <image class="avatar" src="../../icons/icon-people.png"></image>
-                <view class="name">张童鞋</view>
-              </view>
-              <view class="people-item">
-                <image class="avatar" src="../../icons/icon-people.png"></image>
-                <view class="name">张童鞋</view>
-              </view>
-              <view class="people-item">
-                <image class="avatar" src="../../icons/icon-people.png"></image>
-                <view class="name">张童鞋</view>
-              </view>
-              <view class="people-item">
-                <image class="avatar" src="../../icons/icon-people.png"></image>
-                <view class="name">张童鞋</view>
+              <view class="people-item" wx:for="{{gList[0].members}}" wx:key="{{index}}">
+                <image class="avatar" src="{{item.avatar ? item.avatar : '../../icons/icon-people.png'}}"></image>
+                <view class="name">{{item.name}}</view>
               </view>
             </view>
           </scroll-view>
         </view>
+        <!--非冠军组-->
         <view class="other-group-container">
-          <view class="other-group">
+          <view class="other-group" wx:for="{{gList}}" wx:key="{{index}}" wx:if="{{index !== 0}}">
             <view class="other-group-title">
               <view class="l">
-                <text class="grey">1组</text>
-                <text class="light-grey text-small">（6人）</text>
+                <text class="grey">{{item.name}}</text>
+                <text class="light-grey text-small">（{{item.members.length}}人）</text>
               </view>
               <view class="r">
-                <view class="badge">2</view>
+                <view class="badge">{{index + 1}}</view>
               </view>
             </view>
             <view class="other-group-content">
-              <view>
-                <text class="num">209</text>
+              <view class="btn btn-red" wx:if="{{item.members.length === 0}}">删除该组</view>
+              <view wx:if="{{item.members.length !== 0}}">
+                <text class="num">{{item.score}}</text>
                 <text class="unit vab">分</text>
               </view>
-            </view>
-          </view>
-          <view class="other-group">
-            <view class="other-group-title">
-              <view class="l">
-                <text class="grey">1组</text>
-                <text class="light-grey text-small">（6人）</text>
-              </view>
-              <view class="r">
-                <view class="badge">2</view>
-              </view>
-            </view>
-            <view class="other-group-content">
-              <view>
-                <text class="num">209</text>
-                <text class="unit vab">分</text>
-              </view>
-            </view>
-          </view>
-          <view class="other-group">
-            <view class="other-group-title">
-              <view class="l">
-                <text class="grey">1组</text>
-                <text class="light-grey text-small">（6人）</text>
-              </view>
-              <view class="r">
-                <view class="badge">2</view>
-              </view>
-            </view>
-            <view class="other-group-content">
-              <view>
-                <text class="num">209</text>
-                <text class="unit vab">分</text>
-              </view>
-            </view>
-          </view>
-          <view class="other-group">
-            <view class="other-group-title">
-              <view class="l">
-                <text class="grey">1组</text>
-                <text class="light-grey text-small">（6人）</text>
-              </view>
-              <view class="r">
-                <view class="badge">2</view>
-              </view>
-            </view>
-            <view class="other-group-content">
-              <view class="btn btn-red">删除该组</view>
             </view>
           </view>
           <view class="other-group">
             <view class="add-item">
               <image class="icon-add" src="../../icons/icon-add1.png"></image>
-              <view class="add-text">邀请成员</view>
+              <view class="add-text">新建分组</view>
             </view>
           </view>
         </view>

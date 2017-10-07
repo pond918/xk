@@ -15,7 +15,7 @@ Page({
     // 姓名
     name: '',
     // 手机号
-    phone: '15960210046',
+    phone: '',
     // 验证码
     verifyCode: '',
     // 选择的年级序号
@@ -252,6 +252,8 @@ Page({
         image: '../../icons/close-circled.png'
       })
     }
+
+    wx.setStorageSync('role', role);
 
     wx.setNavigationBarTitle({
       title: role == 1 ? '班主任完善个人信息' : '家长完善孩子信息'

@@ -1,9 +1,9 @@
 const time = {
   data: {
-    // 左侧时间tab的选中序号
-    timeTabsIndex: 0,
-    // 右侧群组的选中序号
-    timeGroupIndex: 0,
+    // // 左侧时间tab的选中序号
+    // timeTabsIndex: 0,
+    // // 右侧群组的选中序号
+    // timeGroupIndex: 0,
   },
   // 切换时间序号
   switchTapIndex (e) {

@@ -83,13 +83,22 @@
  * $direction : 三角形指向(top, right, bottom, left)
  * $color : 三角形颜色
  */
+page {
+  padding-top: 78rpx; }
+
 .time-tabs {
   height: 78rpx;
   font-size: 24rpx;
   background-color: #f2f2f2;
-  display: flex; }
+  display: flex;
+  z-index: 10; }
   .time-tabs.bb {
     border-bottom: 2rpx solid #d4e1e9; }
+  .time-tabs.fixed-top {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0; }
   .time-tabs-list {
     flex: 1;
     padding: 0 40rpx;
@@ -119,6 +128,9 @@
     display: flex;
     justify-content: center;
     align-items: center; }
+
+page {
+  height: 100%; }
 
 .statistics-section {
   background-color: #f2f2f2;
@@ -158,6 +170,7 @@
   background-color: #fff; }
 
 .active-list {
+  height: 100%;
   background-color: #fff; }
 
 .active-item {
@@ -225,4 +238,4 @@
       height: 54rpx;
       border: 2rpx solid #08b087; }
 
-/*# sourceMappingURL=index.wxss.map */
+/*# sourceMappingURL=group_detail.wxss.map */

@@ -12,7 +12,7 @@
 	"projectname": "%E4%B9%A0%E8%AF%BE",
 	"condition": {
 		"weapp": {
-			"current": 1,
+			"current": 2,
 			"list": [
 				{
 					"id": 0,
@@ -25,6 +25,12 @@
 					"name": "邀请码",
 					"pathName": "pages/invite/invite",
 					"query": "code=xxx3"
+				},
+				{
+					"id": 2,
+					"name": "群组",
+					"pathName": "pages/group_detail/group_detail",
+					"query": "groupId=1&type=1"
 				}
 			]
 		},

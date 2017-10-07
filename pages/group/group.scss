@@ -63,6 +63,7 @@
   }
   &-content{
     display: flex;
+    justify-content: space-around;
     .people-item{
       text-align: center;
       padding:20rpx 0;

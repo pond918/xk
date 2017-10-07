@@ -12,7 +12,7 @@
   tabsBb: false
 -->
 <template name="time-tabs">
-  <view class="time-tabs {{ bb? 'bb' : '' }}">
+  <view class="time-tabs fixed-top {{ bb? 'bb' : '' }}">
     <view class="time-tabs-list">
       <view class="time-tabs-item"
             wx:for="{{list}}"

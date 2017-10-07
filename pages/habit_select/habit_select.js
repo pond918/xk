@@ -154,19 +154,15 @@ Page({
     } = this.data;
 
     try {
+      if (isSubmit) {
+        throw new Error('正在提交中...');
+      }
       if (requiredNum < 2) {
         throw new Error('必选的习惯不得小于2项');
       }
     } catch (e) {
       return wx.showToast({
         title: e.message,
-        image: '../../icons/close-circled.png'
-      })
-    }
-
-    if (isSubmit) {
-      return wx.showToast({
-        title: '正在提交中...',
         image: '../../icons/close-circled.png'
       })
     }
@@ -180,6 +176,10 @@ Page({
         habitRequiredArr.push(item.isRequired);
       }
     });
+
+    this.setData({
+      isSubmit: true
+    })
 
     wx.showLoading();
     http.request({

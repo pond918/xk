@@ -1,90 +1,94 @@
 <import src="../../components/time-tabs/index.wxml"/>
 
-<template is="time-tabs" data="{{...timeTabs}}"/>
+<block wx:if="{{isLoaded}}">
+  <template is="time-tabs" data="{{...timeTabs}}"/>
 
-<view class="active-list">
-  <view class="active-item mb30">
-    <view class="user-info ptb20">
-      <view class="user-info-avatar">
-        <image class="img" src="../../icons/icon-people.png"></image>
-      </view>
-      <view class="user-info-detail">
-        <view class="name">张童鞋</view>
-        <view class="p">今天  09：30</view>
-      </view>
-      <text class="calc-day green">第98天</text>
-    </view>
-    <view class="img-container num2">
-      <image src="../../testimg/good.jpg"></image>
-      <image src="../../testimg/good.jpg"></image>
-      <image src="../../testimg/good.jpg"></image>
-    </view>
-    <view class="active-opera">
-      <view class="opera-item">
-        <image class="icon" src="../../icons/icon-zan.png"></image>
-        <text class="num">111</text>
-      </view>
-      <view class="opera-item">
-        <image class="icon" src="../../icons/icon-chat.png"></image>
-        <text class="num">2</text>
-      </view>
-    </view>
-    <view class="active-comment">
-      <view class="p">会飞的小猪：好看！</view>
-      <view class="p">猫先生：嗯，写的不错。</view>
-      <view class="p">胡子：喜欢。</view>
-      <view class="active-comment-reply">
-        <view class="label">
-          <view class="text">回复：</view>
-          <input type="text"/>
+  <!--群组动态-->
+  <block wx:if="{{timeTabs.timeTabsIndex == 0}}">
+    <scroll-view class="active-list" scroll-y bindscrolltolower="lower">
+      <view class="active-item mb30" wx:for="{{aList}}" wx:key="{{index}}">
+        <view class="user-info ptb20">
+          <view class="user-info-avatar">
+            <image class="img" src="{{ item.from.avatar ? item.from.avatar : '../../icons/icon-people.png' }}"></image>
+          </view>
+          <view class="user-info-detail">
+            <view class="name">{{item.from.name}}</view>
+            <view class="p">{{item.date}}</view>
+          </view>
+          <text class="calc-day green">第{{item.last}}天</text>
         </view>
-        <view class="btn btn-green">发  送</view>
-      </view>
-    </view>
-  </view>
-</view>
-
-
-
-<view class="bg-light">
-  <view class="todo-item todo-edit">
-    <view class="todo-item-ico">
-      <image class="icon" src="../../icons/icon-selected.png"></image>
-      <text class="ml10">全选</text>
-    </view>
-    <view class="todo-item-info">
-    </view>
-    <view class="todo-item-arrow">
-      移动至
-      <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-        <view class="class-picker mlr10 line1">
-          当前选择当前选择当前选择：{{array[index]}}
+        <view class="img-container num1">
+          <image src="{{item.content}}"></image>
         </view>
-      </picker>
-      <view class="class-confirm btn btn-green">确定</view>
-    </view>
-  </view>
-  <view class="todo-item bb">
-    <view class="todo-item-ico">
-      <image class="icon" src="../../icons/icon-selected.png"></image>
-    </view>
-    <view class="todo-item-info">
-      <view class="user-info">
-        <view class="user-info-avatar">
-          <image class="img" src="../../icons/icon-people.png"></image>
+        <view class="active-opera">
+          <view class="opera-item" bindtap="thumb" data-index="{{index}}">
+            <image class="icon" src="../../icons/icon-zan.png"></image>
+            <text class="num">{{item.thumb}}</text>
+          </view>
+          <view class="opera-item" data-index="{{index}}" bindtap="toggleReply">
+            <image class="icon" src="../../icons/icon-chat.png"></image>
+            <text class="num">{{item.comments.length}}</text>
+          </view>
         </view>
-        <view class="user-info-detail">
-          <view class="name">王童鞋</view>
-          <view class="p">学号：G172981</view>
-          <view class="p">做家务、自己洗漱、叠被子、完成作业 ...</view>
+        <view class="active-comment">
+          <view class="p" wx:for="{{item.comments}}" wx:key="{{index}}" bindtap="reply">{{item.from}}：{{item.content}}</view>
+          <view class="active-comment-reply" wx:if="{{item.isShowReply}}">
+            <view class="label">
+              <view class="text">回复：</view>
+              <input type="text" value="{{item.replyText}}" data-index="{{index}}" bindinput="inputReply"/>
+            </view>
+            <view class="btn btn-green" data-index="{{index}}" bindtap="submitReply">发  送</view>
+          </view>
         </view>
       </view>
+      <view class="p20 tac grey" wx:if="{{!isMore}}">没有更多了哦～</view>
+    </scroll-view>
+  </block>
+  <!--群组成员-->
+  <block wx:if="{{timeTabs.timeTabsIndex == 1}}">
+    <view class="bg-light">
+      <view class="todo-item todo-edit">
+        <view class="todo-item-ico">
+          <image class="icon" src="../../icons/icon-selected.png"></image>
+          <text class="ml10">全选</text>
+        </view>
+        <view class="todo-item-info">
+        </view>
+        <view class="todo-item-arrow">
+          移动至
+          <picker bindchange="bindPickerChange" value="{{groupIndex}}" range-key="name" range="{{gList}}">
+            <view class="class-picker mlr10 line1">
+              {{gList[groupIndex].name}}
+            </view>
+          </picker>
+          <view class="class-confirm btn btn-green">确定</view>
+        </view>
+      </view>
+      <view class="todo-item bb">
+        <view class="todo-item-ico">
+          <image class="icon" src="../../icons/icon-selected.png"></image>
+        </view>
+        <view class="todo-item-info">
+          <view class="user-info">
+            <view class="user-info-avatar">
+              <image class="img" src="../../icons/icon-people.png"></image>
+            </view>
+            <view class="user-info-detail">
+              <view class="name">王童鞋</view>
+              <view class="p">学号：G172981</view>
+              <view class="p">做家务、自己洗漱、叠被子、完成作业 ...</view>
+            </view>
+          </view>
+        </view>
+        <view class="todo-item-arrow">
+          <image class="icon p20" src="../../icons/icon-close1.png"></image>
+        </view>
+      </view>
     </view>
-    <view class="todo-item-arrow">
-      <image class="icon p20" src="../../icons/icon-close1.png"></image>
-    </view>
-  </view>
-</view>
-<view class="btn btn-green-linear btn-full m25">邀请成员</view>
+    <view class="btn btn-green-linear btn-full m25">邀请成员</view>
+  </block>
+</block>
+
+
 
 

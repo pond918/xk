@@ -40,25 +40,17 @@ class Http extends Auth {
       let fn = {
         success: (res) => {
           res = res.data;
-          // 用户未登录，则重新登录之后，再次发起本次请求
+
+          // 用户未登录，则重新登录之后，重新执行页面的onLoad方法
           if (res.errorCode === 401) {
             this.errorCount++;
 
             // 如果登录错误的次数小于规定次数，则自动重新登录
             if (this.errorCount < this.maxErrorCount) {
-              this.login()
-                .then(() => {
-                  sessionId = wx.getStorageSync('sessionId');
-                  config.header.cookie = `SESSION=${sessionId}`;
-                  this.request(config);
-                }, () => {
-                  sessionId = wx.getStorageSync('sessionId');
-                  config.header.cookie = `SESSION=${sessionId}`;
-                  this.request(config);
-                });
+              this.login();
             } else {
               wx.showToast({
-                title: '自动登录出错',
+                title: '自动登录出错次数超过5次，请退出重试',
                 image: '../../icons/close-circled.png'
               })
             }
