@@ -38,7 +38,6 @@
 
 
 <block wx:if="{{false}}">
-
   <view class="habit-item bb">
     <view class="habit-item-label">
       <view class="icon">

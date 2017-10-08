@@ -166,14 +166,10 @@ Page({
       isSubmit
     } = this.data;
 
-    if (isSubmit) {
-      return wx.showToast({
-        title: '正在提交中...',
-        image: '../../icons/close-circled.png'
-      })
-    }
-
     try {
+      if (isSubmit) {
+        throw new Error('正在提交中...');
+      }
       if (!name) {
         throw new Error('请填写姓名');
       }

@@ -1,5 +1,7 @@
 {
   "pages":[
+    "pages/habit/habit",
+
     "pages/group/group",
     "pages/group_detail/group_detail",
 
@@ -8,7 +10,6 @@
     "pages/habit_select/habit_select",
     "pages/invite/invite",
 
-    "pages/habit/habit",
     "pages/success/success"
   ],
   "window":{

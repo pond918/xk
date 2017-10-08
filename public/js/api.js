@@ -46,6 +46,8 @@ let api = {
   deleteGroup: '/t/group/remove',
   // 学生习惯
   studentHabit: '/t/student/habit/list',
+  // 评论学生习惯
+  commentStudentHabit: '/t/student/habit/comment',
 
   // 登录
   login: '/wx/login',

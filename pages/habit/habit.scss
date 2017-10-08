@@ -1,5 +1,6 @@
 @charset "utf-8";
 @import '../../public/css/_mixin.scss';
+@import '../../public/css/_app_popup.scss';
 
 // 老师习惯
 page{
@@ -40,7 +41,7 @@ page{
   }
   .timeline-main{
     border:1rpx solid #1dcca1;
-    margin: 12rpx 0 0 14rpx;
+    margin: 12rpx 0 24rpx 14rpx;
     background-color: #fff;
     &-title{
       height: 85rpx;
@@ -87,7 +88,7 @@ page{
       flex-wrap: wrap;
     }
     .unfinish-item{
-      height: 60rpx;
+      height: 40rpx;
       display: flex;
       align-items: center;
       .icon{
