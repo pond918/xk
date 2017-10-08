@@ -84,7 +84,6 @@ Page({
     this.setData({
       code: params.code
     });
-    console.log(getCurrentPages());
 
     this.getUserInfo();
     this.getData();

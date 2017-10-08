@@ -42,6 +42,10 @@ let api = {
   shareClass: '/share/class',
   // 新建分组
   createGroup: '/t/group/create',
+  // 删除群组
+  deleteGroup: '/t/group/remove',
+  // 学生习惯
+  studentHabit: '/t/student/habit/list',
 
   // 登录
   login: '/wx/login',

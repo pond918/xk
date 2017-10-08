@@ -175,8 +175,10 @@ page {
     .champion-group-title .sub .unit {
       color: #999; }
   .champion-group-content {
+    min-height: 160rpx;
     display: flex;
-    justify-content: space-around; }
+    justify-content: space-around;
+    align-items: center; }
     .champion-group-content .people-item {
       text-align: center;
       padding: 20rpx 0;

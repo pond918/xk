@@ -5,8 +5,8 @@
   <block wx:if="{{isRegisted}}">
     <template is="time-tabs" data="{{...timeTabs}}"/>
     <!--学生列表-->
-    <view hidden="{{!(timeTabs.timeGroupIndex == 0)}}">
-      <view class="statistics-section">
+    <view hidden="{{timeTabs.timeGroupIndex != 1}}">
+      <view class="statistics-section" wx:if="{{false}}">
         <view class="statistics-section-item">
           <view class="title">总积分</view>
           <view class="num">802</view>
@@ -17,95 +17,39 @@
         </view>
       </view>
       <view class="todo-list">
-        <view class="todo-item bb">
+        <view class="todo-item bb" wx:for="{{sList}}" wx:key="{{index}}">
           <view class="todo-item-info">
             <view class="user-info">
               <view class="user-info-avatar">
-                <image class="img" src="../../icons/icon-people.png"></image>
+                <image class="img" src="{{item.avatar ? item.avatar : '../../icons/icon-people.png'}}"></image>
               </view>
               <view class="user-info-detail">
-                <view class="name">王童鞋</view>
-                <view class="p">学号：G172981</view>
-                <view class="p">做家务、自己洗漱、叠被子、完成作业 ...</view>
+                <view class="name">{{item.name}}</view>
+                <view class="p">学号：{{item.studentNo}}</view>
+                <view class="p">
+                  <text wx:for="{{item.habits}}" wx:key="{{index}}" wx:for-item="habit">
+                    <text>{{habit.name}}</text>
+                    <text wx:if="{{index !== (item.habits.length - 1)}}">、</text>
+                  </text>
+                </view>
               </view>
             </view>
           </view>
           <view class="todo-item-grade">
-            <text class="num">80</text><text class="unit">分</text>
+            <text class="num">{{item.score}}</text><text class="unit">分</text>
           </view>
           <view class="todo-item-medal">
-            <image class="icon" src="../../icons/icon-medal1.png"></image>
+            <view class="num" wx:if="{{index > 2}}">{{index + 1}}</view>
+            <image class="icon" wx:if="{{index <= 2}}" src="../../icons/icon-medal{{(index + 1)}}.png"></image>
           </view>
         </view>
-        <view class="todo-item bb">
-          <view class="todo-item-info">
-            <view class="user-info">
-              <view class="user-info-avatar">
-                <image class="img" src="../../icons/icon-people.png"></image>
-              </view>
-              <view class="user-info-detail">
-                <view class="name">王童鞋</view>
-                <view class="p">学号：G172981</view>
-                <view class="p">做家务、自己洗漱、叠被子、完成作业 ...</view>
-              </view>
-            </view>
-          </view>
-          <view class="todo-item-grade">
-            <text class="num">80</text><text class="unit">分</text>
-          </view>
-          <view class="todo-item-medal">
-            <image class="icon" src="../../icons/icon-medal2.png"></image>
-          </view>
-        </view>
-        <view class="todo-item bb">
-          <view class="todo-item-info">
-            <view class="user-info">
-              <view class="user-info-avatar">
-                <image class="img" src="../../icons/icon-people.png"></image>
-              </view>
-              <view class="user-info-detail">
-                <view class="name">王童鞋</view>
-                <view class="p">学号：G172981</view>
-                <view class="p">做家务、自己洗漱、叠被子、完成作业 ...</view>
-              </view>
-            </view>
-          </view>
-          <view class="todo-item-grade">
-            <text class="num">80</text><text class="unit">分</text>
-          </view>
-          <view class="todo-item-medal">
-            <image class="icon" src="../../icons/icon-medal3.png"></image>
-          </view>
-        </view>
-        <view class="todo-item bb">
-          <view class="todo-item-info">
-            <view class="user-info">
-              <view class="user-info-avatar">
-                <image class="img" src="../../icons/icon-people.png"></image>
-              </view>
-              <view class="user-info-detail">
-                <view class="name">王童鞋</view>
-                <view class="p">学号：G172981</view>
-                <view class="p">做家务、自己洗漱、叠被子、完成作业 ...</view>
-              </view>
-            </view>
-          </view>
-          <view class="todo-item-grade">
-            <text class="num">80</text><text class="unit">分</text>
-          </view>
-          <view class="todo-item-medal">
-            <view class="num">4</view>
-          </view>
-        </view>
-
-
       </view>
     </view>
     <!--群组-->
-    <view hidden="{{!(timeTabs.timeGroupIndex == 1)}}">
+    <view hidden="{{timeTabs.timeGroupIndex != 0}}">
       <view class="groups-container">
         <!--冠军组-->
-        <view class="champion-group mb30" wx:if="{{gList.length > 0}}">
+        <navigator url="/pages/group_detail/group_detail?groupId={{gList[0].id}}" class="champion-group mb30" wx:if="{{gList.length > 0}}">
           <view class="champion-group-title">
             <view class="icon">
               <image src="../../icons/icon-medal1.png"></image>
@@ -121,7 +65,7 @@
               </view>
             </view>
           </view>
-          <scroll-view scroll-x="{{true}}">
+          <scroll-view class="champion-group-scroll" scroll-x="{{true}}" wx:if="{{gList[0].members.length !== 0}}">
             <view class="champion-group-content">
               <view class="people-item" wx:for="{{gList[0].members}}" wx:key="{{index}}">
                 <image class="avatar" src="{{item.avatar ? item.avatar : '../../icons/icon-people.png'}}"></image>
@@ -129,10 +73,16 @@
               </view>
             </view>
           </scroll-view>
-        </view>
+          <view class="champion-group-content"
+                wx:if="{{gList[0].members.length === 0}}">
+            <view class="btn btn-red"
+                  data-index="{{0}}"
+                  catchtap="deleteGroup">删除</view>
+          </view>
+        </navigator>
         <!--非冠军组-->
         <view class="other-group-container">
-          <view class="other-group" wx:for="{{gList}}" wx:key="{{index}}" wx:if="{{index !== 0}}">
+          <navigator url="/pages/group_detail/group_detail?groupId={{item.id}}"  class="other-group" wx:for="{{gList}}" wx:key="{{index}}" wx:if="{{index !== 0}}">
             <view class="other-group-title">
               <view class="l">
                 <text class="grey">{{item.name}}</text>
@@ -143,14 +93,17 @@
               </view>
             </view>
             <view class="other-group-content">
-              <view class="btn btn-red" wx:if="{{item.members.length === 0}}">删除该组</view>
+              <view class="btn btn-red"
+                    wx:if="{{item.members.length === 0}}"
+                    data-index="{{index}}"
+                    catchtap="deleteGroup">删除该组</view>
               <view wx:if="{{item.members.length !== 0}}">
                 <text class="num">{{item.score}}</text>
                 <text class="unit vab">分</text>
               </view>
             </view>
-          </view>
-          <view class="other-group">
+          </navigator>
+          <view class="other-group" bindtap="createGroup">
             <view class="add-item">
               <image class="icon-add" src="../../icons/icon-add1.png"></image>
               <view class="add-text">新建分组</view>

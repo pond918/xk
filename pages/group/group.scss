@@ -62,8 +62,10 @@
     }
   }
   &-content{
+    min-height: 160rpx;
     display: flex;
     justify-content: space-around;
+    align-items: center;
     .people-item{
       text-align: center;
       padding:20rpx 0;

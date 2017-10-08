@@ -1,7 +1,7 @@
 {
   "pages":[
-    "pages/group_detail/group_detail",
     "pages/group/group",
+    "pages/group_detail/group_detail",
 
     "pages/role/role",
     "pages/registry/registry",
