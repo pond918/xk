@@ -90,7 +90,7 @@
         </view>
       </view>
     </view>
-    <view class="btn btn-green-linear btn-full m25">邀请成员</view>
+    <view class="btn btn-green-linear btn-full m25" bindtap="inviteMember">邀请成员</view>
   </block>
 </block>
 

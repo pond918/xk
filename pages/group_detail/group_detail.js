@@ -425,7 +425,7 @@ Page({
         if (item.isSelected) {
           ids.push(item.id);
           selectedNum++;
-        }else{
+        } else {
           remainMember.push(item);
         }
       });
@@ -482,6 +482,31 @@ Page({
           });
         }
       }
+    })
+  },
+  // 邀请组员
+  inviteMember () {
+    let { groupId, gList } = this.data;
+    let code = '';
+
+    if (gList.length === 0) {
+      return wx.showToast({
+        title: '获取群组数据中，请稍后...',
+        image: '../../icons/close-circled.png'
+      })
+    }
+
+    gList.some((item) => {
+      if (groupId == item.id) {
+        code = item.inviteCode;
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    wx.navigateTo({
+      url: `/pages/invite/invite?code=${code}`
     })
   },
   onLoad (params) {
