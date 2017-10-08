@@ -1,8 +1,5 @@
 let api = {
   imgUrl: 'http://oxciz4ayj.bkt.clouddn.com/',
-  // 我的习惯列表
-  habitList: '/p/habit/list',
-
   // 群组积分
   groupScoreList: '/score/group/list',
   // 学生排名
@@ -23,9 +20,12 @@ let api = {
   // 移动组员
   moveMember: '/t/member/remove',
 
-
   // 家长习惯列表
   parentHabitList: '/p/habit/mine/list',
+  // 家长注册
+  parentRegistry: '/user/reg/p',
+  // 家长选择习惯
+  parentHabitList: '/p/habit/list',
 
   // 年级列表
   gradeList: '/class/list/grade',

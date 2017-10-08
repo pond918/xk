@@ -505,6 +505,13 @@ Page({
       }
     });
 
+    if (code === '') {
+      return wx.showToast({
+        title: '邀请码获取失败',
+        image: '../../icons/close-circled.png'
+      })
+    }
+
     wx.navigateTo({
       url: `/pages/invite/invite?code=${code}`
     })

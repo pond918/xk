@@ -8,6 +8,7 @@ Page({
     // 当扫码进来的角色为老师时，code表示学校的代码
     // 当扫码进来的角色为家长时，code表示邀请码
     code: '',
+
     // 年级列表
     gradeList: [],
     // 班级列表
@@ -16,12 +17,15 @@ Page({
     name: '',
     // 手机号
     phone: '',
+    // 学号
+    studentNo: '',
     // 验证码
     verifyCode: '',
     // 选择的年级序号
     gradeIndex: '',
     // 选择的班级序号
     classIndex: '',
+
     // 扫码是否出错
     isError: false,
     // 数据是否加载完毕
@@ -107,6 +111,12 @@ Page({
       name: e.detail.value
     })
   },
+  // 输入学号
+  inputStudentNo (e) {
+    this.setData({
+      studentNo: e.detail.value
+    })
+  },
   // 输入手机号
   inputPhone (e) {
     this.setData({
@@ -114,9 +124,15 @@ Page({
     })
   },
   // 输入验证码
-  inputCode (e) {
+  inputVerifyCode (e) {
     this.setData({
       verifyCode: e.detail.value
+    })
+  },
+  // 输入验证码
+  inputInviteCode (e) {
+    this.setData({
+      code: e.detail.value
     })
   },
   // 发送验证码
@@ -154,8 +170,8 @@ Page({
     });
   },
   // 选择班级
-  // 提交
-  submit () {
+  // 老师注册
+  teacherRegistry () {
     let {
       name,
       phone,
@@ -192,6 +208,10 @@ Page({
       })
     }
 
+    this.setData({
+      isSubmit: true
+    })
+
     wx.showLoading();
     http.request({
       url: api.teacherRegistry,
@@ -219,11 +239,70 @@ Page({
           title: res.moreInfo || '提交失败',
           image: '../../icons/close-circled.png'
         })
+      }
 
-        this.setData({
-          isSubmit: false
+      this.setData({
+        isSubmit: false
+      })
+    });
+  },
+  // 家长注册
+  parentRegistry () {
+    let { name, studentNo, code, isSubmit } = this.data;
+
+    try {
+      if (isSubmit) {
+        throw new Error('正在提交中...');
+      }
+      if (!name) {
+        throw new Error('请填写姓名');
+      }
+      if (!studentNo) {
+        throw new Error('请填写学号');
+      }
+    } catch (e) {
+      return wx.showToast({
+        title: e.message,
+        image: '../../icons/close-circled.png'
+      })
+    }
+
+    this.setData({
+      isSubmit: true
+    })
+
+    wx.showLoading();
+    http.request({
+      url: api.parentRegistry,
+      method: 'POST',
+      data: {
+        name,
+        studentNo,
+        classCode: code
+      }
+    }).then((res) => {
+      wx.hideLoading();
+
+      if (res.errorCode == 200) {
+        wx.showToast({
+          title: res.moreInfo || '注册成功'
+        })
+
+        setTimeout(() => {
+          wx.navigateTo({
+            url: '/pages/habit_select/habit_select'
+          });
+        }, 1500);
+      } else {
+        wx.showToast({
+          title: res.moreInfo || '注册失败',
+          image: '../../icons/close-circled.png'
         })
       }
+
+      this.setData({
+        isSubmit: false
+      })
     });
   },
   onLoad (params) {

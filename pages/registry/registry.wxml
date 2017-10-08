@@ -36,7 +36,7 @@
                  <!--type="text"-->
                  <!--placeholder="*请输入验证码"-->
                  <!--value="{{verifyCode}}"-->
-                 <!--bindinput="inputCode"/>-->
+                 <!--bindinput="inputVerifyCode"/>-->
           <!--<view class="code" bindtap="sendVerifyCode">获取验证码</view>-->
         <!--</view>-->
       <!--</view>-->
@@ -73,7 +73,7 @@
           <text class="active">一个学期内不可再次更改！</text>
         </view>
       </view>
-      <view class="btn btn-full btn-green-linear mt60" bindtap="submit">确   定</view>
+      <view class="btn btn-full btn-green-linear mt60" bindtap="teacherRegistry">确   定</view>
     </block>
     <!--家长注册-->
     <block wx:if="{{role == 2}}">
@@ -83,7 +83,7 @@
           <image class="icon" src="../../icons/icon-human.png"></image>
         </view>
         <view class="input-label-content">
-          <input class="input" type="text" placeholder="*请输入您孩子的姓名"/>
+          <input class="input" type="text" placeholder="*请输入您孩子的姓名" bindinput="inputName"/>
         </view>
       </view>
       <view class="input-label mt30">
@@ -91,7 +91,7 @@
           <image class="icon" src="../../icons/icon-password.png"></image>
         </view>
         <view class="input-label-content">
-          <input class="input" type="password" placeholder="*请输入您孩子的学号"/>
+          <input class="input" type="number" placeholder="*请输入您孩子的学号" bindinput="inputStudentNo"/>
         </view>
       </view>
       <view class="input-label mt30">
@@ -99,14 +99,14 @@
           <image class="icon" src="../../icons/icon-key.png"></image>
         </view>
         <view class="input-label-content">
-          <input class="input" type="text" placeholder="*请选择邀请码"/>
+          <input class="input" type="text" value="{{code}}" placeholder="*请选择邀请码" bindinput="inputInviteCode"/>
         </view>
       </view>
       <view class="hint">
         学生家长初次登录需要设置学生姓名和学号，并在
         <text class="active">一个学期内不可再次更改！</text>
       </view>
-      <view class="btn btn-full btn-green-linear mt60">确   定</view>
+      <view class="btn btn-full btn-green-linear mt60" bindtap="parentRegistry">确   定</view>
     </block>
   </view>
 </block>

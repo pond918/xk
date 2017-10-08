@@ -18,7 +18,7 @@
 					"id": 0,
 					"name": "注册",
 					"pathName": "pages/registry/registry",
-					"query": "role=1&code=yyyy"
+					"query": "role=2&code=xxxr1"
 				},
 				{
 					"id": -1,

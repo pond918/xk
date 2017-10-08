@@ -1,13 +1,14 @@
 {
   "pages":[
+    "pages/habit_select/habit_select",
+    "pages/group/group",
+
+    "pages/registry/registry",
     "pages/habit/habit",
 
-    "pages/group/group",
     "pages/group_detail/group_detail",
 
     "pages/role/role",
-    "pages/registry/registry",
-    "pages/habit_select/habit_select",
     "pages/invite/invite",
 
     "pages/success/success"
