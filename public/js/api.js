@@ -14,10 +14,14 @@ let api = {
   comment: '/group/feed/comment',
   // 点赞
   thumb: '/group/feed/thumb',
-  // 群组组
+  // 群组列表
   groupList: '/t/group/list',
   // 群组成员
   groupMemberList: '/t/group/member/list',
+  // 删除组员
+  deleteMember: '/t/member/remove',
+  // 移动组员
+  moveMember: '/t/member/remove',
 
 
   // 家长习惯列表

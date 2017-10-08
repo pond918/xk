@@ -48,8 +48,8 @@
   <block wx:if="{{timeTabs.timeTabsIndex == 1}}">
     <view class="bg-light">
       <view class="todo-item todo-edit">
-        <view class="todo-item-ico">
-          <image class="icon" src="../../icons/icon-selected.png"></image>
+        <view class="todo-item-ico" bindtap="selectAllMember">
+          <image class="icon" src="{{isSelectAll ? '../../icons/icon-selected.png' : '../../icons/icon-unselected.png'}}"></image>
           <text class="ml10">全选</text>
         </view>
         <view class="todo-item-info">
@@ -61,26 +61,31 @@
               {{gList[groupIndex].name}}
             </view>
           </picker>
-          <view class="class-confirm btn btn-green">确定</view>
+          <view class="class-confirm btn btn-green" bindtap="moveMember">确定</view>
         </view>
       </view>
-      <view class="todo-item bb">
+      <view class="todo-item bb" wx:for="{{mList}}" wx:key="{{index}}" data-index="{{index}}" bindtap="selectMember">
         <view class="todo-item-ico">
-          <image class="icon" src="../../icons/icon-selected.png"></image>
+          <image class="icon" src="{{item.isSelected ? '../../icons/icon-selected.png' : '../../icons/icon-unselected.png'}}"></image>
         </view>
         <view class="todo-item-info">
           <view class="user-info">
             <view class="user-info-avatar">
-              <image class="img" src="../../icons/icon-people.png"></image>
+              <image class="img" src="{{item.avatar ? item.avatar : '../../icons/icon-people.png'}}"></image>
             </view>
             <view class="user-info-detail">
-              <view class="name">王童鞋</view>
-              <view class="p">学号：G172981</view>
-              <view class="p">做家务、自己洗漱、叠被子、完成作业 ...</view>
+              <view class="name">{{item.name}}</view>
+              <view class="p">学号：{{item.studentNo}}</view>
+              <view class="p">
+                <text wx:for="{{item.habits}}" wx:key="{{index}}" wx:for-item="habit">
+                  <text>{{habit.name}}</text>
+                  <text wx:if="{{index !== (item.habits.length - 1)}}">、</text>
+                </text>
+              </view>
             </view>
           </view>
         </view>
-        <view class="todo-item-arrow">
+        <view class="todo-item-arrow" data-id="{{item.id}}" data-index="{{index}}" catchtap="deleteMember">
           <image class="icon p20" src="../../icons/icon-close1.png"></image>
         </view>
       </view>

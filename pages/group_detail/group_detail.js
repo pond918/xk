@@ -16,26 +16,33 @@ Page({
     },
     // 群组的id
     groupId: '',
-    // 选择的群组的序号
-    groupIndex: 0,
-    // 群组动态的分页
-    page: 0,
+    // 数据是否加载完毕
+    isLoaded: false,
+
     // 群组动态
     aList: [],
     // 群组列表
     gList: [],
     // 群组成员
     mList: [],
+
+    // 群组动态的分页
+    page: 0,
     // 是否还有下一页
     isMore: true,
-    // 数据是否加载完毕
-    isLoaded: false,
     // 分页是否正在请求中
     isRequest: false,
-    // 是否正在提交数据
-    isSubmit: false,
     // 是否正在回复中
-    isReply: false
+    isReply: false,
+
+    // 选择移动到的群组的序号
+    groupIndex: 0,
+    // 是否全选组员
+    isSelectAll: false,
+    // 是否正在移动组员
+    isMoveMember: false,
+    // 是否正在邀请组员中
+    isInvite: false,
   },
   bindPickerChange (e) {
     this.setData({
@@ -69,8 +76,22 @@ Page({
     let type = this.data.timeTabs.timeTabsIndex;
 
     if (type == 0) {
+      this.setData({
+        page: 0,
+        isMore: true,
+        isRequest: false,
+        isReply: false,
+      });
+
       this.getGroupActive();
     } else if (type == 1) {
+      this.setData({
+        groupIndex: 0,
+        isSelectAll: false,
+        isMoveMember: false,
+        isInvite: false,
+      });
+
       this.getGroupMember();
       this.getGroup();
     }
@@ -282,7 +303,7 @@ Page({
       });
     });
   },
-  // 获取群组成员
+  // 获取群组组员
   getGroupMember () {
     let id = this.data.groupId;
 
@@ -295,15 +316,173 @@ Page({
     }).then((res) => {
       wx.hideLoading();
 
+      res.data.forEach((item) => {
+        item.isSelected = false;
+      });
+
       this.setData({
         isLoaded: true,
         mList: res.data
       });
     });
   },
-  // 全选成员
+  // 全选组员
   selectAllMember () {
-    
+    let { mList, isSelectAll } = this.data;
+
+    isSelectAll = !isSelectAll;
+
+    mList.forEach((item) => {
+      item.isSelected = isSelectAll;
+    });
+
+    this.setData({
+      mList,
+      isSelectAll
+    });
+  },
+  // 选中组员
+  selectMember (e) {
+    let index = e.currentTarget.dataset.index;
+    let { mList } = this.data;
+    let isSelected = mList[index].isSelected;
+
+    this.setData({
+      [`mList[${index}].isSelected`]: !isSelected
+    })
+  },
+  // 删除组员
+  deleteMember (e) {
+    let { index, id } = e.currentTarget.dataset;
+    let { mList } = this.data;
+    let deleteMember = mList.splice(index, 1);
+
+    wx.showModal({
+      content: `确实要删除 "${deleteMember[0].name}" 吗？`,
+      success: (res) => {
+        if (res.confirm) {
+          this.setData({
+            mList
+          })
+
+          wx.showLoading();
+          http.request({
+            url: api.deleteMember,
+            method: 'POST',
+            data: {
+              id
+            }
+          }).then((res) => {
+            wx.hideLoading();
+
+            if (res.data) {
+              wx.showToast({
+                title: '删除成功'
+              })
+            } else {
+              wx.showToast({
+                title: '删除失败',
+                image: '../../icons/close-circled.png'
+              })
+              mList.splice(index, 0, ...deleteMember);
+              this.setData({
+                mList
+              })
+            }
+          });
+        }
+      }
+    })
+  },
+  // 移动组员到其他分组中
+  moveMember () {
+    let { mList, gList, groupIndex, isMoveMember } = this.data;
+    // 选中的组员id
+    let ids = [];
+    // 目标群组id
+    let groupId = gList[groupIndex].id;
+    // 剩余的人员
+    let remainMember = [];
+
+    try {
+      // 正在移动组员中
+      if (isMoveMember) {
+        throw new Error('正在移动组员中');
+      }
+
+      // 如果群组数据未返回
+      if (!gList[groupIndex]) {
+        throw new Error('群组数据未返回，请稍等');
+      }
+
+      // 如果选择的群组id不存在
+      if (!gList[groupIndex].id) {
+        throw new Error(`选择的群组id(${gList[groupIndex].id})有误`);
+      }
+
+      let selectedNum = 0;
+      mList.forEach((item) => {
+        if (item.isSelected) {
+          ids.push(item.id);
+          selectedNum++;
+        }else{
+          remainMember.push(item);
+        }
+      });
+
+      // 如果选择的组员数量为0
+      if (selectedNum === 0) {
+        throw new Error('请至少选择一个组员');
+      }
+    } catch (e) {
+      return wx.showToast({
+        title: e.message,
+        image: '../../icons/close-circled.png'
+      })
+    }
+
+    wx.showModal({
+      content: `将要移动${ids.length}位组员到 "${gList[groupIndex].name}" 中`,
+      success: (res) => {
+        if (res.confirm) {
+          this.setData({
+            isMoveMember: true
+          });
+
+          wx.showLoading();
+          http.request({
+            url: api.moveMember,
+            method: 'POST',
+            data: {
+              ids,
+              groupId
+            }
+          }).then((res) => {
+            wx.hideLoading();
+
+            if (res.data) {
+              wx.showToast({
+                title: '移动成功'
+              })
+              this.setData({
+                mList: remainMember
+              });
+              setTimeout(() => {
+                this.getData();
+              }, 1500)
+            } else {
+              wx.showToast({
+                title: '移动失败',
+                image: '../../icons/close-circled.png'
+              })
+              this.setData({
+                isMoveMember: false
+              });
+            }
+          });
+        }
+      }
+    })
   },
   onLoad (params) {
     // 顶部tabs选中的序号，0为群组动态，1为群组成员
