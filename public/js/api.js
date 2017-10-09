@@ -21,13 +21,17 @@ let api = {
   moveMember: '/t/member/remove',
 
   // 家长习惯列表
-  parentHabitList: '/p/habit/mine/list',
+  parentHabit: '/p/habit/mine/list',
   // 家长注册
   parentRegistry: '/user/reg/p',
   // 家长选择习惯
-  parentHabitList: '/p/habit/list',
+  parentSelectHabit: '/p/habit/list',
   // 家长提交习惯
   parentSubmitHabit: '/p/habit/select',
+  // 家长完成习惯
+  parentCompleteHabit: '/p/habit/mine/check',
+  // 获取七牛云token
+  getUploadToken: '/res/qiniu/token',
 
   // 年级列表
   gradeList: '/class/list/grade',
@@ -37,7 +41,7 @@ let api = {
   // 老师注册
   teacherRegistry: '/user/reg/t',
   // 老师选择习惯
-  teacherHabitList: '/t/habit/list',
+  teacherSelectHabit: '/t/habit/list',
   // 老师提交习惯
   teacherSubmitHabit: '/t/habit/select',
   // 老师分享班级

@@ -4,6 +4,8 @@
   <!--用户已注册-->
   <block wx:if="{{isRegisted}}">
     <template is="time-tabs" data="{{...timeTabs}}"/>
+    <view class="pt78"></view>
+
     <!--学生列表-->
     <view hidden="{{timeTabs.timeGroupIndex != 1}}">
       <view class="statistics-section" wx:if="{{false}}">
@@ -36,7 +38,8 @@
             </view>
           </view>
           <view class="todo-item-grade">
-            <text class="num">{{item.score}}</text><text class="unit">分</text>
+            <text class="num">{{item.score}}</text>
+            <text class="unit">分</text>
           </view>
           <view class="todo-item-medal">
             <view class="num" wx:if="{{index > 2}}">{{index + 1}}</view>
@@ -49,7 +52,8 @@
     <view hidden="{{timeTabs.timeGroupIndex != 0}}">
       <view class="groups-container">
         <!--冠军组-->
-        <navigator url="/pages/group_detail/group_detail?groupId={{gList[0].id}}" class="champion-group mb30" wx:if="{{gList.length > 0}}">
+        <navigator url="/pages/group_detail/group_detail?groupId={{gList[0].id}}" class="champion-group mb30"
+                   wx:if="{{gList.length > 0}}">
           <view class="champion-group-title">
             <view class="icon">
               <image src="../../icons/icon-medal1.png"></image>
@@ -74,15 +78,20 @@
             </view>
           </scroll-view>
           <view class="champion-group-content"
-                wx:if="{{gList[0].members.length === 0}}">
+                wx:if="{{gList[0].members.length === 0 && role == 1}}">
             <view class="btn btn-red"
                   data-index="{{0}}"
-                  catchtap="deleteGroup">删除</view>
+                  catchtap="deleteGroup">删除该组
+            </view>
           </view>
         </navigator>
         <!--非冠军组-->
         <view class="other-group-container">
-          <navigator url="/pages/group_detail/group_detail?groupId={{item.id}}"  class="other-group" wx:for="{{gList}}" wx:key="{{index}}" wx:if="{{index !== 0}}">
+          <navigator url="/pages/group_detail/group_detail?groupId={{item.id}}"
+                     class="other-group"
+                     wx:for="{{gList}}"
+                     wx:key="{{index}}"
+                     wx:if="{{index !== 0}}">
             <view class="other-group-title">
               <view class="l">
                 <text class="grey">{{item.name}}</text>
@@ -94,16 +103,17 @@
             </view>
             <view class="other-group-content">
               <view class="btn btn-red"
-                    wx:if="{{item.members.length === 0}}"
+                    wx:if="{{item.members.length === 0 && role == 1}}"
                     data-index="{{index}}"
-                    catchtap="deleteGroup">删除该组</view>
+                    catchtap="deleteGroup">删除该组
+              </view>
               <view wx:if="{{item.members.length !== 0}}">
                 <text class="num">{{item.score}}</text>
                 <text class="unit vab">分</text>
               </view>
             </view>
           </navigator>
-          <view class="other-group" bindtap="createGroup">
+          <view class="other-group" bindtap="createGroup" wx:if="{{role==1}}">
             <view class="add-item">
               <image class="icon-add" src="../../icons/icon-add1.png"></image>
               <view class="add-text">新建分组</view>

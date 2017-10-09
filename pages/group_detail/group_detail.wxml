@@ -1,7 +1,8 @@
 <import src="../../components/time-tabs/index.wxml"/>
 
 <block wx:if="{{isLoaded}}">
-  <template is="time-tabs" data="{{...timeTabs}}"/>
+  <template is="time-tabs" data="{{...timeTabs}}" wx:if="{{role == 1}}"/>
+  <view class="pt78" wx:if="{{role == 1}}"></view>
 
   <!--群组动态-->
   <block wx:if="{{timeTabs.timeTabsIndex == 0}}">

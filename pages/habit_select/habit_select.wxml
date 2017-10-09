@@ -149,21 +149,6 @@
       </view>
     </view>
     <view class="app-popup-main">
-      <!--<view class="line mt10">习惯完成情况-->
-        <!--<text>完成情况：</text>-->
-        <!--<view class="btns-group">-->
-          <!--<view class="btn btn-green">主动完成</view>-->
-          <!--<view class="btn">监督完成</view>-->
-        <!--</view>-->
-      <!--</view>-->
-      <!--<view class="line mt10">-->
-        <!--<text>上传图片</text>-->
-      <!--</view>-->
-      <!--<view class="upload-file">-->
-        <!--<view class="upload-item">-->
-          <!--<image class="img" src="../../testimg/good.jpg"></image>-->
-        <!--</view>-->
-      <!--</view>-->
       <view class="app-popup-confirm btn btn-full btn-green" bindtap="confirmWeek">我选好了</view>
     </view>
   </view>

@@ -83,9 +83,6 @@
  * $direction : 三角形指向(top, right, bottom, left)
  * $color : 三角形颜色
  */
-page {
-  padding-top: 78rpx; }
-
 .time-tabs {
   height: 78rpx;
   font-size: 24rpx;

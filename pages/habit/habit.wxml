@@ -1,38 +1,83 @@
 <block wx:if="{{isLoaded}}">
   <!--用户已注册-->
   <block wx:if="{{isRegisted}}">
-    <view class="container">
-      <view class="timeline-section" wx:for="{{habit}}" wx:for-index="pIndex" wx:key="{{pIndex}}">
-        <view class="timeline-title">
-          {{item.formatDate}}
-        </view>
-        <view class="timeline-main" wx:for="{{item.students}}" wx:key="{{index}}">
-          <view class="timeline-main-title">
-            <image class="icon" src="{{ item.avatar ? item.avatar : '../../icons/icon-people.png'}}"></image>
-            <view class="title">{{item.name}}</view>
-            <view class="tag  {{ item.comments.length === 0 ? 'not' : 'done' }}"
-                  bindtap="togglePopup"
-                  data-p-index="{{pIndex}}"
-                  data-c-index="{{index}}">{{item.comments.length === 0 ? '批注' : '已批注'}}</view>
+    <!--老师-->
+    <block wx:if="{{role == 1}}">
+      <view class="container">
+        <view class="timeline-section" wx:for="{{habit}}" wx:for-index="pIndex" wx:key="{{pIndex}}">
+          <view class="timeline-title">
+            {{item.formatDate}}
           </view>
-          <view class="timeline-unfinish">
-            <view class="unfinish-list ptb10 bb">
-              <view class="unfinish-item" wx:for="{{item.habits}}" wx:key="{{index}}">
-                <image class="icon" src="../../icons/icon-close2.png"></image>
-                <view class="text">{{item.name}}</view>
-              </view>
+          <view class="timeline-main" wx:for="{{item.students}}" wx:key="{{index}}">
+            <view class="timeline-main-title">
+              <image class="icon" src="{{ item.avatar ? item.avatar : '../../icons/icon-people.png'}}"></image>
+              <view class="title">{{item.name}}</view>
+              <view class="tag  {{ item.comments.length === 0 ? 'not' : 'done' }}"
+                    bindtap="toggleCommentPopup"
+                    data-p-index="{{pIndex}}"
+                    data-c-index="{{index}}">{{item.comments.length === 0 ? '批注' : '已批注'}}</view>
             </view>
-            <view class="ptb10">
-              <view class="unfinish-item" wx:for="{{item.comments}}" wx:key="{{index}}">
-                <text class="green">{{item.from}}：</text>
-                <text>{{item.content}}</text>
-                <!--<image class="icon-msg" src="../../icons/icon-msg2.png"></image>-->
+            <view class="timeline-unfinish">
+              <view class="unfinish-list ptb10 bb">
+                <view class="unfinish-item" wx:for="{{item.habits}}" wx:key="{{index}}">
+                  <image class="icon" src="../../icons/icon-close2.png"></image>
+                  <view class="text">{{item.name}}</view>
+                </view>
+              </view>
+              <view class="ptb10">
+                <view class="unfinish-item" wx:for="{{item.comments}}" wx:key="{{index}}">
+                  <text class="green">{{item.from}}：</text>
+                  <text>{{item.content}}</text>
+                  <!--<image class="icon-msg" src="../../icons/icon-msg2.png"></image>-->
+                </view>
               </view>
             </view>
           </view>
         </view>
       </view>
-    </view>
+    </block>
+    <!--家长-->
+    <block wx:if="{{role == 2}}">
+      <view class="situation-total">
+        <image class="bg" src="../../icons/bg.jpg"></image>
+        <view class="text">
+          <view class="p">{{habit.formatDate}}  星期{{day[habit.formatDay]}}</view>
+          <view class="p">
+            今日得分：<text class="strong">{{habit.score}}</text> 分      坚持时间：<text class="strong">98</text>  天
+          </view>
+        </view>
+      </view>
+
+      <view class="time-line mt30" wx:if="{{habit.deadline != 0 && remainMillion != 0}}">还剩 {{remainTime}} 签到，过期无效。</view>
+      <view class="time-line mt30" wx:if="{{habit.deadline == 0 || remainMillion == 0}}">已过期，无法签到</view>
+      <view class="situation-section {{item.status == null && 'bb-red'}} {{(item.status != null && item.status < 0 ) && 'bb-grey'}} {{(item.status != null && item.status > 0 ) && 'bb-green'}} mb30"
+            wx:for="{{habit.habits}}"
+            wx:key="{{index}}">
+        <view class="btn btn-small btn-green status-btn" wx:if="{{item.status != null && item.status > 0}}">已完成</view>
+        <view class="btn btn-small btn-grey status-btn" wx:if="{{item.status != null && item.status < 0}}">未完成</view>
+        <view class="btn btn-small btn-red status-btn" wx:if="{{item.status != null && item.status == 0}}">今日不用做</view>
+        <view class="title">
+          <view class="text">{{item.name}}</view>
+          <image class="icon vam" src="../../icons/icon-bell.png" wx:if="{{item.alarm}}"></image>
+        </view>
+        <view class="content">
+          <view class="l">
+            <view class="p">开始时间：{{item.formatStart}}</view>
+            <view class="p">至今共坚持{{item.days}}天</view>
+          </view>
+          <!--未完成，显示按钮-->
+          <view class="r" wx:if="{{item.status == null}}">
+            <view class="btn btn-red" data-index="{{index}}" data-own="{{true}}" bindtap="completeHabit">主动完成</view>
+            <view class="btn btn-red" data-index="{{index}}" data-own="{{false}}" bindtap="completeHabit">监督完成</view>
+          </view>
+          <!--已完成，且分数大于0，显示分数-->
+          <view class="r" wx:if="{{item.status != null && item.status > 0}}">
+            <text class="num">{{item.status}}</text>
+            <text class="unit vab">分</text>
+          </view>
+        </view>
+      </view>
+    </block>
   </block>
   <!--用户未注册-->
   <block wx:else>
@@ -42,11 +87,11 @@
   </block>
 </block>
 
-<view class="app-popup" hidden="{{!popupToggle}}">
+<view class="app-popup" hidden="{{!commentPopupToggle}}">
   <view class="app-popup-container">
     <view class="app-popup-title">
       <view class="text">班主任批注</view>
-      <image class="icon" src="../../icons/icon-close.png" bindtap="togglePopup"></image>
+      <image class="icon" src="../../icons/icon-close.png" bindtap="toggleCommentPopup"></image>
     </view>
     <view class="app-popup-main">
       <textarea class="textarea mtb40" value="{{comment}}" placeholder="班主任说点什么吧，这孩子无法无天了..." bindinput="inputComment"></textarea>
@@ -55,68 +100,33 @@
   </view>
 </view>
 
-
-
-
-<view class="situation-total">
-  <image class="bg" src="../../icons/bg.jpg"></image>
-  <view class="text">
-    <view class="p">2017.09.17  星期日</view>
-    <view class="p">
-      今日得分：<text class="strong">12</text> 分      坚持时间：<text class="strong">98</text>  天
+<view class="app-popup" hidden="{{!uploadPopupToggle}}">
+  <view class="app-popup-container">
+    <view class="app-popup-title">
+      <view class="text">习惯完成情况</view>
+      <image class="icon" src="../../icons/icon-close.png" bindtap="toggleUploadPopup"></image>
+    </view>
+    <view class="app-popup-main">
+      <!--<view class="line mt10">-->
+        <!--<text>完成情况：</text>-->
+        <!--<view class="btns-group">-->
+          <!--<view class="btn btn-green">主动完成</view>-->
+          <!--<view class="btn">监督完成</view>-->
+        <!--</view>-->
+      <!--</view>-->
+      <view class="pb20">
+        <text class="grey">上传图片(最多{{UPLOAD_LENGTH}}张)：</text>
+      </view>
+      <view class="upload-file">
+        <view class="upload-item" wx:for="{{waitUploadImgs}}" wx:key="{{index}}">
+          <image class="img" src="{{item}}"></image>
+          <image class="close" src="../../icons/icon-close2.png" data-index="{{index}}" bindtap="removeUploadImg"></image>
+        </view>
+        <view class="upload-item" bindtap="chooseImgs">
+          <image class="icon-add" src="../../icons/icon-add.png"></image>
+        </view>
+      </view>
+      <view class="app-popup-confirm btn btn-full btn-green" bindtap="upload">上传</view>
     </view>
   </view>
 </view>
-
-<view class="time-line mt30">还剩5小时48分签到，过期无效。</view>
-<view class="situation-section bb-red mb30">
-  <view class="title">
-    <view class="text">按时起床</view>
-    <image class="icon vam" src="../../icons/icon-bell.png"></image>
-  </view>
-  <view class="content">
-    <view class="l">
-      <view class="p">开始时间：2017年9月17日</view>
-      <view class="p">至今共坚持98天</view>
-    </view>
-    <view class="r">
-      <view class="btn btn-red">主动完成</view>
-      <view class="btn btn-red">监督完成</view>
-    </view>
-  </view>
-</view>
-<view class="situation-section bb-green mb30">
-  <view class="btn btn-small btn-green status-btn">已完成</view>
-  <view class="title">
-    <view class="text">按时起床</view>
-    <image class="icon vam" src="../../icons/icon-bell.png"></image>
-  </view>
-  <view class="content">
-    <view class="l">
-      <view class="p">开始时间：2017年9月17日</view>
-      <view class="p">至今共坚持98天</view>
-    </view>
-    <view class="r">
-      <text class="num">209</text>
-      <text class="unit vab">分</text>
-    </view>
-  </view>
-</view>
-<view class="situation-section bb-grey mb30">
-  <view class="btn btn-small btn-grey status-btn">已完成</view>
-  <view class="title">
-    <view class="text">按时起床</view>
-    <image class="icon vam" src="../../icons/icon-bell.png"></image>
-  </view>
-  <view class="content">
-    <view class="l">
-      <view class="p">开始时间：2017年9月17日</view>
-      <view class="p">至今共坚持98天</view>
-    </view>
-    <view class="r">
-      <text class="num">209</text>
-      <text class="unit vab">分</text>
-    </view>
-  </view>
-</view>
-

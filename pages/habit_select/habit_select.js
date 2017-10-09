@@ -33,7 +33,7 @@ Page({
   // 根据角色获取老师或者家长的习惯列表
   getData () {
     let { role, page, list, isMore, isRequest, isLoaded } = this.data;
-    let url = (role == 1 ? api.teacherHabitList : api.parentHabitList);
+    let url = (role == 1 ? api.teacherSelectHabit : api.parentSelectHabit);
 
     // 限制重复多次请求
     if(isRequest){
