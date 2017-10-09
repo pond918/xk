@@ -1,12 +1,17 @@
 Page({
   data: {
-
+    name: '',
+    className: ''
   },
   //
   getData () {
 
   },
-  onLoad () {
-
+  onLoad (params) {
+    let { name, className } = params;
+    this.setData({
+      name,
+      className
+    })
   }
 })

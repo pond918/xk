@@ -31,9 +31,9 @@
     <view class="statistic-label">
       <view class="total">
         <view class="p">已选 <text class="strong">{{selectedNum}}</text> 个习惯，其中 <text class="strong">{{requiredNum}}</text> 个为必选习惯</view>
-        <view class="p">必选习惯数最少为 <text class="strong">2</text> 个！</view>
+        <view class="p">必选习惯数最少为 <text class="strong">2</text> 个，最多 <text class="strong">6</text> 个！</view>
       </view>
-      <view class="confirm active" bindtap="submit">确   定</view>
+      <view class="confirm active" bindtap="teacherSubmit">确   定</view>
     </view>
   </block>
 
@@ -111,7 +111,7 @@
         <view class="p">已选 <text class="strong">{{selectedNum}}</text> 个习惯，其中 <text class="strong">{{requiredNum}}</text> 个为必选习惯</view>
         <view class="p">最多选择 <text class="strong">10</text> 个习惯！</view>
       </view>
-      <view class="confirm active" bindtap="submit">确   定</view>
+      <view class="confirm active" bindtap="parentSubmit">确   定</view>
     </view>
   </block>
 </block>

@@ -222,8 +222,6 @@ Page({
         classId: classList[classIndex].id
       }
     }).then((res) => {
-      wx.hideLoading();
-
       if (res.errorCode == 200) {
         wx.showToast({
           title: res.moreInfo || '注册成功'
@@ -281,8 +279,6 @@ Page({
         classCode: code
       }
     }).then((res) => {
-      wx.hideLoading();
-
       if (res.errorCode == 200) {
         wx.showToast({
           title: res.moreInfo || '注册成功'
@@ -290,7 +286,7 @@ Page({
 
         setTimeout(() => {
           wx.navigateTo({
-            url: '/pages/habit_select/habit_select'
+            url: `/pages/success/success?name=${res.data.name}&className=${res.data.className}`
           });
         }, 1500);
       } else {

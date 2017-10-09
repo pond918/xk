@@ -2,9 +2,9 @@
   <image class="img" src="../../icons/join-success.jpg"></image>
   <view class="text">
     <view class="p">
-      欢迎你，<text class="green">张童鞋</text>同学
+      欢迎你，<text class="green">{{name}}</text>同学
     </view>
-    <view class="p">武汉中心小学三年级二班</view>
+    <view class="p">{{className}}</view>
   </view>
 </view>
-<view class="btn btn-full btn-green-linear">选择我的习惯</view>
+<navigator url="/pages/habit_select/habit_select" class="btn btn-full btn-green-linear">选择我的习惯</navigator>

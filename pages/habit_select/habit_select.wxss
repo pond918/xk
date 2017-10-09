@@ -202,8 +202,6 @@ page {
       color: #999; }
   .habit-item-label .sub {
     margin: 0 20rpx; }
-    .habit-item-label .sub .switch-container {
-      margin-right: -30rpx; }
     .habit-item-label .sub switch {
       margin: -15rpx 0;
       transform: scale(0.5); }

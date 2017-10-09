@@ -1,10 +1,10 @@
 {
   "pages":[
-    "pages/habit_select/habit_select",
     "pages/group/group",
 
     "pages/registry/registry",
     "pages/habit/habit",
+    "pages/habit_select/habit_select",
 
     "pages/group_detail/group_detail",
 

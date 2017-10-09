@@ -26,6 +26,8 @@ let api = {
   parentRegistry: '/user/reg/p',
   // 家长选择习惯
   parentHabitList: '/p/habit/list',
+  // 家长提交习惯
+  parentSubmitHabit: '/p/habit/select',
 
   // 年级列表
   gradeList: '/class/list/grade',

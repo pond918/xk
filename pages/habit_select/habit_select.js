@@ -181,21 +181,21 @@ Page({
     let index = e.currentTarget.dataset.index;
     let { list } = this.data;
 
-    if(!list[index].isSelected){
-      wx.showToast({
-        title: '请先选择该选项',
-        image: '../../icons/close-circled.png'
+    if(!list[index].isRequired){
+      this.setData({
+        [`list[${index}].isSelected`]: true,
+        [`list[${index}].isRequired`]: !list[index].isRequired
+      })
+    }else{
+      this.setData({
+        [`list[${index}].isRequired`]: false
       })
     }
 
-    this.setData({
-      [`list[${index}].isRequired`]: !list[index].isRequired
-    })
-
     this.countTeacherHabit ();
   },
-  // 提交
-  submit () {
+  // 老师习惯提交
+  teacherSubmit () {
     let {
       list,
       requiredNum,
@@ -208,6 +208,9 @@ Page({
       }
       if (requiredNum < 2) {
         throw new Error('必选的习惯不得小于2项');
+      }
+      if (requiredNum > 6) {
+        throw new Error('必选的习惯最多6项');
       }
     } catch (e) {
       return wx.showToast({
@@ -239,14 +242,16 @@ Page({
         requireds: habitRequiredArr
       }
     }).then((res) => {
-      wx.hideLoading();
-
       if (res.errorCode == 200) {
         wx.showToast({
           title: res.moreInfo || '提交成功'
         })
 
         setTimeout(() => {
+          this.setData({
+            isSubmit: false
+          })
+
           wx.navigateTo({
             url: `/pages/invite/invite?code=${res.data}`
           });
@@ -328,6 +333,109 @@ Page({
     }
 
     this.toggleRemind();
+  },
+  // 家长习惯提交
+  parentSubmit () {
+    let {
+      list,
+      isSubmit
+    } = this.data;
+
+    try {
+      if (isSubmit) {
+        throw new Error('正在提交中...');
+      }
+
+      let requiredNum = 0;
+      // 如果选项是必须选择的，并且已经选择了，则计数；如果必选习惯未选择，则提示
+      list.some((item)=>{
+        if(item.required){
+          if(item.isSelected){
+            // 如果未选择习惯提醒时间，则提示
+            if(!item.alarm && !item.alarmTimes){
+              throw new Error(`"${item.name}"的提醒时间未选择`);
+              return true;
+            }
+            requiredNum++;
+            return false;
+          }else{
+            throw new Error(`必选习惯"${item.name}"未选择`);
+            return true;
+          }
+        }
+      });
+
+      if(requiredNum > 10){
+        throw new Error(`必选习惯最多选择10个`);
+      }
+    } catch (e) {
+      return wx.showToast({
+        title: e.message,
+        image: '../../icons/close-circled.png'
+      })
+    }
+
+    // 习惯id
+    let habitIds = [];
+    // 习惯设置的时间
+    let alarmTimes = [];
+    // 习惯提醒的星期
+    let alarmRepeats = [];
+
+    list.forEach((item)=>{
+      if(item.isSelected){
+        // 将[1, 0, 0, 0, 0, 0, 1]转为二进制之后再转为数字65
+        let week = parseInt(item.repeatCycle.join(''), 2);
+
+        habitIds.push(item.id);
+        alarmTimes.push(item.alarmTimes === '' ? null : item.alarmTimes);
+        alarmRepeats.push(week);
+      }
+    });
+
+    habitIds = habitIds.join('&');
+    alarmTimes = alarmTimes.join('&');
+    alarmRepeats = alarmRepeats.join('&');
+
+    this.setData({
+      isSubmit: true
+    })
+
+    wx.showLoading();
+    http.request({
+      url: api.parentSubmitHabit,
+      method: 'POST',
+      data: {
+        habitIds,
+        alarmTimes,
+        alarmRepeats
+      }
+    }).then((res) => {
+      if (res.errorCode == 200) {
+        wx.showToast({
+          title: res.moreInfo || '提交成功'
+        })
+
+        setTimeout(() => {
+          this.setData({
+            isSubmit: false
+          })
+
+          wx.switchTab({
+            url: '/pages/group/group'
+          });
+        }, 1500);
+      } else {
+        wx.showToast({
+          title: res.moreInfo || '提交失败',
+          image: '../../icons/close-circled.png'
+        })
+
+        this.setData({
+          isSubmit: false
+        })
+      }
+    });
   },
   onLoad () {
     let role = wx.getStorageSync('role') || 1;
