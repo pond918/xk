@@ -9,8 +9,10 @@ page{
 .container{
   min-height: 100%;
   padding-right:38rpx;
+  padding-bottom:20rpx;
   margin-left: 34rpx;
   border-left: 4rpx solid #1dcca1;
+  box-sizing: border-box;
 }
 
 .timeline-section{

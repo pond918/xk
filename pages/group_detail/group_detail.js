@@ -7,6 +7,7 @@ let role = wx.getStorageSync('role') || 1;
 
 Page({
   data: {
+    role,
     timeTabs: {
       // 左侧时间tab的选中序号
       timeTabsIndex: 0,
@@ -231,8 +232,6 @@ Page({
         content: replyText
       }
     }).then((res) => {
-      wx.hideLoading();
-
       if (res.errorCode == 200) {
         wx.showToast({
           title: res.moreInfo || '回复成功'
@@ -373,8 +372,6 @@ Page({
               id
             }
           }).then((res) => {
-            wx.hideLoading();
-
             if (res.data) {
               wx.showToast({
                 title: '删除成功'
@@ -458,8 +455,6 @@ Page({
               groupId
             }
           }).then((res) => {
-            wx.hideLoading();
-
             if (res.data) {
               wx.showToast({
                 title: '移动成功'

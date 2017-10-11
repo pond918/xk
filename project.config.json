@@ -12,13 +12,13 @@
 	"projectname": "%E4%B9%A0%E8%AF%BE",
 	"condition": {
 		"weapp": {
-			"current": -1,
+			"current": 0,
 			"list": [
 				{
 					"id": 0,
 					"name": "注册",
 					"pathName": "pages/registry/registry",
-					"query": "role=2&code=xxxr1"
+					"query": "role=1&code=yyyy"
 				},
 				{
 					"id": -1,
@@ -37,6 +37,12 @@
 					"name": "选择习惯",
 					"pathName": "pages/habit_select/habit_select",
 					"query": "role=2"
+				},
+				{
+					"id": -1,
+					"name": "习惯",
+					"pathName": "pages/habit/habit",
+					"query": ""
 				}
 			]
 		},

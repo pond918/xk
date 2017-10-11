@@ -18,15 +18,19 @@ class Auth {
                 if (res.data.errorCode === 200) {
                   let data = res.data.data;
                   wx.setStorageSync('sessionId', data.sessionKey);
-                  wx.setStorageSync('role', data.role);
 
-                  // 登录成功，设置当前页面data中的role为相对应的角色
-                  let pages = getCurrentPages();
-                  let currentPage = pages[pages.length-1];
-                  currentPage.setData({
-                    role: data.role
-                  });
-                  currentPage.onLoad();
+                  // 如果不是第一次注册，则角色信息以服务器为准，将本地角色设置为服务器返回的角色
+                  if(data.role){
+                    wx.setStorageSync('role', data.role);
+
+                    // 登录成功，设置当前页面data中的role为相对应的角色
+                    let pages = getCurrentPages();
+                    let currentPage = pages[pages.length-1];
+
+                    currentPage.setData({
+                      role: data.role
+                    });
+                  }
                 }
 
                 resolve();

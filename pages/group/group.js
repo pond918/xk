@@ -2,7 +2,6 @@ import timeTabs from '../../components/time-tabs/index.js';
 import http from '../../public/js/http.js';
 import api from '../../public/js/api.js';
 
-const qiniuUploader = require("../../public/js/qiniuUploader");
 let role = wx.getStorageSync('role') || 1;
 
 Page({
@@ -194,31 +193,5 @@ Page({
     });
 
     this.getData();
-  },
-
-
-
-
-
-  
-  didPressChooseImage: function () {
-    var that = this;
-    wx.chooseImage({
-      count: 1,
-      success: function (res) {
-        var filePath = res.tempFilePaths[0];
-        qiniuUploader.upload(filePath, (res) => {
-          that.setData({
-            'imageURL': res.imageURL,
-          });
-        }, (error) => {
-          console.log('error: ' + error);
-        }, {
-          uploadURL: 'https://up.qbox.me',
-          domain: 'bzkdlkaf.bkt.clouddn.com',
-          uptokenURL: 'UpTokenURL.com/uptoken',
-        })
-      }
-    })
   }
 })

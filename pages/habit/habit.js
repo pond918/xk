@@ -2,6 +2,7 @@ import http from '../../public/js/http.js';
 import api from '../../public/js/api.js';
 import utils from '../../public/js/utils.js';
 
+const qiniuUploader = require("../../public/js/qiniuUploader");
 let role = wx.getStorageSync('role') || 1;
 
 // 总共可以上传几张图片
@@ -34,7 +35,8 @@ Page({
     remainTime: '',
     // 倒计时Id
     countDownId: null,
-
+    // 七牛云token
+    uploadToken: '',
 
     // 批注的是外层哪一个日期
     pIndex: '',
@@ -255,7 +257,7 @@ Page({
         let remainLength = tempFilePaths.length - overLength;
 
         // 如果图片累计的数量超过了规定的张数，则提示
-        if ( overLength > 0) {
+        if (overLength > 0) {
           tempFilePaths = tempFilePaths.splice(0, remainLength);
 
           wx.showToast({
@@ -282,9 +284,65 @@ Page({
       waitUploadImgs
     });
   },
+  // 获取七牛云上传token
+  getUploadToken () {
+    let { uploadToken } = this.data;
+
+    let p = new Promise((resolve, reject) => {
+      // 如果上传token已经获取，则直接resolve
+      if (uploadToken) {
+        resolve(uploadToken);
+      } else {
+        wx.showLoading();
+        http.request({
+          url: api.getUploadToken
+        }).then((res) => {
+
+          if (res.errorCode == 200) {
+            this.setData({
+              uploadToken: res.data
+            })
+
+            resolve(res.data);
+          } else {
+            wx.hideLoading();
+
+            wx.showToast({
+              title: res.moreInfo || '获取七牛云token失败，请重试',
+              image: '../../icons/close-circled.png'
+            })
+
+            reject();
+          }
+        });
+      }
+    });
+
+    return p;
+  },
   // 上传图片
   upload () {
+    let { waitUploadImgs } = this.data;
 
+    this.getUploadToken()
+      .then((res) => {
+        qiniuUploader.upload(waitUploadImgs, (res) => {
+          wx.hideLoading();
+
+          that.setData({
+            'imageURL': res.imageURL,
+          });
+        }, (error) => {
+          console.log('error: ' + error);
+        }, {
+          region: 'ECN',
+          uploadURL: 'https://upload.qiniup.com',
+          uptoken: res,
+          domain: 'oxciz4ayj.bkt.clouddn.com',
+          // uptokenURL: 'UpTokenURL.com/uptoken',
+        })
+      })
+      .catch(()=>{});
   },
 
   // 显示、隐藏老师批注弹窗

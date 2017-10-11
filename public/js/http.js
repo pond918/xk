@@ -47,7 +47,17 @@ class Http extends Auth {
 
             // 如果登录错误的次数小于规定次数，则自动重新登录
             if (this.errorCount < this.maxErrorCount) {
-              this.login();
+              this.login()
+                .then(() => {
+                  sessionId = wx.getStorageSync('sessionId');
+                  config.header.cookie = `SESSION=${sessionId}`;
+                  this.request(config);
+                }, () => {
+                  sessionId = wx.getStorageSync('sessionId');
+                  config.header.cookie = `SESSION=${sessionId}`;
+                  this.request(config);
+                });
+
             } else {
               wx.showToast({
                 title: '自动登录出错次数超过5次，请退出重试',

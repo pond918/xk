@@ -67,7 +67,7 @@ let devDomain = 'https://xike.onxiao.cn/xikedd';
 let testDomain = 'https://result.eolinker.com/ZQruBkm293ea403a5cdbe011f08f51807ba6055cc820467?uri=';
 
 for (var attr in api) {
-  api[attr] = testDomain + api[attr];
+  api[attr] = devDomain + api[attr];
 }
 
 export default api;

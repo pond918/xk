@@ -15,6 +15,9 @@
   <view class="hint">
     家长可凭扫描二维码和输入邀请码两种方式登录系统，请班主任<text class="strong">妥善管理</text>，另该二维码和邀请码 <text class="strong">一个学期内不可再次更改！</text>
   </view>
+  <navigator url="/pages/group/group"
+             open-type="switchTab"
+             class="btn btn-full btn-green-linear mlr20">立刻进入</navigator>
 
   <view class="share-popup" hidden="{{!isShowPopup}}">
     <image class="arrow" src="../../icons/icon-arrow-circle.png"></image>

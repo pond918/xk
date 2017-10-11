@@ -258,6 +258,9 @@ Page({
       if (!studentNo) {
         throw new Error('请填写学号');
       }
+      if (!code) {
+        throw new Error('请填写邀请码');
+      }
     } catch (e) {
       return wx.showToast({
         title: e.message,
@@ -288,17 +291,34 @@ Page({
           wx.navigateTo({
             url: `/pages/success/success?name=${res.data.name}&className=${res.data.className}`
           });
+
+          this.setData({
+            isSubmit: false
+          })
         }, 1500);
       } else {
         wx.showToast({
           title: res.moreInfo || '注册失败',
           image: '../../icons/close-circled.png'
         })
-      }
 
-      this.setData({
-        isSubmit: false
-      })
+        // 如果是已经注册的，直接跳转到选择习惯页
+        if(res.errorCode == 12001){
+          setTimeout(()=>{
+            wx.navigateTo({
+              url: '/pages/habit_select/habit_select'
+            });
+
+            this.setData({
+              isSubmit: false
+            })
+          }, 1500)
+        } else {
+          this.setData({
+            isSubmit: false
+          })
+        }
+      }
     });
   },
   onLoad (params) {
