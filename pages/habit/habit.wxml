@@ -63,7 +63,7 @@
         </view>
         <view class="content">
           <view class="l">
-            <view class="p">开始时间：{{item.formatStart}}</view>
+            <view class="p">最近时间：{{item.formatStart}}</view>
             <view class="p">至今共坚持{{item.days}}天</view>
           </view>
           <!--未完成，显示按钮-->

@@ -531,17 +531,10 @@ Page({
       clearInterval(countDownId);
     }
   },
-  // 页面显示时，重新请求数据
-  onShow () {
-    let { isLoaded } = this.data;
-
-    if (isLoaded) {
-      this.getData();
-    }
-  },
-  onLoad () {
+  // 设置标题
+  setTitle () {
     let role = wx.getStorageSync('role') || 1;
-
+console.log(role);
     wx.setNavigationBarTitle({
       title: role == 1 ? '未完成习惯的学生列表' : '学生习惯完成情况'
     })
@@ -549,7 +542,18 @@ Page({
     this.setData({
       role
     });
+  },
+  // 页面显示时，重新请求数据
+  onShow () {
+    this.setTitle();
 
+    let { isLoaded } = this.data;
+    if (isLoaded) {
+      this.getData();
+    }
+  },
+  onLoad () {
+    this.setTitle();
     this.getData();
   }
 })

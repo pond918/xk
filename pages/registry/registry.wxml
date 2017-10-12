@@ -3,7 +3,7 @@
   <block wx:if="{{isPermission}}">
     <view class="container" wx:if="{{isLoaded}}">
       <!--班主任注册-->
-      <block wx:if="{{role == 1}}">
+      <block wx:if="{{absRole == 1}}">
         <image class="teacher-img" src="../../icons/teacher.jpg"></image>
         <view class="input-label mt30">
           <view class="input-label-icon">

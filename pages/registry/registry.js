@@ -1,10 +1,14 @@
 import http from '../../public/js/http.js';
 import api from '../../public/js/api.js';
+import Auth from '../../public/js/auth.js';
+
+let auth = new Auth();
 
 Page({
   data: {
     // 角色，1为班主任，2为家长，默认为家长
     role: 2,
+    absRole: 2,
     // 当扫码进来的角色为老师时，code表示学校的代码
     // 当扫码进来的角色为家长时，code表示邀请码
     code: '',
@@ -303,6 +307,7 @@ Page({
             wx.showToast({
               title: res.moreInfo || '注册成功'
             })
+            wx.setStorageSync('role', 1);
 
             setTimeout(() => {
               wx.navigateTo({
@@ -319,12 +324,22 @@ Page({
               image: '../../icons/close-circled.png'
             })
 
-            // 如果是已经注册的，直接跳转到选择习惯页
+            // 如果用户已注册，则直接跳转到习惯页
             if (res.errorCode == 12001) {
               setTimeout(() => {
-                wx.navigateTo({
-                  url: '/pages/habit_select/habit_select'
+                wx.switchTab({
+                  url: '/pages/habit/habit',
+                  success () {
+                    let pages = getCurrentPages();
+                    let currentPage = pages[pages.length - 1];
+
+                    // 如果当前页是已经访问过的状态，则刷新当前页数据
+                    if (currentPage.isLoaded) {
+                      currentPage.getData();
+                    }
+                  }
                 });
+
 
                 this.setData({
                   isSubmit: false
@@ -342,7 +357,8 @@ Page({
           })
         });
       })
-      .catch(() => {});
+      .catch(() => {
+      });
   },
   // 家长注册
   parentRegistry () {
@@ -388,6 +404,7 @@ Page({
             wx.showToast({
               title: res.moreInfo || '注册成功'
             })
+            wx.setStorageSync('role', 2);
 
             setTimeout(() => {
               wx.navigateTo({
@@ -404,11 +421,21 @@ Page({
               image: '../../icons/close-circled.png'
             })
 
-            // 如果是已经注册的，直接跳转到选择习惯页
+            // 如果用户已注册，则直接跳转到习惯页
             if (res.errorCode == 12001) {
               setTimeout(() => {
-                wx.navigateTo({
-                  url: '/pages/habit_select/habit_select'
+                wx.switchTab({
+                  url: '/pages/habit/habit',
+                  success () {
+                    // 登录成功，设置当前页面data中的role为相对应的角色
+                    let pages = getCurrentPages();
+                    let currentPage = pages[pages.length - 1];
+
+                    // 如果当前页是已经访问过的状态，则刷新当前页数据
+                    if (currentPage.isLoaded) {
+                      currentPage.getData();
+                    }
+                  }
                 });
 
                 this.setData({
@@ -425,6 +452,12 @@ Page({
       })
       .catch(() => {
       })
+  },
+  // 获取角色的绝对值
+  getAbsRole () {
+    let { role } = this.data;
+
+    return Math.abs(role);
   },
   // 获取用户信息，主要是获取头像
   getUserInfo () {
@@ -463,51 +496,92 @@ Page({
     return q;
   },
   onLoad (params) {
-    let role = 2;
-    let code = '';
-
-    if (params) {
-      params.role && (role = params.role);
-      params.code && (code = params.code);
-    }
-
-    // 扫码出错
-    try {
-      if (role == 1 && !code) {
-        throw new Error('老师注册时，必须传入学校code');
-      }
-    } catch (e) {
-      this.setData({
-        isError: true
-      });
-
-      return wx.showToast({
-        title: e.message,
-        image: '../../icons/close-circled.png'
-      })
-    }
-
-    this.getUserInfo()
+    // 预先获取角色，然后设置本地角色
+    // 该login接口，如果用户已经注册了，则会自动设置本地缓存role为相应的角色，并且返回resolve
+    // 如果用户未注册，则返回reject
+    auth.login()
       .then(() => {
-        // 用户点击同意授权头像
-        wx.setStorageSync('role', role);
-
-        wx.setNavigationBarTitle({
-          title: role == 1 ? '班主任完善个人信息' : '家长完善孩子信息'
+        // 如果用户已注册，则直接跳转到习惯页
+        wx.showToast({
+          title: '您已注册，自动跳转中...',
+          image: '../../icons/close-circled.png'
         })
 
-        this.setData({
-          role,
-          code,
-          isLoaded: true
-        });
+        setTimeout(() => {
+          wx.switchTab({
+            url: '/pages/habit/habit',
+            success () {
+              let pages = getCurrentPages();
+              let currentPage = pages[pages.length - 1];
 
-        // 如果是班主任，则去请求年级列表数据
-        if (role == 1) {
-          this.getGradeList();
+              // 如果当前页是已经访问过的状态，则刷新当前页数据
+              if (currentPage.isLoaded) {
+                currentPage.getData();
+              }
+            }
+          });
+        }, 1500)
+      }, () => {
+        // 默认角色为家长，即2
+        let role = 2;
+        let code = '';
+
+        if (params) {
+          // 当传入的查询字符串role为-1或者1时，表示老师。
+          // -1代表扫码进入本注册页的老师，无需对login返回的role=null做处理，代码在auth.js中体现；
+          // 1表示其他页面的老师，如果login返回的role为null，则要提示用户去注册
+          params.role && (role = params.role);
+          params.code && (code = params.code);
         }
-      })
-      .catch(() => {
+
+        // 角色的绝对值
+        let absRole = Math.abs(role);
+
+        // 扫码出错
+        try {
+          if (absRole == 1 && !code) {
+            throw new Error('老师注册时，必须传入学校code');
+          }
+        } catch (e) {
+          this.setData({
+            isError: true
+          });
+
+          return wx.showToast({
+            title: e.message,
+            image: '../../icons/close-circled.png'
+          })
+        }
+
+        this.getUserInfo()
+          .then(() => {
+            let localRole = wx.getStorageSync('role');
+            // 如果本地缓存中的用户role不存在，才将当前role写入本地缓存中
+            if (!localRole) {
+              wx.setStorageSync('role', absRole);
+            }
+
+            wx.setNavigationBarTitle({
+              title: absRole == 1 ? '班主任完善个人信息' : '家长完善孩子信息'
+            })
+
+            this.setData({
+              role,
+              code,
+              absRole,
+              isLoaded: true
+            });
+
+            // 如果是班主任，则去请求年级列表数据
+            if (Math.abs(role) == 1) {
+              this.getGradeList();
+            } else {
+              wx.hideLoading();
+            }
+          })
+          .catch(() => {
+          });
       });
+
   }
 })

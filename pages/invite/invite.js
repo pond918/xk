@@ -23,7 +23,7 @@ Page({
       }
     }).then((res) => {
       wx.hideLoading();
-
+      console.log(res);
       this.setData({
         isLoaded: true,
         info: res.data
@@ -51,8 +51,11 @@ Page({
   },
   // 右上角分享
   onShareAppMessage () {
+    let { code, info } = this.data;
+
     return {
-      title: '邀请码',
+      title: `${info.teacher}老师邀你进习课`,
+      path: `/pages/registry/registry?role=2&code=${code}`,
       success () {
         wx.showToast({
           title: '分享成功'

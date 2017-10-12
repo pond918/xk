@@ -17,6 +17,9 @@ class Auth {
                 // 登录成功，则设置sessionId
                 if (res.data.errorCode === 200) {
                   let data = res.data.data;
+                  let pages = getCurrentPages();
+                  let currentPage = pages[pages.length - 1];
+
                   wx.setStorageSync('sessionId', data.sessionKey);
 
                   // 如果已经注册，则角色信息以服务器为准，将本地角色设置为服务器返回的角色
@@ -24,17 +27,22 @@ class Auth {
                     wx.setStorageSync('role', data.role);
 
                     // 登录成功，设置当前页面data中的role为相对应的角色
-                    let pages = getCurrentPages();
-                    let currentPage = pages[pages.length - 1];
-
                     currentPage.setData({
                       role: data.role
                     });
                   } else {
-                    reject({
-                      errorCode: 403,
-                      moreInfo: '对不起，您还未注册，请先注册'
-                    });
+                    // 当本地role为-1时，表示是未登陆未注册的老师通过二维码扫描进来
+                    // 这时，系统自动login返回role=null，就不需要提示用户去注册，因为已经是在注册页了
+
+                    // 如果当前页的role不存在，则默认为是老师扫码进来的
+                    let role = currentPage.role || -1;
+
+                    if(role > 0){
+                      return reject({
+                        errorCode: 403,
+                        moreInfo: '对不起，您还未注册，请先注册'
+                      });
+                    }
                   }
                 }
 

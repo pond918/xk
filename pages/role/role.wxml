@@ -1,6 +1,6 @@
 <image class="role-top" src="../../icons/role-bg.jpg"></image>
 <view class="role-list">
-  <navigator class="role-item" url="/pages/registry/registry?role=1&code=yyyy">
+  <navigator class="role-item" url="/pages/registry/registry?role=-1&code=yyyy">
     <image class="icon" src="../../icons/icon-role-man.png"></image>
     <view class="title">我是班主任</view>
   </navigator>
