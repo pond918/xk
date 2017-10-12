@@ -4,6 +4,8 @@ let api = {
   groupScoreList: '/score/group/list',
   // 学生排名
   studentList: '/score/member/list',
+  // 习惯列表
+  habitList: '/student/habit/list',
 
   // 群组动态
   groupActiveList: '/group/feed/list',
@@ -18,10 +20,8 @@ let api = {
   // 删除组员
   deleteMember: '/t/member/remove',
   // 移动组员
-  moveMember: '/t/member/remove',
+  moveMember: '/t/group/member/remove',
 
-  // 家长习惯列表
-  parentHabit: '/p/habit/mine/list',
   // 家长注册
   parentRegistry: '/user/reg/p',
   // 家长选择习惯
@@ -50,13 +50,13 @@ let api = {
   createGroup: '/t/group/create',
   // 删除群组
   deleteGroup: '/t/group/remove',
-  // 学生习惯
-  studentHabit: '/t/student/habit/list',
   // 评论学生习惯
   commentStudentHabit: '/t/student/habit/comment',
 
   // 登录
   login: '/wx/login',
+  // 提交用户信息
+  submitUserInfo: '/wx/user/info',
   // 发送验证码
   verifyCode: '/verify/mobile/send',
   // 个人中心

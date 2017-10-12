@@ -1754,7 +1754,6 @@
 
 .empty-data {
   height: 100%;
-  background-color: #fff;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
@@ -1784,13 +1783,15 @@
   .btns-prompt .each-item {
     flex: 1;
     text-align: center;
-    color: #666;
-    font-size: 26rpx;
+    color: #fff;
+    font-size: 36rpx;
     display: flex;
     justify-content: center;
     align-items: center; }
     .btns-prompt .each-item:first-child {
-      border-right: 1rpx solid #e5e5e5; }
+      margin-right: 10rpx; }
+    .btns-prompt .each-item:second-child {
+      margin-left: 10rpx; }
     .btns-prompt .each-item.confirm {
       color: #fff;
       background: linear-gradient(to right, #ff9000 18%, #ff5000 78%); }

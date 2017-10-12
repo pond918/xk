@@ -52,12 +52,24 @@ class Http extends Auth {
                   sessionId = wx.getStorageSync('sessionId');
                   config.header.cookie = `SESSION=${sessionId}`;
                   this.request(config);
-                }, () => {
-                  sessionId = wx.getStorageSync('sessionId');
-                  config.header.cookie = `SESSION=${sessionId}`;
-                  this.request(config);
-                });
+                }, (res) => {
+                  if (res.errorCode === 403) {
+                    // 用户未注册，则提示
+                    wx.showModal({
+                      title: '提示',
+                      content: '对不起，您还未注册，请先注册',
+                      success: (res) => {
+                        if (res.confirm) {
+                          wx.navigateTo({
+                            url: '/pages/registry/registry'
+                          });
+                        }
+                      }
+                    })
 
+                    reject(res);
+                  }
+                });
             } else {
               wx.showToast({
                 title: '自动登录出错次数超过5次，请退出重试',
@@ -68,8 +80,16 @@ class Http extends Auth {
             // 用户未注册，则提示
             wx.showModal({
               title: '提示',
-              content: '对不起，您还未注册，请扫码注册'
+              content: '对不起，您还未注册，请先注册',
+              success: (res) => {
+                if (res.confirm) {
+                  wx.navigateTo({
+                    url: '/pages/registry/registry'
+                  });
+                }
+              }
             })
+
             reject(res);
           } else {
             resolve(res);

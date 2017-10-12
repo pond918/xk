@@ -4,7 +4,6 @@ import api from '../../public/js/api.js';
 Page({
   data: {
     info: {},
-    avatar: '',
     // 传入的邀请码
     code: '',
     // 是否显示弹窗
@@ -30,19 +29,6 @@ Page({
         info: res.data
       });
     });
-  },
-  // 获取用户信息，主要是获取头像
-  getUserInfo () {
-    wx.getUserInfo({
-      success: (res) => {
-        let userInfo = res.userInfo;
-        let avatar = userInfo.avatarUrl;
-
-        this.setData({
-          avatar
-        });
-      }
-    })
   },
   // 开关弹窗
   togglePopup () {
@@ -71,12 +57,6 @@ Page({
         wx.showToast({
           title: '分享成功'
         })
-      },
-      fail () {
-        wx.showToast({
-          title: '分享失败',
-          image: '../../icons/close-circled.png'
-        })
       }
     }
   },
@@ -85,7 +65,6 @@ Page({
       code: params.code
     });
 
-    this.getUserInfo();
     this.getData();
   }
 })

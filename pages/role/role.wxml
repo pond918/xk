@@ -1,10 +1,10 @@
 <image class="role-top" src="../../icons/role-bg.jpg"></image>
 <view class="role-list">
-  <navigator class="role-item" url="/pages/registry/registry?role=1&code=xxx1">
+  <navigator class="role-item" url="/pages/registry/registry?role=1&code=yyyy">
     <image class="icon" src="../../icons/icon-role-man.png"></image>
     <view class="title">我是班主任</view>
   </navigator>
-  <navigator class="role-item" url="/pages/registry/registry?role=2&code=xxxr1">
+  <navigator class="role-item" url="/pages/registry/registry?role=2&code=xxxx">
     <image class="icon" src="../../icons/icon-role-girl.png"></image>
     <view class="title">我是家长</view>
   </navigator>

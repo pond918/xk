@@ -1,6 +1,6 @@
 <block wx:if="{{isLoaded}}">
   <view class="invite-header">
-    <image class="avatar" src="{{avatar}}" wx:if="{{avatar}}"></image>
+    <image class="avatar" src="{{info.avatar ? info.avatar : '../../icons/icon-people.png'}}"></image>
     <view class="h3 mt15">您好，{{info.teacher}}老师</view>
     <view class="p">{{info.className}}</view>
     <view class="p">班级习惯选择成功，请向班级内学生展示班级二维码或邀请码</view>
@@ -15,7 +15,7 @@
   <view class="hint">
     家长可凭扫描二维码和输入邀请码两种方式登录系统，请班主任<text class="strong">妥善管理</text>，另该二维码和邀请码 <text class="strong">一个学期内不可再次更改！</text>
   </view>
-  <navigator url="/pages/group/group"
+  <navigator url="/pages/habit/habit"
              open-type="switchTab"
              class="btn btn-full btn-green-linear mlr20">立刻进入</navigator>
 

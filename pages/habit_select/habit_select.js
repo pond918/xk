@@ -41,10 +41,7 @@ Page({
     }
 
     if (!isMore) {
-      return wx.showToast({
-        title: '没有更多了',
-        image: '../../icons/close-circled.png'
-      })
+      return false;
     }
 
     this.setData({
@@ -74,7 +71,7 @@ Page({
       } else {
         res.data.forEach((item) => {
           // 二进制周数，1001表示周一和周四必选
-          let weekStr = item.repeat.toString(2);
+          let weekStr = item.repeats.toString(2);
           let zeroArr = Array(7 - weekStr.length + 1).join('0');
 
           // 是否显示具体的分数
@@ -100,6 +97,9 @@ Page({
       if(role == 2) {
         this.countParentHabit();
       }
+    })
+    .catch(()=>{
+      wx.hideLoading();
     });
   },
   // 上拉加载更多
@@ -393,10 +393,6 @@ Page({
       }
     });
 
-    habitIds = habitIds.join('&');
-    alarmTimes = alarmTimes.join('&');
-    alarmRepeats = alarmRepeats.join('&');
-
     this.setData({
       isSubmit: true
     })
@@ -422,7 +418,7 @@ Page({
           })
 
           wx.switchTab({
-            url: '/pages/group/group'
+            url: '/pages/habit/habit'
           });
         }, 1500);
       } else {

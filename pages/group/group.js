@@ -2,6 +2,7 @@ import timeTabs from '../../components/time-tabs/index.js';
 import http from '../../public/js/http.js';
 import api from '../../public/js/api.js';
 
+const qiniuUploader = require("../../public/js/qiniuUploader");
 let role = wx.getStorageSync('role') || 1;
 
 Page({
@@ -12,10 +13,9 @@ Page({
       // 左侧时间tab的选中序号
       timeTabsIndex: 0,
       // 右侧群组的选中序号，0表示群组，1表示学生排名，与下面的group字段值相反
-      timeGroupIndex: role === 1 ? 0 : 1,
+      timeGroupIndex: 1,
       list: ['日', '周', '月', '学期'],
-      //
-      group: ['学生排名>', '群组>'],
+      group: ['群组>', '学生排名>'],
       tabsBb: true
     },
     dateArr: ['D', 'W', 'M', 'T'],
@@ -41,7 +41,7 @@ Page({
   // 根据当前选择的是群组、学生列表，来请求不同的数据
   getData () {
     let index = this.data.timeTabs.timeGroupIndex;
-    if (index === 0) {
+    if (index === 1) {
       this.groupScoreList();
     } else {
       this.studentList();
@@ -193,5 +193,25 @@ Page({
     });
 
     this.getData();
+  },
+  didPressChooseImage: function () {
+    var that = this;
+    wx.chooseImage({
+      count: 1,
+      success: function (res) {
+        var filePath = res.tempFilePaths[0];
+        qiniuUploader.upload(filePath, (res) => {
+          that.setData({
+            'imageURL': res.imageURL,
+          });
+        }, (error) => {
+          console.log('error: ' + error);
+        }, {
+          uploadURL: 'https://up.qbox.me',
+          domain: 'bzkdlkaf.bkt.clouddn.com',
+          uptokenURL: 'UpTokenURL.com/uptoken',
+        })
+      }
+    })
   }
 })

@@ -3,11 +3,22 @@ import api from '../../public/js/api.js';
 
 Page({
   data: {
-    // 角色，1为班主任，2为家长
-    role: 1,
+    // 角色，1为班主任，2为家长，默认为家长
+    role: 2,
     // 当扫码进来的角色为老师时，code表示学校的代码
     // 当扫码进来的角色为家长时，code表示邀请码
     code: '',
+
+    // 用户信息
+    userInfo: '',
+    // 不包括敏感信息的原始数据字符串，用于计算签名
+    rawData: '',
+    // 使用 sha1( rawData + sessionkey ) 得到字符串，用于校验用户信息
+    signature: '',
+    // 包括敏感数据在内的完整用户信息的加密数据
+    encryptedData: '',
+    // 加密算法的初始向量
+    iv: '',
 
     // 年级列表
     gradeList: [],
@@ -31,7 +42,9 @@ Page({
     // 数据是否加载完毕
     isLoaded: false,
     // 是否正在提交数据
-    isSubmit: false
+    isSubmit: false,
+    // 用户是否同意授权数据
+    isPermission: true
   },
   // 获取年级信息
   getGradeList () {
@@ -45,6 +58,14 @@ Page({
       }
     }).then((res) => {
       wx.hideLoading();
+
+      if (res.data.length == 0) {
+        wx.showToast({
+          title: '年级数据为空，请联系管理员',
+          image: '../../icons/close-circled.png',
+          duration: 5000
+        })
+      }
 
       this.setData({
         gradeList: res.data
@@ -169,7 +190,62 @@ Page({
       wx.hideLoading();
     });
   },
-  // 选择班级
+  // 用户信息注册，注册成功了，在进行下一步老师／家长角色注册
+  submitUserInfo () {
+    let {
+      rawData,
+      signature,
+      encryptedData,
+      iv
+    } = this.data;
+
+    let q = new Promise((resolve, reject) => {
+      try {
+        if (!rawData) {
+          throw new Error('rawData字段为空');
+        }
+        if (!signature) {
+          throw new Error('signature字段为空');
+        }
+        if (!encryptedData) {
+          throw new Error('encryptedData字段为空');
+        }
+        if (!iv) {
+          throw new Error('iv字段为空');
+        }
+      } catch (e) {
+        reject();
+        return wx.showToast({
+          title: e.message,
+          image: '../../icons/close-circled.png'
+        })
+      }
+
+      http.request({
+        url: api.submitUserInfo,
+        method: 'POST',
+        data: {
+          rawData,
+          sign: signature,
+          encryptedData,
+          iv
+        }
+      }).then((res) => {
+        if (res) {
+          resolve();
+        } else {
+          wx.showToast({
+            title: res.moreInfo || '微信用户信息注册失败',
+            image: '../../icons/close-circled.png'
+          })
+
+          reject();
+        }
+      });
+    });
+
+    return q;
+  },
   // 老师注册
   teacherRegistry () {
     let {
@@ -177,7 +253,6 @@ Page({
       phone,
       gradeIndex,
       classIndex,
-      gradeList,
       classList,
       isSubmit
     } = this.data;
@@ -213,36 +288,61 @@ Page({
     })
 
     wx.showLoading();
-    http.request({
-      url: api.teacherRegistry,
-      method: 'POST',
-      data: {
-        name,
-        mobile: phone,
-        classId: classList[classIndex].id
-      }
-    }).then((res) => {
-      if (res.errorCode == 200) {
-        wx.showToast({
-          title: res.moreInfo || '注册成功'
-        })
+    this.submitUserInfo()
+      .then(() => {
+        http.request({
+          url: api.teacherRegistry,
+          method: 'POST',
+          data: {
+            name,
+            mobile: phone,
+            classId: classList[classIndex].id
+          }
+        }).then((res) => {
+          if (res.errorCode == 200) {
+            wx.showToast({
+              title: res.moreInfo || '注册成功'
+            })
 
-        setTimeout(() => {
-          wx.navigateTo({
-            url: '/pages/habit_select/habit_select'
-          });
-        }, 1500);
-      } else {
-        wx.showToast({
-          title: res.moreInfo || '提交失败',
-          image: '../../icons/close-circled.png'
-        })
-      }
+            setTimeout(() => {
+              wx.navigateTo({
+                url: '/pages/habit_select/habit_select'
+              });
 
-      this.setData({
-        isSubmit: false
+              this.setData({
+                isSubmit: false
+              })
+            }, 1500);
+          } else {
+            wx.showToast({
+              title: res.moreInfo || '提交失败',
+              image: '../../icons/close-circled.png'
+            })
+
+            // 如果是已经注册的，直接跳转到选择习惯页
+            if (res.errorCode == 12001) {
+              setTimeout(() => {
+                wx.navigateTo({
+                  url: '/pages/habit_select/habit_select'
+                });
+
+                this.setData({
+                  isSubmit: false
+                })
+              }, 1500)
+            } else {
+              this.setData({
+                isSubmit: false
+              })
+            }
+          }
+
+          this.setData({
+            isSubmit: false
+          })
+        });
       })
-    });
+      .catch(() => {});
   },
   // 家长注册
   parentRegistry () {
@@ -273,65 +373,108 @@ Page({
     })
 
     wx.showLoading();
-    http.request({
-      url: api.parentRegistry,
-      method: 'POST',
-      data: {
-        name,
-        studentNo,
-        classCode: code
-      }
-    }).then((res) => {
-      if (res.errorCode == 200) {
-        wx.showToast({
-          title: res.moreInfo || '注册成功'
-        })
+    this.submitUserInfo()
+      .then(() => {
+        http.request({
+          url: api.parentRegistry,
+          method: 'POST',
+          data: {
+            name,
+            studentNo,
+            classCode: code
+          }
+        }).then((res) => {
+          if (res.errorCode == 200) {
+            wx.showToast({
+              title: res.moreInfo || '注册成功'
+            })
 
-        setTimeout(() => {
-          wx.navigateTo({
-            url: `/pages/success/success?name=${res.data.name}&className=${res.data.className}`
+            setTimeout(() => {
+              wx.navigateTo({
+                url: `/pages/success/success?name=${res.data.name}&className=${res.data.className}`
+              });
+
+              this.setData({
+                isSubmit: false
+              })
+            }, 1500);
+          } else {
+            wx.showToast({
+              title: res.moreInfo || '注册失败',
+              image: '../../icons/close-circled.png'
+            })
+
+            // 如果是已经注册的，直接跳转到选择习惯页
+            if (res.errorCode == 12001) {
+              setTimeout(() => {
+                wx.navigateTo({
+                  url: '/pages/habit_select/habit_select'
+                });
+
+                this.setData({
+                  isSubmit: false
+                })
+              }, 1500)
+            } else {
+              this.setData({
+                isSubmit: false
+              })
+            }
+          }
+        });
+      })
+      .catch(() => {
+      })
+  },
+  // 获取用户信息，主要是获取头像
+  getUserInfo () {
+    let q = new Promise((resolve, reject) => {
+      wx.getUserInfo({
+        success: (res) => {
+          let {
+            userInfo,
+            rawData,
+            signature,
+            encryptedData,
+            iv
+          } = res;
+
+          this.setData({
+            userInfo,
+            rawData,
+            signature,
+            encryptedData,
+            iv,
+            isPermission: true
           });
 
+          resolve();
+        },
+        fail: (res) => {
           this.setData({
-            isSubmit: false
-          })
-        }, 1500);
-      } else {
-        wx.showToast({
-          title: res.moreInfo || '注册失败',
-          image: '../../icons/close-circled.png'
-        })
+            isPermission: false
+          });
 
-        // 如果是已经注册的，直接跳转到选择习惯页
-        if(res.errorCode == 12001){
-          setTimeout(()=>{
-            wx.navigateTo({
-              url: '/pages/habit_select/habit_select'
-            });
-
-            this.setData({
-              isSubmit: false
-            })
-          }, 1500)
-        } else {
-          this.setData({
-            isSubmit: false
-          })
+          reject();
         }
-      }
+      })
     });
+
+    return q;
   },
   onLoad (params) {
-    let { role, code } = params;
+    let role = 2;
+    let code = '';
+
+    if (params) {
+      params.role && (role = params.role);
+      params.code && (code = params.code);
+    }
 
     // 扫码出错
     try {
-      if (!role) {
-        throw new Error('role字段缺失');
-      }
-
-      if (!code) {
-        throw new Error('code字段缺失');
+      if (role == 1 && !code) {
+        throw new Error('老师注册时，必须传入学校code');
       }
     } catch (e) {
       this.setData({
@@ -344,21 +487,27 @@ Page({
       })
     }
 
-    wx.setStorageSync('role', role);
+    this.getUserInfo()
+      .then(() => {
+        // 用户点击同意授权头像
+        wx.setStorageSync('role', role);
 
-    wx.setNavigationBarTitle({
-      title: role == 1 ? '班主任完善个人信息' : '家长完善孩子信息'
-    })
+        wx.setNavigationBarTitle({
+          title: role == 1 ? '班主任完善个人信息' : '家长完善孩子信息'
+        })
 
-    this.setData({
-      role,
-      code,
-      isLoaded: true
-    });
+        this.setData({
+          role,
+          code,
+          isLoaded: true
+        });
 
-    // 如果是班主任，则去请求年级列表数据
-    if (role == 1) {
-      this.getGradeList();
-    }
+        // 如果是班主任，则去请求年级列表数据
+        if (role == 1) {
+          this.getGradeList();
+        }
+      })
+      .catch(() => {
+      });
   }
 })

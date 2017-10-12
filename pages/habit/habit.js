@@ -6,7 +6,7 @@ const qiniuUploader = require("../../public/js/qiniuUploader");
 let role = wx.getStorageSync('role') || 1;
 
 // 总共可以上传几张图片
-const UPLOAD_LENGTH = 9;
+const UPLOAD_LENGTH = 1;
 
 Page({
   data: {
@@ -19,8 +19,8 @@ Page({
     // 学生习惯列表
     habit: [],
 
-    // 完成习惯的id
-    habitId: '',
+    // 当前选择的完成习惯的序号
+    habitIndex: '',
     // 家长习惯 主动完成／监督完成
     own: true,
     // 待上传图片列表
@@ -49,68 +49,45 @@ Page({
 
     // 数据是否加载完毕
     isLoaded: false,
+    // 是否注册，默认用户已经注册
+    isRegisted: true,
     // 是否正在提交评论
     isSubmitComment: false,
-    // 是否注册，默认用户已经注册
-    isRegisted: true
+    // 是否正在上传中
+    isUpload: false
   },
-  // 根据当前角色，来请求不同的数据
+  // 获取学生习惯列表
   getData () {
-    let { role } = this.data;
-    if (role == 1) {
-      this.getStudentHabit();
-    } else {
-      this.getParentHabit();
-    }
-  },
-  // 老师获取学生习惯列表
-  getStudentHabit () {
     wx.showLoading();
     http.request({
-      url: api.studentHabit
+      url: api.habitList
     }).then((res) => {
       wx.hideLoading();
 
-      res.data.forEach((item) => {
-        item.formatDate = utils.formatDate(new Date(item.date));
-      });
+      let { role } = this.data;
+      if (role == 1) {
+        res.data.forEach((item) => {
+          item.formatDate = utils.formatDate(new Date(item.date));
+        });
 
-      this.setData({
-        isLoaded: true,
-        habit: res.data
-      });
-    }).catch((res) => {
-      wx.hideLoading();
-
-      // 用户未注册，给出提示
-      if (res.errorCode === 403) {
         this.setData({
           isLoaded: true,
-          isRegisted: false
+          habit: res.data
         });
+      } else {
+        res.data.formatDate = utils.formatDate(new Date(res.data.date), 'YYYY-MM-DD');
+        res.data.formatDay = new Date(res.data.date).getDay();
+        res.data.habits.forEach((item) => {
+          item.formatStart = utils.formatDate(new Date(item.start));
+        });
+
+        this.setData({
+          isLoaded: true,
+          habit: res.data
+        });
+
+        this.countDown();
       }
-    });
-  },
-  // 获取家长习惯列表
-  getParentHabit () {
-    wx.showLoading();
-    http.request({
-      url: api.parentHabit
-    }).then((res) => {
-      wx.hideLoading();
-
-      res.data.formatDate = utils.formatDate(new Date(res.data.date), 'YYYY-MM-DD');
-      res.data.formatDay = new Date(res.data.date).getDay();
-      res.data.habits.forEach((item) => {
-        item.formatStart = utils.formatDate(new Date(item.start));
-      });
-
-      this.setData({
-        isLoaded: true,
-        habit: res.data
-      });
-
-      this.countDown();
     }).catch((res) => {
       wx.hideLoading();
 
@@ -181,54 +158,78 @@ Page({
     }
     return i;
   },
-  // 完成习惯
+  // 向服务器提交习惯
+  submitHabit(){
+    let { habitIndex, own, habit, uploadedImgs, uploadPopupToggle } = this.data;
+    let item = habit.habits[habitIndex];
+
+    if(item.photo){
+      if(uploadedImgs.length == 0){
+        return wx.showToast({
+          title: '未上传任何图片',
+          image: '../../icons/close-circled.png'
+        })
+      }
+    }
+
+    wx.showModal({
+      content: `是否将习惯设为 "${own ? '主动完成' : '监督完成'}"？`,
+      success: (res) => {
+        if (res.confirm) {
+          wx.showLoading();
+          http.request({
+            url: api.parentCompleteHabit,
+            method: 'POST',
+            data: {
+              id: item.id,
+              own,
+              imgs: uploadedImgs
+            }
+          }).then((res) => {
+            if (res.data) {
+              // 如果上传弹窗打开，则关闭它
+              if(uploadPopupToggle){
+                this.toggleUploadPopup();
+              }
+
+              // 重置上传相关的data字段
+              this.resetUpload();
+
+              wx.showToast({
+                title: '设置成功'
+              })
+
+              setTimeout(() => {
+                this.getData();
+              }, 1500)
+            } else {
+              wx.showToast({
+                title: '设置失败，请重试',
+                image: '../../icons/close-circled.png'
+              })
+            }
+          });
+        }
+      }
+    })
+  },
+  // 主动／被动完成习惯
   completeHabit (e) {
     let { index, own } = e.currentTarget.dataset;
     let { habit } = this.data;
     let item = habit.habits[index];
 
+    this.setData({
+      habitIndex: index,
+      own
+    });
+
     // 如果需要上传图片，则打开上传弹窗
     if (item.photo) {
-      this.setData({
-        habitId: item.id,
-        own
-      });
-
       this.toggleUploadPopup();
     } else {
-      let completeText = own ? '主动完成' : '监督完成'
-
-      wx.showModal({
-        content: `是否将习惯设为 "${completeText}"？`,
-        success: (res) => {
-          if (res.confirm) {
-            wx.showLoading();
-            http.request({
-              url: api.parentCompleteHabit,
-              method: 'POST',
-              data: {
-                id: item.id,
-                own,
-                imgs: []
-              }
-            }).then((res) => {
-              if (res.data) {
-                wx.showToast({
-                  title: '设置成功'
-                })
-                setTimeout(() => {
-                  this.getData();
-                }, 1500)
-              } else {
-                wx.showToast({
-                  title: '设置失败，请重试',
-                  image: '../../icons/close-circled.png'
-                })
-              }
-            });
-          }
-        }
-      })
+      // 否则，直接显示完成习惯
+      this.submitHabit();
     }
   },
   // 显示、隐藏上传图片弹窗
@@ -276,12 +277,14 @@ Page({
   // 移除待上传图片
   removeUploadImg (e) {
     let { index } = e.currentTarget.dataset;
-    let { waitUploadImgs } = this.data;
+    let { waitUploadImgs, uploadedImgs } = this.data;
 
     waitUploadImgs.splice(index, 1);
+    uploadedImgs.splice(index, 1);
 
     this.setData({
-      waitUploadImgs
+      waitUploadImgs,
+      uploadedImgs
     });
   },
   // 获取七牛云上传token
@@ -320,29 +323,89 @@ Page({
 
     return p;
   },
+  // 重置上传相关的字段
+  resetUpload () {
+    this.setData({
+      waitUploadImgs: [],
+      uploadedImgs: []
+    });
+  },
   // 上传图片
   upload () {
-    let { waitUploadImgs } = this.data;
+    let { waitUploadImgs, isUpload } = this.data;
+
+    try {
+      if (waitUploadImgs.length == 0) {
+        throw new Error('您还未选择图片');
+      }
+
+      if(isUpload){
+        throw new Error('正在上传中，请稍后');
+      }
+    } catch (e) {
+      return wx.showToast({
+        title: e.message,
+        image: '../../icons/close-circled.png'
+      })
+    }
+
+    this.setData({
+      isUpload: true
+    });
 
     this.getUploadToken()
-      .then((res) => {
-        qiniuUploader.upload(waitUploadImgs, (res) => {
+      .then((uptoken) => {
+        // 每一张上传图片的进度
+        let promiseArr = [];
+
+        // 循环上传每一张图片
+        waitUploadImgs.forEach((imgUrl, index)=>{
+          let q = new Promise((resolve, reject)=>{
+            qiniuUploader.upload(imgUrl, (res) => {
+              // 按顺序设置每一张图片的七牛云地址
+              this.setData({
+                [`uploadedImgs[${index}]`]: res.imageURL,
+              });
+
+              resolve();
+            }, (error) => {
+              reject(error);
+            }, {
+              uptoken,
+              region: 'ECN',
+              domain: 'oxciz4ayj.bkt.clouddn.com'
+            })
+          });
+
+          promiseArr.push(q);
+        });
+
+        // 图片全部上传完毕之后，隐藏loading效果，将isUpload正在上传开关关闭
+        Promise.all(promiseArr).then(()=>{
           wx.hideLoading();
 
-          that.setData({
-            'imageURL': res.imageURL,
+          this.setData({
+            isUpload: false
           });
-        }, (error) => {
-          console.log('error: ' + error);
-        }, {
-          region: 'ECN',
-          uploadURL: 'https://upload.qiniup.com',
-          uptoken: res,
-          domain: 'oxciz4ayj.bkt.clouddn.com',
-          // uptokenURL: 'UpTokenURL.com/uptoken',
-        })
+
+          // 图片上传成功
+          wx.showToast({
+            title: '恭喜你图片上传成功',
+            image: '../../icons/close-circled.png'
+          })
+        }, (res)=>{
+          wx.showToast({
+            title: `上传失败，错误：${res}`,
+            image: '../../icons/close-circled.png'
+          })
+
+          this.setData({
+            isUpload: false
+          });
+        });
       })
-      .catch(()=>{});
+      .catch(() => {
+      });
   },
 
   // 显示、隐藏老师批注弹窗
@@ -453,8 +516,10 @@ Page({
     let { isLoaded } = this.data;
 
     if (isLoaded) {
-      this.countDown();
+      this.onLoad();
     }
+
+    console.log(123);
   },
   onLoad () {
     let role = wx.getStorageSync('role') || 1;

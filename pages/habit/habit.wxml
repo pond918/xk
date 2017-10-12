@@ -3,7 +3,7 @@
   <block wx:if="{{isRegisted}}">
     <!--老师-->
     <block wx:if="{{role == 1}}">
-      <view class="container">
+      <view class="container" wx:if="{{habit.length != 0}}">
         <view class="timeline-section" wx:for="{{habit}}" wx:for-index="pIndex" wx:key="{{pIndex}}">
           <view class="timeline-title">
             {{item.formatDate}}
@@ -35,6 +35,7 @@
           </view>
         </view>
       </view>
+      <view class="p20 tac grey" wx:if="{{habit.length == 0}}">暂无数据～</view>
     </block>
     <!--家长-->
     <block wx:if="{{role == 2}}">
@@ -43,7 +44,7 @@
         <view class="text">
           <view class="p">{{habit.formatDate}}  星期{{day[habit.formatDay]}}</view>
           <view class="p">
-            今日得分：<text class="strong">{{habit.score}}</text> 分      坚持时间：<text class="strong">98</text>  天
+            今日得分：<text class="strong">{{habit.score}}</text> 分      坚持时间：<text class="strong">{{habit.days}}</text>  天
           </view>
         </view>
       </view>
@@ -82,7 +83,8 @@
   <!--用户未注册-->
   <block wx:else>
     <view class="empty-data">
-      <view class="p20 tac grey fs32">对不起，您暂未注册，请扫码注册</view>
+      <view class="p20 tac grey fs32">对不起，您暂未注册，请先注册</view>
+      <navigator url="/pages/registry/registry" class="btn btn-green">马上注册</navigator>
     </view>
   </block>
 </block>
@@ -122,11 +124,15 @@
           <image class="img" src="{{item}}"></image>
           <image class="close" src="../../icons/icon-close2.png" data-index="{{index}}" bindtap="removeUploadImg"></image>
         </view>
-        <view class="upload-item" bindtap="chooseImgs">
+        <view class="upload-item" bindtap="chooseImgs" wx:if="{{waitUploadImgs.length < UPLOAD_LENGTH}}">
           <image class="icon-add" src="../../icons/icon-add.png"></image>
         </view>
       </view>
-      <view class="app-popup-confirm btn btn-full btn-green" bindtap="upload">上传</view>
+      <view class="btns-prompt">
+        <view class="each-item btn btn-green" bindtap="upload">{{isUpload ? '上传中...' : '上传'}}</view>
+        <view class="each-item btn btn-red" wx:if="{{uploadedImgs.length != 0 && !isUpload}}" bindtap="submitHabit">提交习惯</view>
+      </view>
+      <!--<view class="app-popup-confirm btn btn-full btn-green" bindtap="upload">上传</view>-->
     </view>
   </view>
 </view>

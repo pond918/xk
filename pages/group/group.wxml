@@ -5,54 +5,8 @@
   <block wx:if="{{isRegisted}}">
     <template is="time-tabs" data="{{...timeTabs}}"/>
     <view class="pt78"></view>
-
-    <!--学生列表-->
-    <view hidden="{{timeTabs.timeGroupIndex != 1}}">
-      <view class="statistics-section" wx:if="{{false}}">
-        <view class="statistics-section-item">
-          <view class="title">总积分</view>
-          <view class="num">802</view>
-        </view>
-        <view class="statistics-section-item">
-          <view class="title">总完成率</view>
-          <view class="num">78%</view>
-        </view>
-      </view>
-      <view class="todo-list" wx:if="{{sList.length != 0}}">
-        <view class="todo-item bb"
-              wx:for="{{sList}}"
-              wx:key="{{index}}">
-          <view class="todo-item-info">
-            <view class="user-info">
-              <view class="user-info-avatar">
-                <image class="img" src="{{item.avatar ? item.avatar : '../../icons/icon-people.png'}}"></image>
-              </view>
-              <view class="user-info-detail">
-                <view class="name">{{item.name}}</view>
-                <view class="p">学号：{{item.studentNo}}</view>
-                <view class="p">
-                  <text wx:for="{{item.habits}}" wx:key="{{index}}" wx:for-item="habit">
-                    <text>{{habit.name}}</text>
-                    <text wx:if="{{index !== (item.habits.length - 1)}}">、</text>
-                  </text>
-                </view>
-              </view>
-            </view>
-          </view>
-          <view class="todo-item-grade">
-            <text class="num">{{item.score}}</text>
-            <text class="unit">分</text>
-          </view>
-          <view class="todo-item-medal">
-            <view class="num" wx:if="{{index > 2}}">{{index + 1}}</view>
-            <image class="icon" wx:if="{{index <= 2}}" src="../../icons/icon-medal{{(index + 1)}}.png"></image>
-          </view>
-        </view>
-      </view>
-      <view class="p20 tac grey" wx:if="{{sList.length == 0}}">暂无数据～</view>
-    </view>
     <!--群组-->
-    <view hidden="{{timeTabs.timeGroupIndex != 0}}">
+    <view hidden="{{timeTabs.timeGroupIndex == 0}}">
       <view class="groups-container" wx:if="{{gList.length != 0}}">
         <!--冠军组-->
         <navigator url="/pages/group_detail/group_detail?groupId={{gList[0].id}}" class="champion-group mb30"
@@ -126,11 +80,57 @@
       </view>
       <view class="p20 tac grey" wx:if="{{gList.length == 0}}">暂无数据～</view>
     </view>
+    <!--学生列表-->
+    <view hidden="{{timeTabs.timeGroupIndex == 1}}">
+      <view class="statistics-section" wx:if="{{false}}">
+        <view class="statistics-section-item">
+          <view class="title">总积分</view>
+          <view class="num">802</view>
+        </view>
+        <view class="statistics-section-item">
+          <view class="title">总完成率</view>
+          <view class="num">78%</view>
+        </view>
+      </view>
+      <view class="todo-list" wx:if="{{sList.length != 0}}">
+        <view class="todo-item bb"
+              wx:for="{{sList}}"
+              wx:key="{{index}}">
+          <view class="todo-item-info">
+            <view class="user-info">
+              <view class="user-info-avatar">
+                <image class="img" src="{{item.avatar ? item.avatar : '../../icons/icon-people.png'}}"></image>
+              </view>
+              <view class="user-info-detail">
+                <view class="name">{{item.name}}</view>
+                <view class="p">学号：{{item.studentNo}}</view>
+                <view class="p">
+                  <text wx:for="{{item.habits}}" wx:key="{{index}}" wx:for-item="habit">
+                    <text>{{habit.name}}</text>
+                    <text wx:if="{{index !== (item.habits.length - 1)}}">、</text>
+                  </text>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="todo-item-grade">
+            <text class="num">{{item.score}}</text>
+            <text class="unit">分</text>
+          </view>
+          <view class="todo-item-medal">
+            <view class="num" wx:if="{{index > 2}}">{{index + 1}}</view>
+            <image class="icon" wx:if="{{index <= 2}}" src="../../icons/icon-medal{{(index + 1)}}.png"></image>
+          </view>
+        </view>
+      </view>
+      <view class="p20 tac grey" wx:if="{{sList.length == 0}}">暂无数据～</view>
+    </view>
   </block>
   <!--用户未注册-->
   <block wx:else>
     <view class="empty-data">
-      <view class="p20 tac grey fs32">对不起，您暂未注册，请扫码注册</view>
+      <view class="p20 tac grey fs32">对不起，您暂未注册，请先注册</view>
+      <navigator url="/pages/registry/registry" class="btn btn-green">马上注册</navigator>
     </view>
   </block>
 </block>

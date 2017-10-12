@@ -12,11 +12,11 @@
 	"projectname": "%E4%B9%A0%E8%AF%BE",
 	"condition": {
 		"weapp": {
-			"current": 0,
+			"current": 4,
 			"list": [
 				{
 					"id": 0,
-					"name": "注册",
+					"name": "老师注册",
 					"pathName": "pages/registry/registry",
 					"query": "role=1&code=yyyy"
 				},
@@ -43,6 +43,12 @@
 					"name": "习惯",
 					"pathName": "pages/habit/habit",
 					"query": ""
+				},
+				{
+					"id": 5,
+					"name": "家长注册",
+					"pathName": "pages/registry/registry",
+					"query": "code=xxxx"
 				}
 			]
 		},

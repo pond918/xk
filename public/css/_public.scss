@@ -13,7 +13,6 @@
 
 .empty-data{
   height: 100%;
-  background-color: #fff;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
@@ -47,13 +46,16 @@
   .each-item{
     flex: 1;
     text-align: center;
-    color: #666;
-    font-size: 26rpx;
+    color: #fff;
+    font-size: 36rpx;
     display: flex;
     justify-content: center;
     align-items: center;
     &:first-child{
-      border-right: 1rpx solid #e5e5e5;
+      margin-right: 10rpx;
+    }
+    &:second-child{
+      margin-left: 10rpx;
     }
     &.confirm{
       color: #fff;
