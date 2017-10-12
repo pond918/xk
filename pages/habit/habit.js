@@ -65,6 +65,7 @@ Page({
       wx.hideLoading();
 
       let { role } = this.data;
+      // 如果角色是老师
       if (role == 1) {
         res.data.forEach((item) => {
           item.formatDate = utils.formatDate(new Date(item.date));
@@ -75,6 +76,7 @@ Page({
           habit: res.data
         });
       } else {
+        // 如果角色是家长
         res.data.formatDate = utils.formatDate(new Date(res.data.date), 'YYYY-MM-DD');
         res.data.formatDay = new Date(res.data.date).getDay();
         res.data.habits.forEach((item) => {
@@ -82,12 +84,18 @@ Page({
         });
 
         this.setData({
+          isRegisted: true,
           isLoaded: true,
           habit: res.data
         });
 
         this.countDown();
       }
+
+      // 停止下拉刷新
+      setTimeout(()=>{
+        wx.stopPullDownRefresh();
+      }, 0)
     }).catch((res) => {
       wx.hideLoading();
 
@@ -103,8 +111,13 @@ Page({
 
   // 倒计时
   countDown () {
-    let { habit } = this.data;
+    let { habit, countDownId } = this.data;
     let deadline = habit.deadline;
+
+    // 如果已经开启了倒计时，则先清除它
+    if(countDownId){
+      clearInterval(countDownId);
+    }
 
     if (deadline != 0) {
       this.calcRemainTime();
@@ -505,27 +518,32 @@ Page({
       })
     });
   },
+  // 下拉刷新
+  // 未注册用户进入本页面 -> 提示未注册 -> 跳转注册 -> 回到本页面时，也需要调用本方法刷新页面
+  onPullDownRefresh(){
+    this.getData();
+  },
   // 页面隐藏时，将倒计时清除
   onHide () {
     let { countDownId } = this.data;
 
-    clearInterval(countDownId);
+    if(countDownId){
+      clearInterval(countDownId);
+    }
   },
-  // 页面显示时，重新开始倒计时
+  // 页面显示时，重新请求数据
   onShow () {
     let { isLoaded } = this.data;
 
     if (isLoaded) {
-      this.onLoad();
+      this.getData();
     }
-
-    console.log(123);
   },
   onLoad () {
     let role = wx.getStorageSync('role') || 1;
 
     wx.setNavigationBarTitle({
-      title: role == 1 ? '未完成习惯的学生列表' : '学生情况完成情况'
+      title: role == 1 ? '未完成习惯的学生列表' : '学生习惯完成情况'
     })
 
     this.setData({

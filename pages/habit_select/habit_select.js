@@ -418,7 +418,14 @@ Page({
           })
 
           wx.switchTab({
-            url: '/pages/habit/habit'
+            url: '/pages/habit/habit',
+            success () {
+              // 登录成功，设置当前页面data中的role为相对应的角色
+              let pages = getCurrentPages();
+              let currentPage = pages[pages.length - 1];
+
+              currentPage.getData();
+            }
           });
         }, 1500);
       } else {

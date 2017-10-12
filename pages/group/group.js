@@ -65,6 +65,11 @@ Page({
         isLoaded: true,
         sList: res.data
       });
+
+      // 停止下拉刷新
+      setTimeout(()=>{
+        wx.stopPullDownRefresh();
+      }, 0)
     }).catch((res) => {
       wx.hideLoading();
 
@@ -95,6 +100,11 @@ Page({
         isLoaded: true,
         gList: res.data
       });
+
+      // 停止下拉刷新
+      setTimeout(()=>{
+        wx.stopPullDownRefresh();
+      }, 0)
     }).catch((res) => {
       wx.hideLoading();
 
@@ -183,6 +193,18 @@ Page({
       }
     })
   },
+  // 下拉刷新
+  onPullDownRefresh(){
+    this.getData();
+  },
+  // 页面显示时，重新请求数据
+  onShow () {
+    let { isLoaded } = this.data;
+
+    if (isLoaded) {
+      this.getData();
+    }
+  },
   onLoad () {
     let role = wx.getStorageSync('role') || 1;
     let timeGroupIndex = (role === 1) ? 0 : 1;
@@ -193,25 +215,5 @@ Page({
     });
 
     this.getData();
-  },
-  didPressChooseImage: function () {
-    var that = this;
-    wx.chooseImage({
-      count: 1,
-      success: function (res) {
-        var filePath = res.tempFilePaths[0];
-        qiniuUploader.upload(filePath, (res) => {
-          that.setData({
-            'imageURL': res.imageURL,
-          });
-        }, (error) => {
-          console.log('error: ' + error);
-        }, {
-          uploadURL: 'https://up.qbox.me',
-          domain: 'bzkdlkaf.bkt.clouddn.com',
-          uptokenURL: 'UpTokenURL.com/uptoken',
-        })
-      }
-    })
   }
 })

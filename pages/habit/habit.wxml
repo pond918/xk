@@ -96,7 +96,7 @@
       <image class="icon" src="../../icons/icon-close.png" bindtap="toggleCommentPopup"></image>
     </view>
     <view class="app-popup-main">
-      <textarea class="textarea mtb40" value="{{comment}}" placeholder="班主任说点什么吧，这孩子无法无天了..." bindinput="inputComment"></textarea>
+      <textarea class="textarea mtb40" value="{{comment}}" placeholder="" bindinput="inputComment"></textarea>
       <view class="app-popup-confirm btn btn-full btn-green" bindtap="popupSubmit">批注</view>
     </view>
   </view>

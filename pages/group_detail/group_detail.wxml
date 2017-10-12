@@ -13,7 +13,7 @@
             <image class="img" src="{{ item.from.avatar ? item.from.avatar : '../../icons/icon-people.png' }}"></image>
           </view>
           <view class="user-info-detail">
-            <view class="name">{{item.from.name}}</view>
+            <view class="name">{{item.name}}</view>
             <view class="p">{{item.date}}</view>
           </view>
           <text class="calc-day green">第{{item.last}}天</text>
