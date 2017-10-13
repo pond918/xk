@@ -20,7 +20,7 @@ let api = {
   // 删除组员
   deleteMember: '/t/member/remove',
   // 移动组员
-  moveMember: '/t/group/member/remove',
+  moveMember: '/t/group/member/move',
 
   // 家长注册
   parentRegistry: '/user/reg/p',

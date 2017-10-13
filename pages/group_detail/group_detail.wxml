@@ -10,7 +10,7 @@
       <view class="active-item mb30" wx:for="{{aList}}" wx:key="{{index}}">
         <view class="user-info ptb20">
           <view class="user-info-avatar">
-            <image class="img" src="{{ item.from.avatar ? item.from.avatar : '../../icons/icon-people.png' }}"></image>
+            <image class="img" src="{{ item.avatar ? item.avatar : '../../icons/icon-people.png' }}"></image>
           </view>
           <view class="user-info-detail">
             <view class="name">{{item.name}}</view>
@@ -86,7 +86,7 @@
             </view>
           </view>
         </view>
-        <view class="todo-item-arrow" data-id="{{item.id}}" data-index="{{index}}" catchtap="deleteMember">
+        <view class="todo-item-arrow" hidden="{{!item.isSelected}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="deleteMember">
           <image class="icon p20" src="../../icons/icon-close1.png"></image>
         </view>
       </view>

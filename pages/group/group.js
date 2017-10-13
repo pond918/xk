@@ -12,7 +12,7 @@ Page({
     timeTabs: {
       // 左侧时间tab的选中序号
       timeTabsIndex: 0,
-      // 右侧群组的选中序号，0表示群组，1表示学生排名，与下面的group字段值相反
+      // 右侧群组的选中序号，1表示群组，0表示学生排名，与下面的group字段值相反
       timeGroupIndex: 1,
       list: ['日', '周', '月', '学期'],
       group: ['群组>', '学生排名>'],
@@ -183,7 +183,8 @@ Page({
                 title: '删除失败',
                 image: '../../icons/close-circled.png'
               })
-              gList.splice(index, 0, ...deleteMember);
+
+              gList.splice(index, 0, ...deleteGroup);
               this.setData({
                 gList
               })
@@ -207,11 +208,9 @@ Page({
   },
   onLoad () {
     let role = wx.getStorageSync('role') || 1;
-    let timeGroupIndex = (role === 1) ? 0 : 1;
 
     this.setData({
-      role,
-      'timeTabs.timeGroupIndex': timeGroupIndex
+      role
     });
 
     this.getData();

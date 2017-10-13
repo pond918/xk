@@ -107,10 +107,7 @@ Page({
     }
 
     if (!isMore) {
-      return wx.showToast({
-        title: '没有更多了',
-        image: '../../icons/close-circled.png'
-      })
+      return false;
     }
 
     this.setData({
@@ -160,7 +157,6 @@ Page({
   },
   // 上拉加载更多
   lower () {
-    console.log(1);
     this.getGroupActive();
   },
   // 显示、隐藏回复框
@@ -340,6 +336,22 @@ Page({
       isSelectAll
     });
   },
+  // 计算组员是否全选
+  calcIsSelectAll () {
+    let { mList } = this.data;
+
+    let isSelectAll = mList.every((item) => {
+      if (item.isSelected) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    this.setData({
+      isSelectAll
+    });
+  },
   // 选中组员
   selectMember (e) {
     let index = e.currentTarget.dataset.index;
@@ -349,6 +361,9 @@ Page({
     this.setData({
       [`mList[${index}].isSelected`]: !isSelected
     })
+
+    // 检查是否全选
+    this.calcIsSelectAll();
   },
   // 删除组员
   deleteMember (e) {

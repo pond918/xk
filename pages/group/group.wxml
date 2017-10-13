@@ -6,7 +6,7 @@
     <template is="time-tabs" data="{{...timeTabs}}"/>
     <view class="pt78"></view>
     <!--群组-->
-    <view hidden="{{timeTabs.timeGroupIndex == 0}}">
+    <view hidden="{{timeTabs.timeGroupIndex != 1}}">
       <view class="groups-container" wx:if="{{gList.length != 0}}">
         <!--冠军组-->
         <navigator url="/pages/group_detail/group_detail?groupId={{gList[0].id}}" class="champion-group mb30"
@@ -81,7 +81,7 @@
       <view class="p20 tac grey" wx:if="{{gList.length == 0}}">暂无数据～</view>
     </view>
     <!--学生列表-->
-    <view hidden="{{timeTabs.timeGroupIndex == 1}}">
+    <view hidden="{{timeTabs.timeGroupIndex != 0}}">
       <view class="statistics-section" wx:if="{{false}}">
         <view class="statistics-section-item">
           <view class="title">总积分</view>

@@ -58,6 +58,12 @@ Page({
   },
   // 获取学生习惯列表
   getData () {
+    // 还原页面状态
+    this.setData({
+      isSubmitComment: false,
+      isUpload: false
+    });
+
     wx.showLoading();
     http.request({
       url: api.habitList
@@ -93,7 +99,7 @@ Page({
       }
 
       // 停止下拉刷新
-      setTimeout(()=>{
+      setTimeout(() => {
         wx.stopPullDownRefresh();
       }, 0)
     }).catch((res) => {
@@ -115,7 +121,7 @@ Page({
     let deadline = habit.deadline;
 
     // 如果已经开启了倒计时，则先清除它
-    if(countDownId){
+    if (countDownId) {
       clearInterval(countDownId);
     }
 
@@ -137,13 +143,11 @@ Page({
     let deadline = habit.deadline;
 
     if (deadline != 0) {
-      let zeroDate = (utils.formatDate(new Date(), 'YYYY-MM-DD'));
-      let zero = new Date(zeroDate).getTime();
+      let zeroDate = (utils.formatDate(new Date(), 'YYYY/MM/DD'));
+      let zero = new Date(zeroDate + ' 00:00:00').getTime();
       let now = new Date().getTime();
       let remainMillion = zero + deadline - now;
 
-      //计算剩余的天数
-      let days = parseInt(remainMillion / 1000 / 60 / 60 / 24, 10);
       //计算剩余的小时
       let hours = parseInt(remainMillion / 1000 / 60 / 60 % 24, 10);
       //计算剩余的分钟
@@ -151,12 +155,11 @@ Page({
       //计算剩余的秒数
       let seconds = parseInt(remainMillion / 1000 % 60, 10);
 
-      days = this.checkTime(days);
       hours = this.checkTime(hours);
       minutes = this.checkTime(minutes);
       seconds = this.checkTime(seconds);
 
-      let remainTime = `${days}天${hours}时${minutes}分${seconds}秒`;
+      let remainTime = `${hours}时${minutes}分${seconds}秒`;
 
       this.setData({
         remainMillion,
@@ -172,12 +175,12 @@ Page({
     return i;
   },
   // 向服务器提交习惯
-  submitHabit(){
+  submitHabit () {
     let { habitIndex, own, habit, uploadedImgs, uploadPopupToggle } = this.data;
     let item = habit.habits[habitIndex];
 
-    if(item.photo){
-      if(uploadedImgs.length == 0){
+    if (item.photo) {
+      if (uploadedImgs.length == 0) {
         return wx.showToast({
           title: '未上传任何图片',
           image: '../../icons/close-circled.png'
@@ -201,7 +204,7 @@ Page({
           }).then((res) => {
             if (res.data) {
               // 如果上传弹窗打开，则关闭它
-              if(uploadPopupToggle){
+              if (uploadPopupToggle) {
                 this.toggleUploadPopup();
               }
 
@@ -352,7 +355,7 @@ Page({
         throw new Error('您还未选择图片');
       }
 
-      if(isUpload){
+      if (isUpload) {
         throw new Error('正在上传中，请稍后');
       }
     } catch (e) {
@@ -372,12 +375,12 @@ Page({
         let promiseArr = [];
 
         // 循环上传每一张图片
-        waitUploadImgs.forEach((imgUrl, index)=>{
-          let q = new Promise((resolve, reject)=>{
+        waitUploadImgs.forEach((imgUrl, index) => {
+          let q = new Promise((resolve, reject) => {
             qiniuUploader.upload(imgUrl, (res) => {
               // 按顺序设置每一张图片的七牛云地址
               this.setData({
-                [`uploadedImgs[${index}]`]: res.imageURL,
+                [`uploadedImgs[${index}]`]: `http://${res.imageURL}`,
               });
 
               resolve();
@@ -394,9 +397,7 @@ Page({
         });
 
         // 图片全部上传完毕之后，隐藏loading效果，将isUpload正在上传开关关闭
-        Promise.all(promiseArr).then(()=>{
-          wx.hideLoading();
-
+        Promise.all(promiseArr).then(() => {
           this.setData({
             isUpload: false
           });
@@ -406,9 +407,9 @@ Page({
             title: '恭喜你图片上传成功',
             image: '../../icons/close-circled.png'
           })
-        }, (res)=>{
+        }, (res) => {
           wx.showToast({
-            title: `上传失败，错误：${res}`,
+            title: `上传失败，错误：${res.errMsg}`,
             image: '../../icons/close-circled.png'
           })
 
@@ -484,13 +485,13 @@ Page({
     let id = habit[pIndex].students[cIndex].id;
 
     wx.showLoading();
-    this.togglePopup();
+    this.toggleCommentPopup();
     http.request({
       url: api.commentStudentHabit,
       method: 'POST',
       data: {
         id,
-        comment
+        content: comment
       }
     }).then((res) => {
       wx.hideLoading();
@@ -520,21 +521,21 @@ Page({
   },
   // 下拉刷新
   // 未注册用户进入本页面 -> 提示未注册 -> 跳转注册 -> 回到本页面时，也需要调用本方法刷新页面
-  onPullDownRefresh(){
+  onPullDownRefresh () {
     this.getData();
   },
   // 页面隐藏时，将倒计时清除
   onHide () {
     let { countDownId } = this.data;
 
-    if(countDownId){
+    if (countDownId) {
       clearInterval(countDownId);
     }
   },
   // 设置标题
   setTitle () {
     let role = wx.getStorageSync('role') || 1;
-console.log(role);
+    console.log(role);
     wx.setNavigationBarTitle({
       title: role == 1 ? '未完成习惯的学生列表' : '学生习惯完成情况'
     })
