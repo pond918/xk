@@ -224,35 +224,37 @@ page {
         font-weight: bold; }
 
 .situation-section {
-  background-color: #fff;
-  padding: 20rpx 25rpx;
-  position: relative; }
+  background-color: #e4edf2;
+  padding-top: 20rpx;
+  position: relative;}
   .situation-section.bb-green {
-    border-bottom: 10rpx solid #1dcca1; }
+    border-bottom: 5rpx solid #1dcca1; }
   .situation-section.bb-grey {
-    border-bottom: 10rpx solid #ccc; }
+    border-bottom: 5rpx solid #ccc; }
   .situation-section.bb-red {
-    border-bottom: 10rpx solid #f56857; }
+    border-bottom: 5rpx solid #f56857; }
   .situation-section .status-btn {
     position: absolute;
     top: 20rpx;
-    right: 25rpx; }
+    right: 100rpx; }
   .situation-section .title {
     height: 44rpx;
     font-size: 32rpx;
     display: flex;
     align-items: center;
     padding-right: 100rpx;
-    margin-bottom: 15rpx;
+    margin-bottom: 10rpx;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; }
+    text-overflow: ellipsis; 
+    padding:0 25rpx;}
     .situation-section .title .icon {
       width: 38rpx;
       height: 38rpx;
       margin-left: 10rpx; }
   .situation-section .content {
-    display: flex; }
+    display: flex;
+    padding:0 25rpx; }
     .situation-section .content .l {
       padding-top: 6rpx;
       flex: 1; }
@@ -269,5 +271,19 @@ page {
     line-height: 25rpx;
     font-size: 20rpx;
     color: #999; }
-
+      .situation-section .p .t{margin-right:20rpx;}
+.situation-section .top{position:relative;padding-right:100rpx;padding-bottom:20rpx;}
+.situation-section .opeat{padding:20rpx 25rpx;border-top:1px solid #eee;background-color:#fff;}
+.situation-section .opeat .btn{margin-right:20rpx;padding:0;width:220rpx;height:60rpx;line-height:60rpx;text-align:center;}
+.situation-section .opeat .btn:last-of-type{margin-right:0}
+.opeat .btn .t{width:125rpx;display:inline-block}
+.opeat .btn .s{border-left:1px solid #d24736;height:100%;display:inline-block;padding-left:10rpx;}
+.opeat .btn .s .ss{font-size:32rpx;}
+.opeat .btn.btn-grey .s{border-left-color:#ddd}
+.opeat_arrow{width:48rpx;height:48rpx;position:absolute;top:50%;right:20rpx;margin-top:-24rpx;}
+.opeat_arrow .i{width:100%;height:100%}
+.situation-section .info{background-color:#fff;border-bottom:1px solid #eee;padding:20rpx 25rpx 10rpx 25rpx;}
+.situation-section .info .item{overflow:hidden;display:flex;width:100%;margin-bottom:10rpx;}
+.situation-section .info .item .m{width:40rpx;height:40rpx;display:block;float:left}
+.situation-section .info .item .i{flex:1;color:#999;line-height:1.5;margin-left:20rpx;}
 /*# sourceMappingURL=habit.wxss.map */

@@ -26,6 +26,6 @@
       text-align: center; }
 
 .btn {
-  margin: 180rpx 24rpx; }
+  margin: 180rpx 24rpx 0; }
 
-/*# sourceMappingURL=index.wxss.map */
+/*# sourceMappingURL=success.wxss.map */

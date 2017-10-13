@@ -41,6 +41,10 @@
                   catchtap="deleteGroup">删除该组
             </view>
           </view>
+          <view class="champion-group-content"
+                wx:if="{{gList[0].members.length === 0 && role == 2}}">
+            <text class="grey">暂无组员</text>
+          </view>
         </navigator>
         <!--非冠军组-->
         <view class="other-group-container">
@@ -63,6 +67,10 @@
                     wx:if="{{item.members.length === 0 && role == 1}}"
                     data-index="{{index}}"
                     catchtap="deleteGroup">删除该组
+              </view>
+              <view class="champion-group-content"
+                    wx:if="{{item.members.length === 0 && role == 2}}">
+                <text class="grey">暂无组员</text>
               </view>
               <view wx:if="{{item.members.length !== 0}}">
                 <text class="num">{{item.score}}</text>

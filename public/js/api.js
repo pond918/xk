@@ -30,6 +30,8 @@ let api = {
   parentSubmitHabit: '/p/habit/select',
   // 家长完成习惯
   parentCompleteHabit: '/p/habit/mine/check',
+  // 家长未完成习惯
+  parentFailHabit: '/p/habit/mine/uncheck',
   // 获取七牛云token
   getUploadToken: '/res/qiniu/token',
 

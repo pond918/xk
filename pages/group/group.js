@@ -3,7 +3,7 @@ import http from '../../public/js/http.js';
 import api from '../../public/js/api.js';
 
 const qiniuUploader = require("../../public/js/qiniuUploader");
-let role = wx.getStorageSync('role') || 1;
+let role = wx.getStorageSync('role') || null;
 
 Page({
   data: {
@@ -203,13 +203,14 @@ Page({
     let { isLoaded } = this.data;
 
     if (isLoaded) {
-      this.getData();
+      this.onLoad();
     }
   },
   onLoad () {
-    let role = wx.getStorageSync('role') || 1;
+    let role = wx.getStorageSync('role') || null;
 
     this.setData({
+      isRegisted: true,
       role
     });
 

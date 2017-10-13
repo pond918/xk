@@ -3,7 +3,7 @@ import api from '../../public/js/api.js';
 import utils from '../../public/js/utils.js';
 
 const qiniuUploader = require("../../public/js/qiniuUploader");
-let role = wx.getStorageSync('role') || 1;
+let role = wx.getStorageSync('role') || null;
 
 // 总共可以上传几张图片
 const UPLOAD_LENGTH = 1;
@@ -18,6 +18,8 @@ Page({
     role: role,
     // 学生习惯列表
     habit: [],
+    //所有的习惯详情是否开启的开关
+    showInfoOn:[],
 
     // 当前选择的完成习惯的序号
     habitIndex: '',
@@ -58,6 +60,7 @@ Page({
   },
   // 获取学生习惯列表
   getData () {
+    var _this = this;
     // 还原页面状态
     this.setData({
       isSubmitComment: false,
@@ -95,6 +98,15 @@ Page({
           habit: res.data
         });
 
+        //设置是否开启家长查看习惯详情的开关
+        var arrr=[];
+        for(var i in _this.data.habit){
+          arrr.push({id:_this.data.habit[i].id,on:false})
+        }
+        this.setData({
+          showInfoOn: arrr
+        });
+
         this.countDown();
       }
 
@@ -112,6 +124,22 @@ Page({
           isRegisted: false
         });
       }
+    });
+  },
+  // 查看习惯的详情
+  showInfo:function(e){
+    var _this = this,
+        id = e.currentTarget.dataset.index,
+        arr = _this.data.showInfoOn;
+    for(var i in arr){
+      if(i == id){  //当前点击项
+        arr[i].on = !arr[i].on;
+      }else{
+        arr[i].on = false;
+      }
+    }
+    _this.setData({
+      showInfoOn:arr
     });
   },
 
@@ -184,7 +212,7 @@ Page({
         return wx.showToast({
           title: '未上传任何图片',
           image: '../../icons/close-circled.png'
-        })
+        });
       }
     }
 
@@ -210,7 +238,6 @@ Page({
 
               // 重置上传相关的data字段
               this.resetUpload();
-
               wx.showToast({
                 title: '设置成功'
               })
@@ -229,9 +256,9 @@ Page({
       }
     })
   },
-  // 主动／被动完成习惯
+  // 主动／被动/未能完成习惯
   completeHabit (e) {
-    let { index, own } = e.currentTarget.dataset;
+    let { index, own, fail } = e.currentTarget.dataset;
     let { habit } = this.data;
     let item = habit.habits[index];
 
@@ -240,6 +267,12 @@ Page({
       own
     });
 
+    //如果点击的是”未完成“按钮，则直接提交不用上传图片
+    if(fail === true){
+      this.submitFailHabit();
+      return false;
+    }
+
     // 如果需要上传图片，则打开上传弹窗
     if (item.photo) {
       this.toggleUploadPopup();
@@ -247,6 +280,50 @@ Page({
       // 否则，直接显示完成习惯
       this.submitHabit();
     }
+  },
+  submitFailHabit () {
+    let { habitIndex, own, habit, uploadedImgs, uploadPopupToggle } = this.data;
+    let item = habit.habits[habitIndex];
+
+    wx.showModal({
+      content: `是否将习惯设为 "未完成"？`,
+      success: (res) => {
+        if (res.confirm) {
+          wx.showLoading();
+          http.request({
+            url: api.parentFailHabit,
+            method: 'POST',
+            data: {
+              id: item.id,
+              own,
+              imgs: uploadedImgs
+            }
+          }).then((res) => {
+            if (res.data) {
+              // 如果上传弹窗打开，则关闭它
+              if (uploadPopupToggle) {
+                this.toggleUploadPopup();
+              }
+
+              // 重置上传相关的data字段
+              this.resetUpload();
+              wx.showToast({
+                title: '设置成功'
+              })
+
+              setTimeout(() => {
+                this.getData();
+              }, 1500)
+            } else {
+              wx.showToast({
+                title: '设置失败，请重试',
+                image: '../../icons/close-circled.png'
+              })
+            }
+          });
+        }
+      }
+    })
   },
   // 显示、隐藏上传图片弹窗
   toggleUploadPopup () {
@@ -532,10 +609,16 @@ Page({
       clearInterval(countDownId);
     }
   },
-  // 设置标题
-  setTitle () {
-    let role = wx.getStorageSync('role') || 1;
-    console.log(role);
+  // 页面显示时，重新请求数据
+  onShow () {
+    let { isLoaded } = this.data;
+    if (isLoaded) {
+      this.onLoad();
+    }
+  },
+  onLoad () {
+    let role = wx.getStorageSync('role') || null;
+
     wx.setNavigationBarTitle({
       title: role == 1 ? '未完成习惯的学生列表' : '学生习惯完成情况'
     })
@@ -543,18 +626,7 @@ Page({
     this.setData({
       role
     });
-  },
-  // 页面显示时，重新请求数据
-  onShow () {
-    this.setTitle();
 
-    let { isLoaded } = this.data;
-    if (isLoaded) {
-      this.getData();
-    }
-  },
-  onLoad () {
-    this.setTitle();
     this.getData();
   }
 })
