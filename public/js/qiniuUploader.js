@@ -137,7 +137,8 @@ function uploadURLFromRegionCode(code) {
   var uploadURL = null
   switch (code) {
     case 'ECN':
-      uploadURL = 'https://up.qbox.me'
+      // uploadURL = 'https://up.qbox.me'
+      uploadURL = 'https://upload.qiniup.com'
       break
     case 'NCN':
       uploadURL = 'https://up-z1.qbox.me'
