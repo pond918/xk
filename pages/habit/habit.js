@@ -217,7 +217,7 @@ Page({
     }
 
     wx.showModal({
-      content: `是否将习惯设为 "${own ? '主动完成' : '监督完成'}"？`,
+      content: `该习惯是"${own ? '主动完成' : '监督完成'}"的吗？`,
       success: (res) => {
         if (res.confirm) {
           wx.showLoading();
@@ -286,7 +286,7 @@ Page({
     let item = habit.habits[habitIndex];
 
     wx.showModal({
-      content: `是否将习惯设为 "未完成"？`,
+      content: `该习惯"未完成"？`,
       success: (res) => {
         if (res.confirm) {
           wx.showLoading();
