@@ -86,7 +86,16 @@
           </view>
         </view>
       </view>
-      <view class="p20 tac grey" wx:if="{{gList.length == 0}}">暂无数据～</view>
+      <view class="p20 tac grey" wx:if="{{gList.length == 0}}">
+        <view class="other-group-container" wx:if="{{role==1}}">
+	      <view class="other-group" bindtap="createGroup">
+            <view class="add-item">
+              <image class="icon-add" src="../../icons/icon-add1.png"></image>
+              <view class="add-text">新建分组</view>
+            </view>
+          </view>
+        </view>
+	  </view>
     </view>
     <!--学生列表-->
     <view hidden="{{timeTabs.timeGroupIndex != 0}}">
