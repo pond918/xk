@@ -20,7 +20,7 @@
             <view class="timeline-unfinish">
               <view class="unfinish-list ptb10 bb">
                 <view class="unfinish-item" wx:for="{{item.habits}}" wx:key="{{index}}">
-                  <image class="icon" src="../../icons/icon-close2.png"></image>
+                  <image class="icon" src="{{item.score > 0 ? '../../icons/icon-check2.png': '../../icons/icon-close2.png'}}"></image>
                   <view class="text">{{item.name}}</view>
                 </view>
               </view>

@@ -242,7 +242,9 @@ Page({
         requireds: habitRequiredArr
       }
     }).then((res) => {
-      if (res.errorCode == 200) {
+      if (res.errorCode == 200
+       // 无法改选习惯了
+       || res.errorCode == 12001) {
         wx.showToast({
           title: res.moreInfo || '提交成功'
         })
@@ -407,7 +409,9 @@ Page({
         alarmRepeats
       }
     }).then((res) => {
-      if (res.errorCode == 200) {
+      if (res.errorCode == 200
+        // 无法改选习惯了
+        || res.errorCode == 12001) {
         wx.showToast({
           title: res.moreInfo || '提交成功'
         })
