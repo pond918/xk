@@ -8,7 +8,9 @@ let role = wx.getStorageSync('role') || null;
 // 总共可以上传几张图片
 const UPLOAD_LENGTH = 1;
 
+let app = getApp()
 Page({
+  formIdSubmit: app.formIdSubmit,
   data: {
     // 总共可以上传几张图片
     UPLOAD_LENGTH,
@@ -91,6 +93,14 @@ Page({
         res.data.habits.forEach((item) => {
           item.formatStart = utils.formatDate(new Date(item.start));
         });
+
+        if (res.data.habits.length == 0) {
+          // 还没选习惯
+          wx.navigateTo({
+            url: '/pages/habit_select/habit_select'
+          });
+          return;
+        }
 
         this.setData({
           isRegisted: true,
@@ -239,7 +249,7 @@ Page({
               // 重置上传相关的data字段
               this.resetUpload();
               wx.showToast({
-                title: '设置成功'
+                title: '评分成功'
               })
 
               setTimeout(() => {
@@ -308,7 +318,7 @@ Page({
               // 重置上传相关的data字段
               this.resetUpload();
               wx.showToast({
-                title: '设置成功'
+                title: '评分成功'
               })
 
               setTimeout(() => {

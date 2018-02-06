@@ -5,7 +5,9 @@ import api from '../../public/js/api.js';
 const qiniuUploader = require("../../public/js/qiniuUploader");
 let role = wx.getStorageSync('role') || null;
 
+let app = getApp()
 Page({
+  formIdSubmit: app.formIdSubmit,
   data: {
     // 角色，1为老师，2为家长
     role: role,
@@ -215,5 +217,7 @@ Page({
     });
 
     this.getData();
+
+    app.formIdsSave()
   }
 })

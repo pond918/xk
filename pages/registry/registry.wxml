@@ -93,7 +93,7 @@
             <image class="icon" src="../../icons/icon-password.png"></image>
           </view>
           <view class="input-label-content">
-            <input class="input" type="number" placeholder="*请输入您孩子的学号" bindinput="inputStudentNo"/>
+            <input class="input" type="number" maxlength='11' placeholder="*请输入家长的手机号" bindinput="inputStudentNo"/>
           </view>
         </view>
         <view class="input-label mt30">

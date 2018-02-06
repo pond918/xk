@@ -206,12 +206,16 @@ Page({
       if (isSubmit) {
         throw new Error('正在提交中...');
       }
-      if (requiredNum < 2) {
-        throw new Error('必选的习惯不得小于2项');
+      if (requiredNum != 8) {
+        throw new Error('必选的习惯必须8项');
       }
-      if (requiredNum > 6) {
-        throw new Error('必选的习惯最多6项');
-      }
+      let selectNum = 0;
+      list.some((item) => {
+        if (item.isSelected)
+          selectNum++;
+      });
+      if (selectNum < 10)
+        throw new Error(`请选择至少10个习惯。`);
     } catch (e) {
       return wx.showToast({
         title: e.message,
@@ -349,8 +353,11 @@ Page({
       }
 
       let requiredNum = 0;
+      let selectNum = 0;
       // 如果选项是必须选择的，并且已经选择了，则计数；如果必选习惯未选择，则提示
       list.some((item)=>{
+        if (item.isSelected)
+          selectNum++;        
         if(item.required){
           if(item.isSelected){
             // 如果未选择习惯提醒时间，则提示
@@ -367,6 +374,8 @@ Page({
         }
       });
 
+      if (selectNum!= 10)
+        throw new Error(`请选择10个习惯。`);
       if(requiredNum > 10){
         throw new Error(`必选习惯最多选择10个`);
       }

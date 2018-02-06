@@ -55,7 +55,7 @@
             wx:for="{{habit.habits}}"
             wx:key="{{index}}">
         <view class="btn btn-small btn-green status-btn" wx:if="{{item.status != null && item.status > 0}}">已完成</view>
-        <view class="btn btn-small btn-grey status-btn" wx:if="{{item.status != null && item.status < 0}}">未完成</view>
+        <view class="btn btn-small btn-red status-btn" wx:if="{{item.status != null && item.status < 0}}">未完成</view>
         <view class="btn btn-small btn-red status-btn" wx:if="{{item.status != null && item.status == 0}}">今日不用做</view>
         <view 
           class="top" 
@@ -113,31 +113,39 @@
         <view class="opeat" wx:if="{{item.status == null}}">
           <!--未完成，显示按钮-->
           <view class="r">
-              <view 
-                class="btn btn-red" 
+          <form bindsubmit='formIdSubmit' report-submit>
+              <view
+                class="btn btn-green" 
                 data-index="{{index}}" 
                 data-own="{{true}}" 
                 bindtap="completeHabit">
-                <text class="t">主动完成</text>
-                <text class="s"><text class="ss">{{item.scoreA>0?"+"+item.scoreA:"-"+item.scoreA}}</text>分</text>
-            </view>
+                <button plain class='btn_fid' form-type='submit'>
+                  <text class="t">主动完成</text>
+                  <text class="s"><text class="ss">{{item.scoreA>0?"+"+item.scoreA:"-"+item.scoreA}}</text>分</text>
+                </button>
+              </view>
               <view 
-                class="btn btn-red" 
+                class="btn btn-green" 
                 data-index="{{index}}" 
                 data-own="{{false}}" 
                 bindtap="completeHabit">
-                <text class="t">监督完成</text>
-                <text class="s"><text class="ss">{{item.scoreB>0?"+"+item.scoreB:"-"+item.scoreB}}</text>分</text>
+                <button plain class='btn_fid' form-type='submit'>
+                  <text class="t">监督完成</text>
+                  <text class="s"><text class="ss">{{item.scoreB>0?"+"+item.scoreB:"-"+item.scoreB}}</text>分</text>
+                </button>
             </view>
             <view 
-              class="btn btn-grey" 
+              class="btn btn-red" 
               data-index="{{index}}"
               data-own="{{false}}"
               data-fail="{{true}}"
               bindtap="completeHabit">
-              <text class="t">未完成</text>
-              <text class="s"><text class="ss">{{item.scoreC}}</text>分</text>
+                <button plain class='btn_fid' form-type='submit'>
+                <text class="t">未完成</text>
+                <text class="s"><text class="ss">{{item.scoreC}}</text>分</text>
+                </button>
             </view>
+          </form>
           </view>
         </view>
       </view>

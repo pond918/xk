@@ -1942,3 +1942,15 @@ page {
   background: #f5f9fc; }
 
 /*# sourceMappingURL=app.wxss.map */
+
+
+
+.btn_fid {
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline !important;
+  line-height: inherit !important;
+  font-size: inherit !important;
+  color: inherit !important;
+}

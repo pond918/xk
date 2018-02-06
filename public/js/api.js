@@ -62,7 +62,9 @@ let api = {
   // 发送验证码
   verifyCode: '/verify/mobile/send',
   // 个人中心
-  user: '/wx/info'
+  user: '/wx/info',
+  // 收集formId
+  formIdsSave: '/wx/formIds'
 }
 
 let devDomain = 'https://xike.onxiao.cn/xikedd';

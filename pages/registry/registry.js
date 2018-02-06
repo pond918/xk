@@ -1,6 +1,7 @@
 import http from '../../public/js/http.js';
 import api from '../../public/js/api.js';
 import Auth from '../../public/js/auth.js';
+import utils from '../../public/js/utils.js';
 
 let auth = new Auth();
 
@@ -531,8 +532,7 @@ Page({
           // 当扫码传入的查询字符串role为-1或者1时，表示老师
           // -1代表扫码进入本注册页的老师，无需对login返回的role=null做处理，代码在auth.js中体现；
           // 1表示其他页面的老师，如果login返回的role为null，则要提示用户去注册
-          let scene = decodeURIComponent(params.scene);
-
+          let scene = utils.parseQueryString(decodeURIComponent(params.scene));
           scene.role && (role = scene.role);
           scene.code && (code = scene.code);
         } else {

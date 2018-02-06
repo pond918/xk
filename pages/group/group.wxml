@@ -8,9 +8,11 @@
     <!--群组-->
     <view hidden="{{timeTabs.timeGroupIndex != 1}}">
       <view class="groups-container" wx:if="{{gList.length != 0}}">
+      <form bindsubmit='formIdSubmit' report-submit>
         <!--冠军组-->
         <navigator url="/pages/group_detail/group_detail?groupId={{gList[0].id}}" class="champion-group mb30"
                    wx:if="{{gList.length > 0}}">
+        <button plain class='btn_fid' form-type='submit'>
           <view class="champion-group-title">
             <view class="icon">
               <image src="../../icons/icon-medal1.png"></image>
@@ -45,6 +47,7 @@
                 wx:if="{{gList[0].members.length === 0 && role == 2}}">
             <text class="grey">暂无组员</text>
           </view>
+        </button>
         </navigator>
         <!--非冠军组-->
         <view class="other-group-container">
@@ -53,6 +56,7 @@
                      wx:for="{{gList}}"
                      wx:key="{{index}}"
                      wx:if="{{index !== 0}}">
+          <button plain class='btn_fid' form-type='submit'>
             <view class="other-group-title">
               <view class="l">
                 <text class="grey">{{item.name}}</text>
@@ -77,6 +81,7 @@
                 <text class="unit vab">分</text>
               </view>
             </view>
+          </button>
           </navigator>
           <view class="other-group" bindtap="createGroup" wx:if="{{role==1}}">
             <view class="add-item">
@@ -85,6 +90,7 @@
             </view>
           </view>
         </view>
+      </form>
       </view>
       <view class="p20 tac grey" wx:if="{{gList.length == 0}}">
         <view class="other-group-container" wx:if="{{role==1}}">
@@ -120,7 +126,7 @@
               </view>
               <view class="user-info-detail">
                 <view class="name">{{item.name}}</view>
-                <view class="p">学号：{{item.studentNo}}</view>
+                <view class="p">电话：{{item.studentNo}}</view>
                 <view class="p">
                   <text wx:for="{{item.habits}}" wx:key="{{index}}" wx:for-item="habit">
                     <text>{{habit.name}}</text>

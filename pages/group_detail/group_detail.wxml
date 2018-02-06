@@ -19,7 +19,7 @@
           <text class="calc-day green">第{{item.last}}天</text>
         </view>
         <view class="img-container num1">
-          <image src="{{item.content}}"></image>
+          <image mode="widthFix" src="{{item.content}}"></image>
         </view>
         <view class="active-opera">
           <view class="opera-item" bindtap="thumb" data-index="{{index}}">
@@ -76,7 +76,7 @@
             </view>
             <view class="user-info-detail">
               <view class="name">{{item.name}}</view>
-              <view class="p">学号：{{item.studentNo}}</view>
+              <view class="p">电话：{{item.studentNo}}</view>
               <view class="p">
                 <text wx:for="{{item.habits}}" wx:key="{{index}}" wx:for-item="habit">
                   <text>{{habit.name}}</text>
